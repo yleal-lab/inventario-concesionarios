@@ -24,6 +24,7 @@
         .stock-zero { background: #f1f1f1; color: #6c757d; font-weight: bold; padding: 4px 8px; border-radius: 4px; text-align: center; }
         .loading { text-align: center; padding: 40px; color: #666; }
         .footer { text-align: center; padding: 15px; background: #ecf0f1; color: #7f8c8d; font-size: 12px; }
+        .error { text-align: center; padding: 40px; color: #e74c3c; background: #f8d7da; margin: 20px; border-radius: 8px; }
     </style>
 </head>
 <body>
@@ -49,6 +50,7 @@
         
         <div style="overflow-x: auto; max-height: 70vh; overflow-y: auto;">
             <div id="loading-message" class="loading">🔄 Cargando inventario...</div>
+            <div id="error-message" class="error" style="display: none;"></div>
             <table class="inventory-table" id="inventory-table" style="display: none;">
                 <thead>
                     <tr>
@@ -71,8 +73,8 @@
     </div>
 
     <script>
-        // CONFIGURACIÓN - CAMBIA ESTA URL POR LA DE TU ARCHIVO CSV
-        const CSV_URL = 'https://raw.githubusercontent.com/tuusuario/inventario-concesionarios/main/inventario.csv';
+        // URL de tu archivo CSV en GitHub - IMPORTANTE: usa la URL RAW
+        const CSV_URL = 'https://raw.githubusercontent.com/yleal-lab/inventario-concesionarios/main/inventario.csv';
         
         let inventoryData = [];
 
@@ -84,6 +86,12 @@
 
         function renderInventory(data) {
             const tbody = document.getElementById('inventory-body');
+            
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 20px; color: #666;">No se encontraron repuestos</td></tr>';
+                return;
+            }
+            
             tbody.innerHTML = data.map(item => {
                 const status = getStockStatus(item.cantidad);
                 return `
@@ -106,10 +114,10 @@
             
             const filteredData = inventoryData.filter(item => {
                 const matchesSearch = 
-                    item.codigo.toLowerCase().includes(searchTerm) ||
-                    item.descripcion.toLowerCase().includes(searchTerm) ||
-                    item.numero_parte.toLowerCase().includes(searchTerm) ||
-                    item.modelo.toLowerCase().includes(searchTerm);
+                    (item.codigo && item.codigo.toLowerCase().includes(searchTerm)) ||
+                    (item.descripcion && item.descripcion.toLowerCase().includes(searchTerm)) ||
+                    (item.numero_parte && item.numero_parte.toLowerCase().includes(searchTerm)) ||
+                    (item.modelo && item.modelo.toLowerCase().includes(searchTerm));
                 
                 let matchesStock = true;
                 if (stockFilter === "high") matchesStock = item.cantidad > 10;
@@ -124,34 +132,32 @@
 
         // Función para convertir CSV a JSON
         function csvToJSON(csv) {
-            const lines = csv.split('\n');
+            const lines = csv.split('\n').filter(line => line.trim() !== '');
+            if (lines.length < 2) return [];
+            
             const result = [];
-            const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+            const headers = lines[0].split(',').map(h => h.trim().toLowerCase().replace(' ', '_'));
             
             for (let i = 1; i < lines.length; i++) {
-                if (!lines[i].trim()) continue;
-                
                 const obj = {};
-                const currentline = lines[i].split(',');
+                const currentline = lines[i].split(',').map(field => field.trim());
                 
                 for (let j = 0; j < headers.length; j++) {
                     const key = headers[j];
-                    let value = currentline[j] ? currentline[j].trim() : '';
+                    let value = currentline[j] || '';
                     
                     // Convertir cantidad a número
                     if (key === 'cantidad') {
                         value = parseInt(value) || 0;
                     }
                     
-                    // Mapear nombres de columnas
-                    if (key === 'descripcion_espanol') {
-                        obj['descripcion'] = value;
-                    } else {
-                        obj[key] = value;
-                    }
+                    obj[key] = value;
                 }
                 
-                result.push(obj);
+                // Asegurar que tenemos todos los campos necesarios
+                if (obj.codigo && obj.descripcion) {
+                    result.push(obj);
+                }
             }
             
             return result;
@@ -160,9 +166,24 @@
         // Cargar datos del CSV
         async function loadInventory() {
             try {
-                const response = await fetch(CSV_URL + '?t=' + new Date().getTime());
+                document.getElementById('loading-message').style.display = 'block';
+                document.getElementById('error-message').style.display = 'none';
+                document.getElementById('inventory-table').style.display = 'none';
+                
+                // Agregar timestamp para evitar cache
+                const timestamp = new Date().getTime();
+                const response = await fetch(CSV_URL + '?t=' + timestamp);
+                
+                if (!response.ok) {
+                    throw new Error('No se pudo cargar el archivo CSV');
+                }
+                
                 const csvData = await response.text();
                 inventoryData = csvToJSON(csvData);
+                
+                if (inventoryData.length === 0) {
+                    throw new Error('El archivo CSV está vacío o tiene formato incorrecto');
+                }
                 
                 // Ocultar loading, mostrar tabla
                 document.getElementById('loading-message').style.display = 'none';
@@ -172,7 +193,11 @@
                 document.getElementById('update-time').textContent = new Date().toLocaleString();
                 
             } catch (error) {
-                document.getElementById('loading-message').innerHTML = '❌ Error cargando el inventario. Intenta más tarde.';
+                document.getElementById('loading-message').style.display = 'none';
+                document.getElementById('error-message').style.display = 'block';
+                document.getElementById('error-message').innerHTML = 
+                    '❌ Error cargando el inventario: ' + error.message + 
+                    '<br><br>Verifica que el archivo "inventario.csv" exista y tenga el formato correcto.';
                 console.error('Error:', error);
             }
         }
@@ -184,8 +209,8 @@
             document.getElementById('searchInput').addEventListener('input', filterInventory);
             document.getElementById('stockFilter').addEventListener('change', filterInventory);
             
-            // Actualizar automáticamente cada hora
-            setInterval(loadInventory, 60 * 60 * 1000);
+            // Actualizar automáticamente cada 30 minutos
+            setInterval(loadInventory, 30 * 60 * 1000);
         });
     </script>
 </body>
