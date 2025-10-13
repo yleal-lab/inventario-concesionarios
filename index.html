@@ -5,185 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventario DFSK - Repuestos Glory</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 95%;
-            margin: 0 auto;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: #2c3e50;
-            color: white;
-            padding: 25px;
-            text-align: center;
-        }
-        
-        .header h1 {
-            font-size: 2.2em;
-            margin-bottom: 8px;
-        }
-        
-        .header p {
-            opacity: 0.9;
-            font-size: 1.1em;
-        }
-        
-        .last-update {
-            background: #34495e;
-            padding: 10px;
-            text-align: center;
-            color: #ecf0f1;
-            font-size: 0.9em;
-            border-bottom: 1px solid #2c3e50;
-        }
-        
-        .controls {
-            padding: 20px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e9ecef;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        .search-box {
-            flex: 1;
-            min-width: 250px;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            font-size: 14px;
-            transition: border-color 0.3s;
-        }
-        
-        .search-box:focus {
-            outline: none;
-            border-color: #3498db;
-        }
-        
-        .stock-filter {
-            padding: 10px;
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            font-size: 14px;
-            background: white;
-        }
-        
-        .inventory-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-        }
-        
-        .inventory-table th {
-            background: #34495e;
-            color: white;
-            padding: 12px 8px;
-            text-align: left;
-            font-weight: 600;
-            font-size: 11px;
-            position: sticky;
-            top: 0;
-        }
-        
-        .inventory-table td {
-            padding: 10px 8px;
-            border-bottom: 1px solid #ecf0f1;
-            font-size: 11px;
-            line-height: 1.3;
-        }
-        
-        .inventory-table tr:hover {
-            background: #f8f9fa;
-        }
-        
-        .stock-high { 
-            background: #d4edda; 
-            color: #155724; 
-            font-weight: bold;
-            padding: 4px 8px;
-            border-radius: 4px;
-            text-align: center;
-        }
-        
-        .stock-medium { 
-            background: #fff3cd; 
-            color: #856404; 
-            font-weight: bold;
-            padding: 4px 8px;
-            border-radius: 4px;
-            text-align: center;
-        }
-        
-        .stock-low { 
-            background: #f8d7da; 
-            color: #721c24; 
-            font-weight: bold;
-            padding: 4px 8px;
-            border-radius: 4px;
-            text-align: center;
-        }
-        
-        .stock-zero { 
-            background: #f1f1f1; 
-            color: #6c757d; 
-            font-weight: bold;
-            padding: 4px 8px;
-            border-radius: 4px;
-            text-align: center;
-        }
-        
-        .footer {
-            text-align: center;
-            padding: 15px;
-            background: #ecf0f1;
-            color: #7f8c8d;
-            font-size: 12px;
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                margin: 5px;
-                border-radius: 8px;
-            }
-            
-            .header h1 {
-                font-size: 1.8em;
-            }
-            
-            .controls {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .search-box {
-                min-width: auto;
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+        body { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 95%; margin: 0 auto; background: white; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); overflow: hidden; }
+        .header { background: #2c3e50; color: white; padding: 25px; text-align: center; }
+        .header h1 { font-size: 2.2em; margin-bottom: 8px; }
+        .last-update { background: #34495e; padding: 10px; text-align: center; color: #ecf0f1; font-size: 0.9em; }
+        .controls { padding: 20px; background: #f8f9fa; border-bottom: 1px solid #e9ecef; display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
+        .search-box { flex: 1; min-width: 250px; padding: 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 14px; }
+        .stock-filter { padding: 10px; border: 2px solid #ddd; border-radius: 6px; font-size: 14px; background: white; }
+        .inventory-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        .inventory-table th { background: #34495e; color: white; padding: 12px 8px; text-align: left; font-weight: 600; font-size: 11px; position: sticky; top: 0; }
+        .inventory-table td { padding: 10px 8px; border-bottom: 1px solid #ecf0f1; font-size: 11px; line-height: 1.3; }
+        .inventory-table tr:hover { background: #f8f9fa; }
+        .stock-high { background: #d4edda; color: #155724; font-weight: bold; padding: 4px 8px; border-radius: 4px; text-align: center; }
+        .stock-medium { background: #fff3cd; color: #856404; font-weight: bold; padding: 4px 8px; border-radius: 4px; text-align: center; }
+        .stock-low { background: #f8d7da; color: #721c24; font-weight: bold; padding: 4px 8px; border-radius: 4px; text-align: center; }
+        .stock-zero { background: #f1f1f1; color: #6c757d; font-weight: bold; padding: 4px 8px; border-radius: 4px; text-align: center; }
+        .loading { text-align: center; padding: 40px; color: #666; }
+        .footer { text-align: center; padding: 15px; background: #ecf0f1; color: #7f8c8d; font-size: 12px; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>🏭 Inventario DFSK - Serie Glory</h1>
-            <p>Stock de repuestos disponible - Consulta en tiempo real</p>
+            <p>Stock de repuestos disponible - Actualización automática</p>
         </div>
         
         <div class="last-update">
@@ -191,11 +38,7 @@
         </div>
         
         <div class="controls">
-            <input type="text" 
-                   class="search-box" 
-                   placeholder="🔍 Buscar por código, descripción, número de parte..." 
-                   id="searchInput">
-            
+            <input type="text" class="search-box" placeholder="🔍 Buscar por código, descripción, número de parte..." id="searchInput">
             <select class="stock-filter" id="stockFilter">
                 <option value="all">Todo el stock</option>
                 <option value="high">Stock Alto (>10)</option>
@@ -205,7 +48,8 @@
         </div>
         
         <div style="overflow-x: auto; max-height: 70vh; overflow-y: auto;">
-            <table class="inventory-table">
+            <div id="loading-message" class="loading">🔄 Cargando inventario...</div>
+            <table class="inventory-table" id="inventory-table" style="display: none;">
                 <thead>
                     <tr>
                         <th>CODIGO</th>
@@ -217,49 +61,20 @@
                         <th>CANTIDAD</th>
                     </tr>
                 </thead>
-                <tbody id="inventory-body">
-                    <!-- Los datos se cargarán aquí con JavaScript -->
-                </tbody>
+                <tbody id="inventory-body"></tbody>
             </table>
         </div>
         
         <div class="footer">
-            <p>&copy; 2024 Sistema de Inventario DFSK - Solo consulta</p>
+            <p>&copy; 2024 Sistema de Inventario DFSK - Actualización automática</p>
         </div>
     </div>
 
     <script>
-        // TUS DATOS EXACTOS - Reemplaza esto con tu información real
-        const inventoryData = [
-            { codigo: "87000", marca: "DFSK", serie: "SERIE GLORY", modelo: "G600 / GE5", numero_parte: "4133210-ST01", descripcion: "STOP INFERIOR IZO", cantidad: 2 },
-            { codigo: "87001", marca: "DFSK", serie: "SERIE GLORY", modelo: "G600 / GE5", numero_parte: "4133220-ST01", descripcion: "STOP INFERIOR DER", cantidad: 2 },
-            { codigo: "88746", marca: "DFSK", serie: "SERIE GLORY", modelo: "GIX5", numero_parte: "1012200F0000", descripcion: "FILTRO ACEITE", cantidad: 1 },
-            { codigo: "88747", marca: "DFSK", serie: "SERIE GLORY", modelo: "GIX5", numero_parte: "1109100-SF01", descripcion: "CUERPO FILTRO AIRE", cantidad: 3 },
-            { codigo: "88750", marca: "DFSK", serie: "SERIE GLORY", modelo: "GIX5", numero_parte: "3707200F0000A", descripcion: "BUJIAS", cantidad: 0 },
-            { codigo: "88751", marca: "DFSK", serie: "SERIE GLORY", modelo: "GIX5", numero_parte: "1109100-SF02", descripcion: "FILTRO AIRE", cantidad: 3 },
-            { codigo: "88752", marca: "DFSK", serie: "SERIE GLORY", modelo: "GIX5", numero_parte: "3614100F0000A", descripcion: "FLAUTA+ NYECTORES", cantidad: 2 },
-            { codigo: "88753", marca: "DFSK", serie: "SERIE GLORY", modelo: "G560 / G580", numero_parte: "5500610-SA01", descripcion: "DECORADOR INFERIOR IZO", cantidad: 1 },
-            { codigo: "88877", marca: "DFSK", serie: "SERIE GLORY", modelo: "G560", numero_parte: "S/N", descripcion: "CAJA CYT PARA MOTOR SFG18", cantidad: 0 },
-            { codigo: "88879", marca: "DFSK", serie: "SERIE GLORY", modelo: "G560", numero_parte: "1901110-FK02", descripcion: "RADIADOR", cantidad: 2 },
-            { codigo: "88880", marca: "DFSK", serie: "SERIE GLORY", modelo: "G560", numero_parte: "2803011-FK01-X", descripcion: "PARACHOQUES DELANTERO", cantidad: 2 },
-            { codigo: "88883", marca: "DFSK", serie: "SERIE GLORY", modelo: "G560 / G500", numero_parte: "3502500-FB01", descripcion: "PASTILLAS FRENOS TRASERA", cantidad: 1 },
-            { codigo: "88885", marca: "DFSK", serie: "SERIE GLORY", modelo: "G560", numero_parte: "4133010-FK01", descripcion: "LAMPARA PUERTA TRASERA IZO", cantidad: 3 },
-            { codigo: "88887", marca: "DFSK", serie: "SERIE GLORY", modelo: "G560", numero_parte: "5105100-FK01", descripcion: "CONDENSADOR", cantidad: 2 },
-            { codigo: "88889", marca: "DFSK", serie: "SERIE GLORY", modelo: "G560", numero_parte: "5205012-ST02", descripcion: "PARABRISAS DELANTERO", cantidad: 3 },
-            { codigo: "88990", marca: "DFSK", serie: "SERIE GLORY", modelo: "G560", numero_parte: "3811020-C1402-A000002", descripcion: "CONJ ROTULA+TERMINAL IZO", cantidad: 0 },
-            { codigo: "88991", marca: "DFSK", serie: "SERIE GLORY", modelo: "G560", numero_parte: "2904200-FK01", descripcion: "AMORTIGUADOR/BASE/ESPIRAL ARMADO DELANTERO IZO", cantidad: 0 },
-            { codigo: "88992", marca: "DFSK", serie: "SERIE GLORY", modelo: "G560", numero_parte: "2904100-FK01", descripcion: "AMORTIGUADOR/BASE/ESPIRAL ARMADO DELANTERO DER", cantidad: 0 },
-            { codigo: "88993", marca: "DFSK", serie: "SERIE GLORY", modelo: "G560", numero_parte: "3507200-FK05", descripcion: "EPD MODULO FRENO ELECTRONICO ESTACIONAMIENTO", cantidad: 3 },
-            { codigo: "88996", marca: "DFSK", serie: "SERIE GLORY", modelo: "G560", numero_parte: "1706102-PIOZRYRX", descripcion: "BOMBO GASOLINA", cantidad: 16 },
-            { codigo: "88997", marca: "DFSK", serie: "SERIE GLORY", modelo: "G560", numero_parte: "1117140F0000A", descripcion: "FILTRO GASOLINA", cantidad: 0 },
-            { codigo: "88999", marca: "DFSK", serie: "SERIE GLORY", modelo: "G560", numero_parte: "4115040-FK01", descripcion: "LAMPARA TRASERA IZO", cantidad: 1 },
-            { codigo: "89249", marca: "DFSK", serie: "SERIE GLORY", modelo: "G330", numero_parte: "S/N", descripcion: "KIT DE TIEMPO (MOTOR 1.5)", cantidad: 2 },
-            { codigo: "89250", marca: "DFSK", serie: "SERIE GLORY", modelo: "G500", numero_parte: "374510001800-13308", descripcion: "COMPRESOR", cantidad: 0 },
-            { codigo: "89255", marca: "DFSK", serie: "SERIE GLORY", modelo: "G330", numero_parte: "2804010-FA01-X", descripcion: "PARACHOQUE TRASERO", cantidad: 2 },
-            { codigo: "89261", marca: "DFSK", serie: "SERIE GLORY", modelo: "G330", numero_parte: "3900000-CA01", descripcion: "KIT DE HERRAMIENTAS VEHICULO", cantidad: 2 },
-            { codigo: "89268", marca: "DFSK", serie: "SERIE GLORY", modelo: "G330", numero_parte: "5403501-FA01", descripcion: "VIDRIO PARAL TRASERO IZO", cantidad: 1 },
-            { codigo: "89269", marca: "DFSK", serie: "SERIE GLORY", modelo: "G330", numero_parte: "5403501-FA01", descripcion: "VIDRIO PARAL TRASERO DER", cantidad: 1 }
-        ];
+        // CONFIGURACIÓN - CAMBIA ESTA URL POR LA DE TU ARCHIVO CSV
+        const CSV_URL = 'https://raw.githubusercontent.com/tuusuario/inventario-concesionarios/main/inventario.csv';
+        
+        let inventoryData = [];
 
         function getStockStatus(cantidad) {
             if (cantidad > 10) return { text: "Alto", class: "stock-high" };
@@ -307,19 +122,70 @@
             renderInventory(filteredData);
         }
 
+        // Función para convertir CSV a JSON
+        function csvToJSON(csv) {
+            const lines = csv.split('\n');
+            const result = [];
+            const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+            
+            for (let i = 1; i < lines.length; i++) {
+                if (!lines[i].trim()) continue;
+                
+                const obj = {};
+                const currentline = lines[i].split(',');
+                
+                for (let j = 0; j < headers.length; j++) {
+                    const key = headers[j];
+                    let value = currentline[j] ? currentline[j].trim() : '';
+                    
+                    // Convertir cantidad a número
+                    if (key === 'cantidad') {
+                        value = parseInt(value) || 0;
+                    }
+                    
+                    // Mapear nombres de columnas
+                    if (key === 'descripcion_espanol') {
+                        obj['descripcion'] = value;
+                    } else {
+                        obj[key] = value;
+                    }
+                }
+                
+                result.push(obj);
+            }
+            
+            return result;
+        }
+
+        // Cargar datos del CSV
+        async function loadInventory() {
+            try {
+                const response = await fetch(CSV_URL + '?t=' + new Date().getTime());
+                const csvData = await response.text();
+                inventoryData = csvToJSON(csvData);
+                
+                // Ocultar loading, mostrar tabla
+                document.getElementById('loading-message').style.display = 'none';
+                document.getElementById('inventory-table').style.display = 'table';
+                
+                renderInventory(inventoryData);
+                document.getElementById('update-time').textContent = new Date().toLocaleString();
+                
+            } catch (error) {
+                document.getElementById('loading-message').innerHTML = '❌ Error cargando el inventario. Intenta más tarde.';
+                console.error('Error:', error);
+            }
+        }
+
         // Inicializar
         document.addEventListener('DOMContentLoaded', function() {
-            renderInventory(inventoryData);
-            document.getElementById('update-time').textContent = new Date().toLocaleString();
+            loadInventory();
             
-            // Buscador en tiempo real
             document.getElementById('searchInput').addEventListener('input', filterInventory);
             document.getElementById('stockFilter').addEventListener('change', filterInventory);
             
-            // Actualizar cada 5 minutos (simulado)
-            setInterval(() => {
-                document.getElementById('update-time').textContent = new Date().toLocaleString();
-            }, 300000);
+            // Actualizar automáticamente cada hora
+            setInterval(loadInventory, 60 * 60 * 1000);
         });
     </script>
 </body>
