@@ -1,1 +1,85 @@
-index.html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario - Repuestos Disponibles</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); overflow: hidden; }
+        .header { background: #2c3e50; color: white; padding: 30px; text-align: center; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .last-update { background: #34495e; padding: 10px; text-align: center; color: #ecf0f1; }
+        .search-box { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; margin: 20px; font-size: 16px; }
+        .inventory-table { width: 100%; border-collapse: collapse; }
+        .inventory-table th { background: #34495e; color: white; padding: 15px; text-align: left; }
+        .inventory-table td { padding: 12px 15px; border-bottom: 1px solid #ecf0f1; }
+        .inventory-table tr:hover { background: #f8f9fa; }
+        .stock-high { color: #27ae60; font-weight: bold; }
+        .stock-medium { color: #f39c12; font-weight: bold; }
+        .stock-low { color: #e74c3c; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏭 Inventario de Repuestos</h1>
+            <p>Stock disponible actualizado - Solo consulta</p>
+        </div>
+        <div class="last-update">Última actualización: <span id="update-time">Cargando...</span></div>
+        <input type="text" class="search-box" placeholder="🔍 Buscar repuesto..." id="searchInput">
+        <div style="overflow-x: auto;">
+            <table class="inventory-table">
+                <thead>
+                    <tr><th>Código</th><th>Nombre</th><th>Categoría</th><th>Stock</th><th>Precio</th><th>Estado</th></tr>
+                </thead>
+                <tbody id="inventory-body"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const inventoryData = [
+            { code: "FIL-001", name: "Filtro de Aceite Premium", category: "Filtros", stock: 45, price: "$28.50" },
+            { code: "FR-202", name: "Pastillas de Freno", category: "Frenos", stock: 23, price: "$67.80" },
+            { code: "BUJ-015", name: "Bujía Iridium", category: "Motor", stock: 89, price: "$15.20" },
+            { code: "ACE-301", name: "Aceite Motor 5W-30", category: "Lubricantes", stock: 12, price: "$42.00" }
+        ];
+
+        function getStockStatus(stock) {
+            if (stock > 30) return { text: "Alto", class: "stock-high" };
+            if (stock > 10) return { text: "Medio", class: "stock-medium" };
+            return { text: "Bajo", class: "stock-low" };
+        }
+
+        function renderInventory(data) {
+            const tbody = document.getElementById('inventory-body');
+            tbody.innerHTML = data.map(item => {
+                const status = getStockStatus(item.stock);
+                return `<tr>
+                    <td><strong>${item.code}</strong></td>
+                    <td>${item.name}</td>
+                    <td>${item.category}</td>
+                    <td class="${status.class}">${item.stock} unidades</td>
+                    <td>${item.price}</td>
+                    <td class="${status.class}">${status.text}</td>
+                </tr>`;
+            }).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderInventory(inventoryData);
+            document.getElementById('update-time').textContent = new Date().toLocaleString();
+            document.getElementById('searchInput').addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const filteredData = inventoryData.filter(item => 
+                    item.name.toLowerCase().includes(searchTerm) ||
+                    item.code.toLowerCase().includes(searchTerm)
+                );
+                renderInventory(filteredData);
+            });
+        });
+    </script>
+</body>
+</html>
