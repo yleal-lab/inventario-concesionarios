@@ -73,8 +73,8 @@
     </div>
 
     <script>
-        // URL de tu archivo CSV - REEMPLAZA CON TU URL REAL
-        const CSV_URL = 'https://raw.githubusercontent.com/yleal-lab/inventario-concesionarios/main/inventario.csv';
+        // URL SIMPLIFICADA - Esto debería funcionar
+        const CSV_URL = './inventario.csv';
         
         let inventoryData = [];
 
@@ -130,106 +130,76 @@
             renderInventory(filteredData);
         }
 
-        // Función mejorada para convertir CSV a JSON
         function csvToJSON(csv) {
-            try {
-                const lines = csv.split('\n').filter(line => line.trim() !== '');
-                if (lines.length < 2) {
-                    throw new Error('El archivo CSV tiene muy pocas líneas');
-                }
+            const lines = csv.split('\n').filter(line => line.trim() !== '');
+            if (lines.length < 2) return [];
+            
+            const result = [];
+            const headers = lines[0].split(',').map(h => h.trim().toLowerCase().replace(/ /g, '_'));
+            
+            for (let i = 1; i < lines.length; i++) {
+                const obj = {};
+                const currentline = lines[i].split(',');
                 
-                const result = [];
-                const headers = lines[0].split(',').map(h => h.trim().toLowerCase().replace(/ /g, '_'));
-                
-                console.log('Headers encontrados:', headers);
-                
-                for (let i = 1; i < lines.length; i++) {
-                    const obj = {};
-                    // Manejar comas dentro de campos
-                    const currentline = lines[i].split(',').map(field => field.trim());
+                for (let j = 0; j < headers.length; j++) {
+                    const key = headers[j];
+                    let value = currentline[j] ? currentline[j].trim() : '';
                     
-                    for (let j = 0; j < headers.length; j++) {
-                        const key = headers[j];
-                        let value = currentline[j] || '';
-                        
-                        // Convertir cantidad a número
-                        if (key === 'cantidad') {
-                            value = parseInt(value) || 0;
-                        }
-                        
-                        obj[key] = value;
+                    if (key === 'cantidad') {
+                        value = parseInt(value) || 0;
                     }
                     
-                    // Solo agregar si tiene código
-                    if (obj.codigo) {
-                        result.push(obj);
-                    }
+                    obj[key] = value;
                 }
                 
-                console.log('Datos convertidos:', result);
-                return result;
-                
-            } catch (error) {
-                console.error('Error convirtiendo CSV:', error);
-                return [];
+                if (obj.codigo) {
+                    result.push(obj);
+                }
             }
+            
+            return result;
         }
 
-        // Cargar datos del CSV
         async function loadInventory() {
             try {
                 document.getElementById('loading-message').style.display = 'block';
                 document.getElementById('error-message').style.display = 'none';
                 document.getElementById('inventory-table').style.display = 'none';
                 
-                console.log('Cargando CSV desde:', CSV_URL);
+                const response = await fetch(CSV_URL + '?t=' + new Date().getTime());
                 
-                // Agregar timestamp para evitar cache
-                const timestamp = new Date().getTime();
-                const response = await fetch(CSV_URL + '?t=' + timestamp);
-                
-                if (!response.ok) {
-                    throw new Error('No se pudo cargar el archivo CSV. Error: ' + response.status);
-                }
+                if (!response.ok) throw new Error('No se pudo cargar el archivo CSV');
                 
                 const csvData = await response.text();
-                console.log('Datos CSV recibidos:', csvData);
+                
+                if (!csvData || csvData.trim() === '') {
+                    throw new Error('El archivo CSV está vacío');
+                }
                 
                 inventoryData = csvToJSON(csvData);
                 
                 if (inventoryData.length === 0) {
-                    throw new Error('El archivo CSV está vacío o tiene formato incorrecto');
+                    throw new Error('Formato CSV incorrecto');
                 }
                 
-                // Ocultar loading, mostrar tabla
                 document.getElementById('loading-message').style.display = 'none';
                 document.getElementById('inventory-table').style.display = 'table';
-                
                 renderInventory(inventoryData);
                 document.getElementById('update-time').textContent = new Date().toLocaleString();
                 
             } catch (error) {
-                console.error('Error cargando inventario:', error);
                 document.getElementById('loading-message').style.display = 'none';
                 document.getElementById('error-message').style.display = 'block';
                 document.getElementById('error-message').innerHTML = 
-                    '❌ Error cargando el inventario: ' + error.message + 
-                    '<br><br>Verifica que:<br>' +
-                    '• El archivo "inventario.csv" exista<br>' +
-                    '• Tenga el formato correcto (7 columnas)<br>' +
-                    '• La primera línea sean los nombres de columnas';
+                    '❌ Error: ' + error.message + 
+                    '<br><br>Verifica que el archivo "inventario.csv" exista y tenga datos.';
             }
         }
 
-        // Inicializar
         document.addEventListener('DOMContentLoaded', function() {
             loadInventory();
-            
             document.getElementById('searchInput').addEventListener('input', filterInventory);
             document.getElementById('stockFilter').addEventListener('change', filterInventory);
-            
-            // Actualizar automáticamente cada 30 minutos
-            setInterval(loadInventory, 30 * 60 * 1000);
         });
     </script>
 </body>
