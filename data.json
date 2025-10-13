@@ -1,1 +1,8 @@
-data.json
+json
+{
+    "lastUpdate": "2024-01-01 10:00:00",
+    "inventory": [
+        {"code": "FIL-001", "name": "Filtro de Aceite Premium", "category": "Filtros", "stock": 45, "price": "$28.50"},
+        {"code": "FR-202", "name": "Pastillas de Freno", "category": "Frenos", "stock": 23, "price": "$67.80"}
+    ]
+}
