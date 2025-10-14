@@ -23,13 +23,13 @@
             overflow-x: hidden;
         }
         
-        /* VARIABLES DE COLOR ROJO FERRARI */
+        /* VARIABLES DE COLOR ROJO FERRARI MÁS INTENSO */
         :root {
-            --ferrari-red: #ff2800;
-            --ferrari-red-dark: #cc0000;
-            --ferrari-red-light: #ff4d4d;
-            --ferrari-red-glow: rgba(255, 40, 0, 0.6);
-            --ferrari-red-glow-light: rgba(255, 40, 0, 0.1);
+            --ferrari-red: #d40000;
+            --ferrari-red-dark: #a80000;
+            --ferrari-red-light: #ff0000;
+            --ferrari-red-glow: rgba(212, 0, 0, 0.6);
+            --ferrari-red-glow-light: rgba(212, 0, 0, 0.1);
         }
         
         /* CONTENEDOR DE LOGOS - AMBAS IMÁGENES */
@@ -53,7 +53,7 @@
             border-radius: 15px;
             box-shadow: 
                 0 0 20px var(--ferrari-red-glow-light),
-                0 0 40px rgba(255, 40, 0, 0.1);
+                0 0 40px rgba(212, 0, 0, 0.1);
             filter: brightness(1.1) contrast(1.1);
             transition: all 0.5s ease;
         }
@@ -64,7 +64,7 @@
             border-radius: 15px;
             box-shadow: 
                 0 0 20px var(--ferrari-red-glow-light),
-                0 0 40px rgba(255, 40, 0, 0.1);
+                0 0 40px rgba(212, 0, 0, 0.1);
             filter: brightness(1.1) contrast(1.1);
             transition: all 0.5s ease;
             background: rgba(255, 255, 255, 0.1);
@@ -75,7 +75,7 @@
             transform: scale(1.05);
             box-shadow: 
                 0 0 30px var(--ferrari-red-glow-light),
-                0 0 60px rgba(255, 40, 0, 0.15);
+                0 0 60px rgba(212, 0, 0, 0.15);
         }
         
         /* HEADER GAC EMPOW - FONDO BLANCO */
@@ -104,8 +104,8 @@
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(circle at 20% 80%, rgba(255, 40, 0, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 40, 0, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(212, 0, 0, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(212, 0, 0, 0.03) 0%, transparent 50%),
                 radial-gradient(circle at center, transparent 0%, rgba(255, 255, 255, 0.8) 70%);
             z-index: 1;
         }
@@ -158,9 +158,9 @@
             height: 3px;
             background: linear-gradient(90deg, 
                 transparent, 
-                rgba(255, 40, 0, 0.3), 
+                rgba(212, 0, 0, 0.3), 
                 var(--ferrari-red), 
-                rgba(255, 40, 0, 0.3), 
+                rgba(212, 0, 0, 0.3), 
                 transparent);
             margin: 40px auto;
             border-radius: 2px;
@@ -306,7 +306,7 @@
             outline: none;
             border-color: var(--ferrari-red-light);
             box-shadow: 
-                0 0 0 4px rgba(255, 40, 0, 0.1),
+                0 0 0 4px rgba(212, 0, 0, 0.1),
                 0 12px 35px var(--ferrari-red-glow-light);
             transform: translateY(-3px);
             background: #ffffff;
@@ -331,7 +331,7 @@
         .stock-filter:focus {
             outline: none;
             border-color: var(--ferrari-red-light);
-            box-shadow: 0 0 0 4px rgba(255, 40, 0, 0.1);
+            box-shadow: 0 0 0 4px rgba(212, 0, 0, 0.1);
         }
         
         .search-box:hover, .stock-filter:hover {
@@ -443,7 +443,7 @@
         
         .inventory-table td {
             padding: 24px;
-            border-bottom: 1px solid rgba(255, 40, 0, 0.2);
+            border-bottom: 1px solid rgba(212, 0, 0, 0.2);
             font-size: 14px;
             line-height: 1.5;
             color: #333333;
@@ -457,13 +457,13 @@
         }
         
         .inventory-table tr:not(:last-child) {
-            border-bottom: 1px solid rgba(255, 40, 0, 0.1);
+            border-bottom: 1px solid rgba(212, 0, 0, 0.1);
         }
         
         .inventory-table tr:hover {
             background: linear-gradient(135deg, 
-                rgba(255, 40, 0, 0.05), 
-                rgba(255, 40, 0, 0.02));
+                rgba(212, 0, 0, 0.05), 
+                rgba(212, 0, 0, 0.02));
             transform: translateY(-2px);
             box-shadow: 
                 0 8px 25px var(--ferrari-red-glow-light),
@@ -523,7 +523,7 @@
         .quantity-input:focus {
             outline: none;
             border-color: var(--ferrari-red-light);
-            box-shadow: 0 0 0 3px rgba(255, 40, 0, 0.2);
+            box-shadow: 0 0 0 3px rgba(212, 0, 0, 0.2);
         }
         
         /* ESTADOS DE STOCK - COLORES SUAVES */
@@ -583,7 +583,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px;
-            border-bottom: 1px solid rgba(255, 40, 0, 0.2);
+            border-bottom: 1px solid rgba(212, 0, 0, 0.2);
             background: rgba(255, 255, 255, 0.5);
             border-radius: 10px;
             margin-bottom: 10px;
@@ -596,8 +596,39 @@
             color: var(--ferrari-red);
             margin: 20px 0;
             padding: 15px;
-            background: rgba(255, 40, 0, 0.05);
+            background: rgba(212, 0, 0, 0.05);
             border-radius: 10px;
+        }
+
+        /* PANEL DE ANÁLISIS DE REPOSICIÓN */
+        .replenishment-panel {
+            background: linear-gradient(135deg, #ffffff, #f8f8f8);
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 30px;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 var(--ferrari-red);
+            border: 2px solid var(--ferrari-red);
+            display: none;
+        }
+
+        .replenishment-panel h3 {
+            color: var(--ferrari-red);
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            text-align: center;
+        }
+
+        .replenishment-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid rgba(212, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            margin-bottom: 8px;
         }
         
         /* ESTADOS DE CARGA - FONDO BLANCO */
@@ -611,7 +642,7 @@
         .gac-spinner {
             width: 60px;
             height: 60px;
-            border: 4px solid rgba(255, 40, 0, 0.2);
+            border: 4px solid rgba(212, 0, 0, 0.2);
             border-top: 4px solid var(--ferrari-red);
             border-radius: 50%;
             animation: spin 1.2s linear infinite;
@@ -634,8 +665,8 @@
             padding: 60px; 
             color: var(--ferrari-red); 
             background: linear-gradient(135deg, 
-                rgba(255, 40, 0, 0.05), 
-                rgba(255, 40, 0, 0.02));
+                rgba(212, 0, 0, 0.05), 
+                rgba(212, 0, 0, 0.02));
             margin: 30px; 
             border-radius: 20px;
             font-size: 17px;
@@ -683,13 +714,13 @@
         .pdf-header {
             text-align: center;
             margin-bottom: 30px;
-            border-bottom: 3px solid #ff2800;
+            border-bottom: 3px solid #d40000;
             padding-bottom: 20px;
         }
 
         .pdf-title {
             font-size: 28px;
-            color: #ff2800;
+            color: #d40000;
             margin-bottom: 10px;
             font-weight: bold;
         }
@@ -707,7 +738,7 @@
         }
 
         .pdf-table th {
-            background-color: #ff2800;
+            background-color: #d40000;
             color: white;
             padding: 12px 8px;
             text-align: left;
@@ -729,12 +760,12 @@
             margin-top: 30px;
             padding: 20px;
             background-color: #fff3f3;
-            border: 2px solid #ff2800;
+            border: 2px solid #d40000;
             border-radius: 10px;
         }
 
         .pdf-request-title {
-            color: #ff2800;
+            color: #d40000;
             font-weight: bold;
             margin-bottom: 15px;
             font-size: 16px;
@@ -743,7 +774,7 @@
         .pdf-footer {
             margin-top: 30px;
             padding-top: 20px;
-            border-top: 2px solid #ff2800;
+            border-top: 2px solid #d40000;
             text-align: center;
             font-size: 12px;
             color: #666;
@@ -751,7 +782,7 @@
 
         .pdf-total {
             font-weight: bold;
-            color: #ff2800;
+            color: #d40000;
             font-size: 14px;
         }
         
@@ -925,6 +956,14 @@
                     </button>
                 </div>
             </div>
+
+            <!-- PANEL DE ANÁLISIS DE REPOSICIÓN -->
+            <div class="replenishment-panel" id="replenishmentPanel">
+                <h3>📊 Análisis de Reposición Recomendada</h3>
+                <div id="replenishmentItems">
+                    <!-- Los items de reposición se generarán aquí -->
+                </div>
+            </div>
         </section>
     </main>
 
@@ -938,7 +977,7 @@
         
         <!-- SECCIÓN DE PRODUCTOS EN STOCK -->
         <div style="margin-bottom: 30px;">
-            <h3 style="color: #ff2800; margin-bottom: 15px;">PRODUCTOS DISPONIBLES</h3>
+            <h3 style="color: #d40000; margin-bottom: 15px;">PRODUCTOS DISPONIBLES</h3>
             <table class="pdf-table" id="pdfTable">
                 <thead>
                     <tr>
@@ -960,7 +999,7 @@
         
         <!-- SECCIÓN DE SOLICITUDES (PRODUCTOS SIN STOCK) -->
         <div id="pdfRequestSection" class="pdf-request-section" style="display: none;">
-            <div class="pdf-request-title">SOLICITUDES ESPECIALES - PRODUCTOS SIN STOCK</div>
+            <div class="pdf-request-title">SOLICITUD SIN STOCK</div>
             <table class="pdf-table" id="pdfRequestTable">
                 <thead>
                     <tr>
@@ -971,6 +1010,7 @@
                         <th>Número de Parte</th>
                         <th>Descripción</th>
                         <th>Cantidad Solicitada</th>
+                        <th>Stock Actual</th>
                     </tr>
                 </thead>
                 <tbody id="pdfRequestTableBody">
@@ -978,7 +1018,7 @@
                 </tbody>
             </table>
             <div style="margin-top: 15px; font-style: italic; color: #666;">
-                <strong>Observación:</strong> El cliente solicita estos productos que actualmente no se encuentran en stock. Favor dar respuesta sobre disponibilidad y tiempos de entrega.
+                <strong>Observación:</strong> El cliente solicita estos productos que exceden el stock disponible. Favor dar respuesta sobre disponibilidad y tiempos de entrega para las cantidades adicionales solicitadas.
             </div>
         </div>
         
@@ -1000,6 +1040,7 @@
         
         let inventoryData = [];
         let quoteItems = [];
+        let productFrequency = JSON.parse(localStorage.getItem('productFrequency')) || {};
 
         function getStockStatus(cantidad) {
             if (cantidad > 10) return { class: "stock-high" };
@@ -1028,11 +1069,11 @@
                 
                 return `
                     <tr>
-                        <td><strong style="color: #ff2800; font-size: 1.1em;">${item.codigo}</strong></td>
+                        <td><strong style="color: #d40000; font-size: 1.1em;">${item.codigo}</strong></td>
                         <td>${item.marca}</td>
                         <td>${item.serie}</td>
                         <td>${item.modelo}</td>
-                        <td><code style="background: rgba(255,40,0,0.1); padding: 4px 8px; border-radius: 6px; color: #ff2800; font-weight: 600;">${item.numero_parte}</code></td>
+                        <td><code style="background: rgba(212, 0, 0, 0.1); padding: 4px 8px; border-radius: 6px; color: #d40000; font-weight: 600;">${item.numero_parte}</code></td>
                         <td>${item.descripcion_espanol}</td>
                         <td><span class="${status.class}">${item.cantidad === 0 ? 'Sin stock' : item.cantidad + ' unidades'}</span></td>
                         <td>
@@ -1042,7 +1083,7 @@
                                        value="${quantity}" min="0" 
                                        onchange="updateQuantity('${item.codigo}', this.value)">
                                 <button class="quantity-btn" onclick="increaseQuantity('${item.codigo}')">+</button>
-                                ${item.cantidad === 0 ? '<div style="font-size: 0.8em; color: #ff4444; margin-top: 5px;">Producto sin stock</div>' : ''}
+                                ${item.cantidad === 0 ? '<div style="font-size: 0.8em; color: #d40000; margin-top: 5px;">Producto sin stock</div>' : ''}
                             </div>
                         </td>
                     </tr>
@@ -1147,30 +1188,108 @@
         function generateQuote() {
             if (quoteItems.length === 0) return;
             
+            // Actualizar frecuencia de productos
+            updateProductFrequency();
+            
             const quoteItemsContainer = document.getElementById('quoteItems');
             const quoteTotal = document.getElementById('quoteTotal');
             const quotePanel = document.getElementById('quotePanel');
             
-            quoteItemsContainer.innerHTML = quoteItems.map(item => `
-                <div class="quote-item">
-                    <div>
-                        <strong style="color: #ff2800;">${item.codigo}</strong><br>
-                        <small>${item.descripcion_espanol}</small><br>
-                        <small style="color: #666666;">Parte: ${item.numero_parte} | Modelo: ${item.modelo}</small>
+            quoteItemsContainer.innerHTML = quoteItems.map(item => {
+                const availableStock = Math.min(item.quantity, item.cantidad);
+                const extraRequest = item.quantity > item.cantidad ? item.quantity - item.cantidad : 0;
+                
+                return `
+                    <div class="quote-item">
+                        <div>
+                            <strong style="color: #d40000;">${item.codigo}</strong><br>
+                            <small>${item.descripcion_espanol}</small><br>
+                            <small style="color: #666666;">Parte: ${item.numero_parte} | Modelo: ${item.modelo}</small>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-weight: 600; color: #333333;">Cantidad: ${item.quantity}</div>
+                            <div style="font-size: 0.9em; color: #666666;">Stock disponible: ${item.cantidad}</div>
+                            ${extraRequest > 0 ? `<div style="font-size: 0.8em; color: #d40000; margin-top: 5px;">⚠️ ${extraRequest} unidades adicionales solicitadas</div>` : ''}
+                            ${item.cantidad === 0 ? '<div style="font-size: 0.8em; color: #d40000; margin-top: 5px;">⚠️ Sin stock</div>' : ''}
+                        </div>
                     </div>
-                    <div style="text-align: right;">
-                        <div style="font-weight: 600; color: #333333;">Cantidad: ${item.quantity}</div>
-                        <div style="font-size: 0.9em; color: #666666;">Stock disponible: ${item.cantidad}</div>
-                        ${item.cantidad === 0 ? '<div style="font-size: 0.8em; color: #ff4444; margin-top: 5px;">⚠️ Sin stock</div>' : ''}
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
             
-            quoteTotal.innerHTML = `Total de items seleccionados: <span id="totalItems" style="color: #ff2800; font-size: 1.2em;">${quoteItems.length}</span>`;
+            quoteTotal.innerHTML = `Total de items seleccionados: <span id="totalItems" style="color: #d40000; font-size: 1.2em;">${quoteItems.length}</span>`;
             quotePanel.style.display = 'block';
+            
+            // Mostrar análisis de reposición
+            showReplenishmentAnalysis();
             
             // Scroll suave al panel de cotización
             quotePanel.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function updateProductFrequency() {
+            quoteItems.forEach(item => {
+                if (!productFrequency[item.codigo]) {
+                    productFrequency[item.codigo] = {
+                        count: 0,
+                        description: item.descripcion_espanol,
+                        totalRequested: 0
+                    };
+                }
+                productFrequency[item.codigo].count++;
+                productFrequency[item.codigo].totalRequested += item.quantity;
+                productFrequency[item.codigo].lastRequested = new Date().toISOString();
+            });
+            
+            // Guardar en localStorage
+            localStorage.setItem('productFrequency', JSON.stringify(productFrequency));
+        }
+
+        function showReplenishmentAnalysis() {
+            const replenishmentPanel = document.getElementById('replenishmentPanel');
+            const replenishmentItems = document.getElementById('replenishmentItems');
+            
+            // Calcular productos que necesitan reposición
+            const replenishmentNeeded = [];
+            
+            Object.keys(productFrequency).forEach(codigo => {
+                const frequencyData = productFrequency[codigo];
+                const inventoryItem = inventoryData.find(item => item.codigo === codigo);
+                
+                if (inventoryItem && frequencyData.count >= 2) {
+                    const avgRequest = Math.ceil(frequencyData.totalRequested / frequencyData.count);
+                    const recommendedStock = Math.max(avgRequest * 2, 10); // Mínimo 10 unidades o el doble del promedio
+                    
+                    if (inventoryItem.cantidad < recommendedStock) {
+                        replenishmentNeeded.push({
+                            codigo,
+                            description: frequencyData.description,
+                            currentStock: inventoryItem.cantidad,
+                            recommendedStock,
+                            frequency: frequencyData.count,
+                            avgRequest: avgRequest
+                        });
+                    }
+                }
+            });
+            
+            if (replenishmentNeeded.length > 0) {
+                replenishmentItems.innerHTML = replenishmentNeeded.map(item => `
+                    <div class="replenishment-item">
+                        <div>
+                            <strong style="color: #d40000;">${item.codigo}</strong><br>
+                            <small>${item.description}</small>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-weight: 600; color: #333333;">Stock actual: ${item.currentStock}</div>
+                            <div style="color: #27ae60;">Recomendado: ${item.recommendedStock}</div>
+                            <div style="font-size: 0.8em; color: #666666;">Solicitado ${item.frequency} veces</div>
+                        </div>
+                    </div>
+                `).join('');
+                replenishmentPanel.style.display = 'block';
+            } else {
+                replenishmentPanel.style.display = 'none';
+            }
         }
 
         function generatePDF() {
@@ -1179,9 +1298,23 @@
             // Mostrar loading
             showNotification('Generando PDF...', 'info');
             
-            // Separar productos con stock y sin stock
-            const itemsWithStock = quoteItems.filter(item => item.cantidad > 0);
-            const itemsWithoutStock = quoteItems.filter(item => item.cantidad === 0);
+            // Separar productos con stock disponible y solicitudes adicionales
+            const itemsWithStock = [];
+            const itemsWithoutStock = [];
+            
+            quoteItems.forEach(item => {
+                if (item.cantidad > 0 && item.quantity <= item.cantidad) {
+                    // Producto completamente en stock
+                    itemsWithStock.push(item);
+                } else {
+                    // Producto sin stock o con cantidad adicional solicitada
+                    itemsWithoutStock.push({
+                        ...item,
+                        extraQuantity: item.quantity > item.cantidad ? item.quantity - item.cantidad : item.quantity,
+                        availableStock: Math.min(item.quantity, item.cantidad)
+                    });
+                }
+            });
             
             // Preparar datos para el PDF
             const pdfDate = new Date().toLocaleDateString('es-ES', {
@@ -1208,7 +1341,7 @@
                 </tr>
             `).join('');
             
-            // Llenar tabla de solicitudes (productos sin stock)
+            // Llenar tabla de solicitudes sin stock
             const pdfRequestTableBody = document.getElementById('pdfRequestTableBody');
             const pdfRequestSection = document.getElementById('pdfRequestSection');
             
@@ -1221,7 +1354,8 @@
                         <td>${item.modelo}</td>
                         <td>${item.numero_parte}</td>
                         <td>${item.descripcion_espanol}</td>
-                        <td>${item.quantity}</td>
+                        <td>${item.extraQuantity || item.quantity}</td>
+                        <td>${item.cantidad}</td>
                     </tr>
                 `).join('');
                 pdfRequestSection.style.display = 'block';
@@ -1284,6 +1418,7 @@
             
             updateQuoteButton();
             document.getElementById('quotePanel').style.display = 'none';
+            document.getElementById('replenishmentPanel').style.display = 'none';
             
             // Mostrar mensaje de confirmación
             showNotification('Cotización limpiada correctamente', 'success');
@@ -1367,6 +1502,9 @@
                 // Actualizar timestamp
                 document.getElementById('update-time').textContent = new Date().toLocaleString();
                 
+                // Mostrar análisis de reposición si hay datos
+                showReplenishmentAnalysis();
+                
                 // Mostrar notificación de éxito
                 showNotification(`Inventario cargado: ${inventoryData.length} repuestos encontrados`, 'success');
                 
@@ -1376,7 +1514,7 @@
                 errorMessage.style.display = 'block';
                 errorMessage.innerHTML = `
                     <div style="font-size: 1.3em; margin-bottom: 15px;">⚠️ Error al cargar el inventario</div>
-                    <div style="margin-bottom: 20px; color: #ff4444;">${error.message}</div>
+                    <div style="margin-bottom: 20px; color: #d40000;">${error.message}</div>
                     <small style="opacity: 0.8;">Verifica que el archivo "inventario.csv" esté en la misma carpeta y tenga el formato correcto.</small>
                 `;
             }
@@ -1408,3 +1546,4 @@
     </script>
 </body>
 </html>
+
