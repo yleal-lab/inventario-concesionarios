@@ -20,32 +20,62 @@
             overflow-x: hidden;
         }
         
-        /* LOGO GAC - MÁS GRANDE */
-        .logo-container {
+        /* VARIABLES DE COLOR ROJO FERRARI */
+        :root {
+            --ferrari-red: #ff2800;
+            --ferrari-red-dark: #cc0000;
+            --ferrari-red-light: #ff4d4d;
+            --ferrari-red-glow: rgba(255, 40, 0, 0.6);
+            --ferrari-red-glow-light: rgba(255, 40, 0, 0.3);
+        }
+        
+        /* CONTENEDOR DE LOGOS - AMBAS IMÁGENES */
+        .logos-container {
             margin-bottom: 30px;
             text-align: center;
             animation: fadeIn 1s ease-out;
         }
 
+        .logo-pair {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
         .gac-logo-img {
-            height: 180px;
+            height: 160px;
             width: auto;
             border-radius: 15px;
             box-shadow: 
-                0 0 40px rgba(255, 215, 0, 0.4),
-                0 0 80px rgba(255, 215, 0, 0.2);
+                0 0 40px var(--ferrari-red-glow-light),
+                0 0 80px rgba(255, 40, 0, 0.2);
             filter: brightness(1.1) contrast(1.1);
             transition: all 0.5s ease;
         }
 
-        .gac-logo-img:hover {
+        .dfsk-logo-img {
+            height: 140px;
+            width: auto;
+            border-radius: 15px;
+            box-shadow: 
+                0 0 40px var(--ferrari-red-glow-light),
+                0 0 80px rgba(255, 40, 0, 0.2);
+            filter: brightness(1.1) contrast(1.1);
+            transition: all 0.5s ease;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+        }
+
+        .gac-logo-img:hover, .dfsk-logo-img:hover {
             transform: scale(1.05);
             box-shadow: 
-                0 0 50px rgba(255, 215, 0, 0.6),
-                0 0 100px rgba(255, 215, 0, 0.3);
+                0 0 50px var(--ferrari-red-glow),
+                0 0 100px rgba(255, 40, 0, 0.3);
         }
         
-        /* HEADER GAC EMPOW - FONDO MÁS CLARO */
+        /* HEADER GAC EMPOW - ROJO FERRARI */
         .hero-header {
             background: 
                 linear-gradient(135deg, rgba(15, 26, 43, 0.9) 0%, rgba(30, 45, 70, 0.95) 100%),
@@ -71,8 +101,8 @@
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(255, 40, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 40, 0, 0.05) 0%, transparent 50%),
                 radial-gradient(circle at center, transparent 0%, rgba(15, 26, 43, 0.8) 70%);
             z-index: 1;
         }
@@ -85,7 +115,7 @@
             backdrop-filter: blur(15px);
             background: rgba(15, 26, 43, 0.6);
             border-radius: 30px;
-            border: 1px solid rgba(255, 215, 0, 0.2);
+            border: 1px solid var(--ferrari-red);
             box-shadow: 
                 0 20px 40px rgba(0, 0, 0, 0.3),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -97,10 +127,10 @@
             letter-spacing: 4px;
             text-transform: uppercase;
             margin-bottom: 20px;
-            color: #ffd700;
+            color: var(--ferrari-red);
             font-weight: 600;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            text-shadow: 0 0 20px var(--ferrari-red-glow);
+            background: linear-gradient(135deg, var(--ferrari-red), var(--ferrari-red-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -111,7 +141,7 @@
             margin-bottom: 20px;
             letter-spacing: 3px;
             color: #ffffff;
-            text-shadow: 0 0 30px rgba(255, 215, 0, 0.7);
+            text-shadow: 0 0 30px var(--ferrari-red-glow);
             background: linear-gradient(135deg, #ffffff, #e8e8e8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -131,16 +161,16 @@
             height: 3px;
             background: linear-gradient(90deg, 
                 transparent, 
-                rgba(255, 215, 0, 0.3), 
-                #ffd700, 
-                rgba(255, 215, 0, 0.3), 
+                rgba(255, 40, 0, 0.3), 
+                var(--ferrari-red), 
+                rgba(255, 40, 0, 0.3), 
                 transparent);
             margin: 40px auto;
             border-radius: 2px;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+            box-shadow: 0 0 20px var(--ferrari-red-glow);
         }
         
-        /* CONTENEDOR PRINCIPAL - FONDO MÁS CLARO */
+        /* CONTENEDOR PRINCIPAL - ROJO FERRARI */
         .main-container {
             background: linear-gradient(135deg, #1a2536, #2a3548);
             margin-top: -80px;
@@ -148,8 +178,8 @@
             z-index: 2;
             border-radius: 50px 50px 0 0;
             box-shadow: 
-                0 -25px 60px rgba(255, 215, 0, 0.1),
-                inset 0 1px 0 rgba(255, 215, 0, 0.1);
+                0 -25px 60px var(--ferrari-red-glow-light),
+                inset 0 1px 0 var(--ferrari-red);
             min-height: 70vh;
         }
         
@@ -159,7 +189,7 @@
             margin: 0 auto;
         }
         
-        /* ENCABEZADO DE SECCIÓN - PULIDO */
+        /* ENCABEZADO DE SECCIÓN - ROJO FERRARI */
         .section-header {
             text-align: center;
             margin-bottom: 80px;
@@ -169,8 +199,8 @@
         
         .gac-badge {
             display: inline-block;
-            background: linear-gradient(135deg, #ffd700, #ffed4e);
-            color: #000000;
+            background: linear-gradient(135deg, var(--ferrari-red), var(--ferrari-red-light));
+            color: #ffffff;
             padding: 14px 32px;
             border-radius: 30px;
             font-size: 0.9em;
@@ -179,7 +209,7 @@
             margin-bottom: 30px;
             text-transform: uppercase;
             box-shadow: 
-                0 8px 25px rgba(255, 215, 0, 0.4),
+                0 8px 25px var(--ferrari-red-glow),
                 0 2px 5px rgba(0, 0, 0, 0.2);
             position: relative;
             overflow: hidden;
@@ -205,10 +235,10 @@
             font-weight: 400;
             margin-bottom: 25px;
             letter-spacing: 2px;
-            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            background: linear-gradient(135deg, var(--ferrari-red), var(--ferrari-red-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            text-shadow: 0 0 30px var(--ferrari-red-glow);
         }
         
         .section-subtitle {
@@ -221,7 +251,7 @@
             opacity: 0.9;
         }
         
-        /* CONTROLES DE BÚSQUEDA - FONDO MÁS CLARO */
+        /* CONTROLES DE BÚSQUEDA - ROJO FERRARI */
         .search-controls {
             background: linear-gradient(135deg, #2a3548, #354258);
             padding: 50px;
@@ -229,8 +259,8 @@
             margin-bottom: 50px;
             box-shadow: 
                 0 20px 50px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 215, 0, 0.1);
-            border: 1px solid rgba(255, 215, 0, 0.15);
+                inset 0 1px 0 var(--ferrari-red);
+            border: 1px solid var(--ferrari-red);
             position: relative;
             overflow: hidden;
             animation: fadeIn 1s ease-out 0.6s both;
@@ -244,10 +274,10 @@
             right: 0;
             height: 3px;
             background: linear-gradient(90deg, 
-                #ffd700, 
+                var(--ferrari-red), 
                 #ffffff, 
-                #ffd700);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+                var(--ferrari-red));
+            box-shadow: 0 0 15px var(--ferrari-red-glow);
         }
         
         .controls-row {
@@ -261,7 +291,7 @@
             flex: 1;
             min-width: 450px;
             padding: 22px 30px;
-            border: 2px solid rgba(255, 215, 0, 0.25);
+            border: 2px solid var(--ferrari-red);
             border-radius: 18px;
             font-size: 16px;
             background: rgba(26, 37, 54, 0.8);
@@ -279,17 +309,17 @@
         
         .search-box:focus {
             outline: none;
-            border-color: #ffd700;
+            border-color: var(--ferrari-red-light);
             box-shadow: 
-                0 0 0 4px rgba(255, 215, 0, 0.15),
-                0 12px 35px rgba(255, 215, 0, 0.2);
+                0 0 0 4px rgba(255, 40, 0, 0.15),
+                0 12px 35px var(--ferrari-red-glow-light);
             transform: translateY(-3px);
             background: rgba(26, 37, 54, 0.9);
         }
         
         .stock-filter {
             padding: 22px 30px;
-            border: 2px solid rgba(255, 215, 0, 0.25);
+            border: 2px solid var(--ferrari-red);
             border-radius: 18px;
             font-size: 16px;
             background: rgba(26, 37, 54, 0.8);
@@ -305,30 +335,30 @@
         
         .stock-filter:focus {
             outline: none;
-            border-color: #ffd700;
-            box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.15);
+            border-color: var(--ferrari-red-light);
+            box-shadow: 0 0 0 4px rgba(255, 40, 0, 0.15);
         }
         
         .search-box:hover, .stock-filter:hover {
-            border-color: #ffd700;
+            border-color: var(--ferrari-red-light);
             transform: translateY(-2px);
             box-shadow: 
-                0 12px 30px rgba(255, 215, 0, 0.2),
+                0 12px 30px var(--ferrari-red-glow-light),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
         
-        /* INDICADOR DE ACTUALIZACIÓN - FONDO MÁS CLARO */
+        /* INDICADOR DE ACTUALIZACIÓN - ROJO FERRARI */
         .update-indicator {
             background: linear-gradient(135deg, #354258, #3f4d64);
             padding: 28px;
             text-align: center;
-            color: #ffd700;
+            color: var(--ferrari-red);
             border-radius: 20px;
             margin-bottom: 40px;
             box-shadow: 
                 0 12px 35px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 215, 0, 0.1);
-            border-left: 5px solid #ffd700;
+                inset 0 1px 0 var(--ferrari-red);
+            border-left: 5px solid var(--ferrari-red);
             animation: fadeIn 1s ease-out 0.9s both;
             font-size: 1.1em;
         }
@@ -337,18 +367,18 @@
             font-weight: 600;
             color: #ffffff;
             font-size: 1.2em;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            text-shadow: 0 0 10px var(--ferrari-red-glow);
         }
         
-        /* TABLA - FONDO MÁS CLARO */
+        /* TABLA - ROJO FERRARI */
         .table-container {
             background: linear-gradient(135deg, #2a3548, #354258);
             border-radius: 30px;
             overflow: hidden;
             box-shadow: 
                 0 25px 60px rgba(0, 0, 0, 0.5),
-                inset 0 1px 0 rgba(255, 215, 0, 0.1);
-            border: 1px solid rgba(255, 215, 0, 0.15);
+                inset 0 1px 0 var(--ferrari-red);
+            border: 1px solid var(--ferrari-red);
             animation: fadeIn 1s ease-out 1.2s both;
         }
         
@@ -361,7 +391,7 @@
         
         .inventory-table th {
             background: linear-gradient(135deg, #1a2536, #2a3548);
-            color: #ffd700;
+            color: var(--ferrari-red);
             padding: 26px 24px;
             text-align: left;
             font-weight: 600;
@@ -370,7 +400,7 @@
             top: 0;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            border-bottom: 3px solid #ffd700;
+            border-bottom: 3px solid var(--ferrari-red);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
         
@@ -384,7 +414,7 @@
         
         .inventory-table td {
             padding: 24px;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 40, 0, 0.1);
             font-size: 14px;
             line-height: 1.5;
             color: #ffffff;
@@ -398,25 +428,25 @@
         }
         
         .inventory-table tr:not(:last-child) {
-            border-bottom: 1px solid rgba(255, 215, 0, 0.08);
+            border-bottom: 1px solid rgba(255, 40, 0, 0.08);
         }
         
         .inventory-table tr:hover {
             background: linear-gradient(135deg, 
-                rgba(255, 215, 0, 0.08), 
-                rgba(255, 215, 0, 0.03));
+                rgba(255, 40, 0, 0.08), 
+                rgba(255, 40, 0, 0.03));
             transform: translateY(-2px);
             box-shadow: 
-                0 8px 25px rgba(255, 215, 0, 0.15),
+                0 8px 25px var(--ferrari-red-glow-light),
                 inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
         
         .inventory-table tr:hover td {
-            color: #ffd700;
+            color: var(--ferrari-red);
             font-weight: 500;
         }
         
-        /* ESTADOS DE STOCK - PULIDOS */
+        /* ESTADOS DE STOCK - ROJO FERRARI */
         .stock-high { 
             background: linear-gradient(135deg, #27ae60, #2ecc71);
             color: white; 
@@ -471,7 +501,7 @@
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
         
-        /* ESTADOS DE CARGA - PULIDOS */
+        /* ESTADOS DE CARGA - ROJO FERRARI */
         .loading { 
             text-align: center; 
             padding: 100px; 
@@ -482,12 +512,12 @@
         .gac-spinner {
             width: 60px;
             height: 60px;
-            border: 4px solid rgba(255, 215, 0, 0.2);
-            border-top: 4px solid #ffd700;
+            border: 4px solid rgba(255, 40, 0, 0.2);
+            border-top: 4px solid var(--ferrari-red);
             border-radius: 50%;
             animation: spin 1.2s linear infinite;
             margin: 0 auto 30px;
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+            box-shadow: 0 0 25px var(--ferrari-red-glow);
         }
         
         @keyframes spin {
@@ -503,27 +533,27 @@
         .error { 
             text-align: center; 
             padding: 60px; 
-            color: #ff6b6b; 
+            color: var(--ferrari-red); 
             background: linear-gradient(135deg, 
-                rgba(255, 107, 107, 0.1), 
-                rgba(255, 107, 107, 0.05));
+                rgba(255, 40, 0, 0.1), 
+                rgba(255, 40, 0, 0.05));
             margin: 30px; 
             border-radius: 20px;
             font-size: 17px;
             box-shadow: 
                 0 12px 35px rgba(0, 0, 0, 0.3),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            border-left: 5px solid #ff6b6b;
+            border-left: 5px solid var(--ferrari-red);
         }
         
-        /* FOOTER - FONDO MÁS CLARO */
+        /* FOOTER - ROJO FERRARI */
         .footer {
             text-align: center;
             padding: 50px 20px;
             background: linear-gradient(135deg, #1a2536, #2a3548);
             color: #cccccc;
             margin-top: 100px;
-            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            border-top: 1px solid var(--ferrari-red);
             box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
         }
         
@@ -535,10 +565,10 @@
         }
         
         .gac-signature {
-            color: #ffd700;
+            color: var(--ferrari-red);
             font-weight: 600;
             margin-top: 15px;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            text-shadow: 0 0 10px var(--ferrari-red-glow);
             letter-spacing: 1.5px;
         }
         
@@ -579,8 +609,12 @@
                 background-position: center 35%;
             }
             
-            .gac-logo-img {
-                height: 140px;
+            .gac-logo-img, .dfsk-logo-img {
+                height: 120px;
+            }
+            
+            .logo-pair {
+                gap: 20px;
             }
             
             .search-controls {
@@ -590,14 +624,19 @@
     </style>
 </head>
 <body>
-    <!-- HEADER GAC EMPOW - ACTUALIZADO -->
+    <!-- HEADER GAC EMPOW - ROJO FERRARI -->
     <header class="hero-header">
         <div class="hero-content">
-            <!-- LOGO GAC EMPOW - MÁS GRANDE -->
-            <div class="logo-container">
-                <img src="https://br-www-resouce-cdn.gacgroup.com/static/Global/tenant/cms/common/202503/acd070ba-2958-4119-a246-9e8fbb408de3.webp" 
-                     alt="GAC EMPOW" 
-                     class="gac-logo-img">
+            <!-- LOGOS GAC Y DFSK - AMBAS IMÁGENES -->
+            <div class="logos-container">
+                <div class="logo-pair">
+                    <img src="https://br-www-resouce-cdn.gacgroup.com/static/Global/tenant/cms/common/202503/acd070ba-2958-4119-a246-9e8fbb408de3.webp" 
+                         alt="GAC EMPOW" 
+                         class="gac-logo-img">
+                    <img src="https://static.wixstatic.com/media/ccd68f_12a5a4cad7ee4633ab365d38ab26a056~mv2.png/v1/crop/x_1306,y_0,w_7398,h_5621/fill/w_644,h_490,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/9%E6%9C%8825%E5%8F%B7-4%E4%B8%9C%E9%A3%8E36029203.png" 
+                         alt="DFSK Motor" 
+                         class="dfsk-logo-img">
+                </div>
             </div>
             
             <!-- CAMBIADO A GAC MOTOR / DFSK MOTOR -->
@@ -609,22 +648,22 @@
         </div>
     </header>
     
-    <!-- CONTENIDO PRINCIPAL - ACTUALIZADO -->
+    <!-- CONTENIDO PRINCIPAL - ROJO FERRARI -->
     <main class="main-container">
         <section class="inventory-section">
-            <!-- ENCABEZADO - ACTUALIZADO -->
+            <!-- ENCABEZADO - ROJO FERRARI -->
             <div class="section-header">
                 <div class="gac-badge">Sistema de Inventario</div>
                 <h2 class="section-title">Gestión de Repuestos</h2>
                 <p class="section-subtitle">Consulta en tiempo real la disponibilidad de repuestos originales GAC / DFSK</p>
             </div>
             
-            <!-- CONTROLES DE BÚSQUEDA - ACTUALIZADOS -->
+            <!-- CONTROLES DE BÚSQUEDA - ROJO FERRARI -->
             <div class="search-controls">
                 <div class="controls-row">
                     <input type="text" 
                            class="search-box" 
-                           placeholder="🔍 Buscar por código, descripción, número de parte..." 
+                           placeholder="🔍 Buscar por código, descripción, número de parte, serie..." 
                            id="searchInput">
                     
                     <select class="stock-filter" id="stockFilter">
@@ -636,12 +675,12 @@
                 </div>
             </div>
             
-            <!-- INDICADOR DE ACTUALIZACIÓN - ACTUALIZADO -->
+            <!-- INDICADOR DE ACTUALIZACIÓN - ROJO FERRARI -->
             <div class="update-indicator">
                 Última actualización: <span id="update-time">Cargando...</span>
             </div>
             
-            <!-- TABLA - ACTUALIZADA -->
+            <!-- TABLA - ROJO FERRARI -->
             <div class="table-container">
                 <div id="loading-message" class="loading">
                     <div class="gac-spinner"></div>
@@ -673,7 +712,7 @@
         </section>
     </main>
     
-    <!-- FOOTER - ACTUALIZADO -->
+    <!-- FOOTER - ROJO FERRARI -->
     <footer class="footer">
         <p>&copy; 2024 GAC Motor Philippines. Todos los derechos reservados.</p>
         <p class="gac-signature">Innovation • Quality • Excellence</p>
@@ -709,12 +748,12 @@
                 const status = getStockStatus(item.cantidad);
                 return `
                     <tr>
-                        <td><strong style="color: #ffd700; font-size: 1.1em;">${item.codigo}</strong></td>
+                        <td><strong style="color: #ff2800; font-size: 1.1em;">${item.codigo}</strong></td>
                         <td style="font-weight: 500; color: #ffffff;">${item.marca}</td>
                         <td style="color: #cccccc;">${item.serie}</td>
                         <td style="color: #cccccc;">${item.modelo}</td>
                         <td>
-                            <code style="background: rgba(255, 215, 0, 0.1); padding: 8px 12px; border-radius: 8px; font-family: 'Courier New', monospace; font-weight: 600; color: #ffd700; border: 1px solid rgba(255, 215, 0, 0.3);">
+                            <code style="background: rgba(255, 40, 0, 0.1); padding: 8px 12px; border-radius: 8px; font-family: 'Courier New', monospace; font-weight: 600; color: #ff2800; border: 1px solid rgba(255, 40, 0, 0.3);">
                                 ${item.numero_parte}
                             </code>
                         </td>
@@ -725,28 +764,29 @@
             }).join('');
         }
 
-       function filterInventory() {
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    const stockFilter = document.getElementById('stockFilter').value;
-    
-    const filteredData = inventoryData.filter(item => {
-        const matchesSearch = 
-            (item.codigo && item.codigo.toLowerCase().includes(searchTerm)) ||
-            (item.descripcion && item.descripcion.toLowerCase().includes(searchTerm)) ||
-            (item.numero_parte && item.numero_parte.toLowerCase().includes(searchTerm)) ||
-            (item.modelo && item.modelo.toLowerCase().includes(searchTerm)) ||
-            (item.serie && item.serie.toLowerCase().includes(searchTerm)); // ← AGREGADO
-        
-        let matchesStock = true;
-        if (stockFilter === "high") matchesStock = item.cantidad > 10;
-        else if (stockFilter === "medium") matchesStock = item.cantidad > 0 && item.cantidad <= 10;
-        else if (stockFilter === "low") matchesStock = item.cantidad === 0;
-        
-        return matchesSearch && matchesStock;
-    });
-    
-    renderInventory(filteredData);
-}
+        function filterInventory() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const stockFilter = document.getElementById('stockFilter').value;
+            
+            const filteredData = inventoryData.filter(item => {
+                const matchesSearch = 
+                    (item.codigo && item.codigo.toLowerCase().includes(searchTerm)) ||
+                    (item.descripcion && item.descripcion.toLowerCase().includes(searchTerm)) ||
+                    (item.numero_parte && item.numero_parte.toLowerCase().includes(searchTerm)) ||
+                    (item.modelo && item.modelo.toLowerCase().includes(searchTerm)) ||
+                    (item.serie && item.serie.toLowerCase().includes(searchTerm));
+                
+                let matchesStock = true;
+                if (stockFilter === "high") matchesStock = item.cantidad > 10;
+                else if (stockFilter === "medium") matchesStock = item.cantidad > 0 && item.cantidad <= 10;
+                else if (stockFilter === "low") matchesStock = item.cantidad === 0;
+                
+                return matchesSearch && matchesStock;
+            });
+            
+            renderInventory(filteredData);
+        }
+
         // Función para convertir CSV a JSON
         function csvToJSON(csv) {
             const lines = csv.split('\n').filter(line => line.trim() !== '');
