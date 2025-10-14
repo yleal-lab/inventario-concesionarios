@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -919,12 +918,12 @@
                 
                 return `
                     <tr>
-                        <td><strong style="color: #ff2800; font-size: 1.1em;">${item.codigo}</strong></
-                                                <td>${item.marca}</td>
+                        <td><strong style="color: #ff2800; font-size: 1.1em;">${item.codigo}</strong></td>
+                        <td>${item.marca}</td>
                         <td>${item.serie}</td>
                         <td>${item.modelo}</td>
                         <td><code style="background: rgba(255,40,0,0.1); padding: 4px 8px; border-radius: 6px; color: #ff2800; font-weight: 600;">${item.numero_parte}</code></td>
-                        <td>${item.descripcion}</td>
+                        <td>${item.descripcion_espanol}</td>
                         <td><span class="${status.class}">${status.text}</span></td>
                         <td>
                             <div class="quantity-controls">
@@ -1026,7 +1025,7 @@
                     item.serie.toLowerCase().includes(searchTerm) ||
                     item.modelo.toLowerCase().includes(searchTerm) ||
                     item.numero_parte.toLowerCase().includes(searchTerm) ||
-                    item.descripcion.toLowerCase().includes(searchTerm)
+                    item.descripcion_espanol.toLowerCase().includes(searchTerm)
                 );
             }
             
@@ -1056,8 +1055,8 @@
                 <div class="quote-item">
                     <div>
                         <strong style="color: #ff2800;">${item.codigo}</strong><br>
-                        <small>${item.descripcion}</small><br>
-                        <small style="color: #cccccc;">Parte: ${item.numero_parte}</small>
+                        <small>${item.descripcion_espanol}</small><br>
+                        <small style="color: #cccccc;">Parte: ${item.numero_parte} | Modelo: ${item.modelo}</small>
                     </div>
                     <div style="text-align: right;">
                         <div style="font-weight: 600; color: #ffffff;">Cantidad: ${item.quantity}</div>
@@ -1079,7 +1078,7 @@
             let csvContent = "Código,Marca,Serie,Modelo,Número de Parte,Descripción,Cantidad Cotizada,Stock Disponible\n";
             
             quoteItems.forEach(item => {
-                csvContent += `"${item.codigo}","${item.marca}","${item.serie}","${item.modelo}","${item.numero_parte}","${item.descripcion}",${item.quantity},${item.cantidad}\n`;
+                csvContent += `"${item.codigo}","${item.marca}","${item.serie}","${item.modelo}","${item.numero_parte}","${item.descripcion_espanol}",${item.quantity},${item.cantidad}\n`;
             });
             
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -1103,7 +1102,10 @@
                 if (!input.disabled) {
                     input.value = 0;
                     const codigo = input.id.replace('qty-', '');
-                    updateQuantityButtons(codigo, 0, 0);
+                    const item = inventoryData.find(i => i.codigo === codigo);
+                    if (item) {
+                        updateQuantityButtons(codigo, 0, item.cantidad);
+                    }
                 }
             });
             
@@ -1161,7 +1163,7 @@
                 
                 if (lines.length <= 1) throw new Error('El archivo CSV está vacío o no tiene datos');
                 
-                // Parsear CSV (asumiendo encabezados: codigo,marca,serie,modelo,numero_parte,descripcion,cantidad)
+                // Parsear CSV con los encabezados correctos de tu archivo
                 const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
                 
                 inventoryData = lines.slice(1).map(line => {
@@ -1176,7 +1178,7 @@
                     item.cantidad = parseInt(item.cantidad) || 0;
                     
                     return item;
-                }).filter(item => item.codigo); // Filtrar items vacíos
+                }).filter(item => item.codigo && item.codigo !== 'CODIGO'); // Filtrar items vacíos y encabezado
                 
                 if (inventoryData.length === 0) throw new Error('No se pudieron cargar datos válidos del CSV');
                 
