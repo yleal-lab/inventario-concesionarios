@@ -1,9 +1,16 @@
+¡Excelente idea! **Vamos a convertir tu página en un sistema de cotización completo**. Te propongo esta implementación:
+
+## 🛒 **SISTEMA DE COTIZACIÓN COMPLETO**
+
+**Reemplaza todo tu `index.html` con este código:**
+
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GAC Motors | Sistema de Inventario Premium</title>
+    <title>GAC Motors | Sistema de Cotización</title>
     <style>
         * { 
             margin: 0; 
@@ -18,6 +25,15 @@
             color: #2c3e50;
             line-height: 1.6;
             overflow-x: hidden;
+        }
+        
+        /* VARIABLES DE COLOR ROJO FERRARI */
+        :root {
+            --ferrari-red: #ff2800;
+            --ferrari-red-dark: #cc0000;
+            --ferrari-red-light: #ff4d4d;
+            --ferrari-red-glow: rgba(255, 40, 0, 0.6);
+            --ferrari-red-glow-light: rgba(255, 40, 0, 0.3);
         }
         
         /* CONTENEDOR DE LOGOS - AMBAS IMÁGENES */
@@ -40,8 +56,8 @@
             width: auto;
             border-radius: 15px;
             box-shadow: 
-                0 0 40px rgba(255, 215, 0, 0.4),
-                0 0 80px rgba(255, 215, 0, 0.2);
+                0 0 40px var(--ferrari-red-glow-light),
+                0 0 80px rgba(255, 40, 0, 0.2);
             filter: brightness(1.1) contrast(1.1);
             transition: all 0.5s ease;
         }
@@ -51,8 +67,8 @@
             width: auto;
             border-radius: 15px;
             box-shadow: 
-                0 0 40px rgba(255, 215, 0, 0.4),
-                0 0 80px rgba(255, 215, 0, 0.2);
+                0 0 40px var(--ferrari-red-glow-light),
+                0 0 80px rgba(255, 40, 0, 0.2);
             filter: brightness(1.1) contrast(1.1);
             transition: all 0.5s ease;
             background: rgba(255, 255, 255, 0.1);
@@ -62,11 +78,11 @@
         .gac-logo-img:hover, .dfsk-logo-img:hover {
             transform: scale(1.05);
             box-shadow: 
-                0 0 50px rgba(255, 215, 0, 0.6),
-                0 0 100px rgba(255, 215, 0, 0.3);
+                0 0 50px var(--ferrari-red-glow),
+                0 0 100px rgba(255, 40, 0, 0.3);
         }
         
-        /* HEADER GAC EMPOW - FONDO MÁS CLARO */
+        /* HEADER GAC EMPOW - ROJO FERRARI */
         .hero-header {
             background: 
                 linear-gradient(135deg, rgba(15, 26, 43, 0.9) 0%, rgba(30, 45, 70, 0.95) 100%),
@@ -92,8 +108,8 @@
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(255, 40, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 40, 0, 0.05) 0%, transparent 50%),
                 radial-gradient(circle at center, transparent 0%, rgba(15, 26, 43, 0.8) 70%);
             z-index: 1;
         }
@@ -106,7 +122,7 @@
             backdrop-filter: blur(15px);
             background: rgba(15, 26, 43, 0.6);
             border-radius: 30px;
-            border: 1px solid rgba(255, 215, 0, 0.2);
+            border: 1px solid var(--ferrari-red);
             box-shadow: 
                 0 20px 40px rgba(0, 0, 0, 0.3),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -118,10 +134,10 @@
             letter-spacing: 4px;
             text-transform: uppercase;
             margin-bottom: 20px;
-            color: #ffd700;
+            color: var(--ferrari-red);
             font-weight: 600;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            text-shadow: 0 0 20px var(--ferrari-red-glow);
+            background: linear-gradient(135deg, var(--ferrari-red), var(--ferrari-red-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -132,7 +148,7 @@
             margin-bottom: 20px;
             letter-spacing: 3px;
             color: #ffffff;
-            text-shadow: 0 0 30px rgba(255, 215, 0, 0.7);
+            text-shadow: 0 0 30px var(--ferrari-red-glow);
             background: linear-gradient(135deg, #ffffff, #e8e8e8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -152,16 +168,16 @@
             height: 3px;
             background: linear-gradient(90deg, 
                 transparent, 
-                rgba(255, 215, 0, 0.3), 
-                #ffd700, 
-                rgba(255, 215, 0, 0.3), 
+                rgba(255, 40, 0, 0.3), 
+                var(--ferrari-red), 
+                rgba(255, 40, 0, 0.3), 
                 transparent);
             margin: 40px auto;
             border-radius: 2px;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+            box-shadow: 0 0 20px var(--ferrari-red-glow);
         }
         
-        /* CONTENEDOR PRINCIPAL - FONDO MÁS CLARO */
+        /* CONTENEDOR PRINCIPAL - ROJO FERRARI */
         .main-container {
             background: linear-gradient(135deg, #1a2536, #2a3548);
             margin-top: -80px;
@@ -169,8 +185,8 @@
             z-index: 2;
             border-radius: 50px 50px 0 0;
             box-shadow: 
-                0 -25px 60px rgba(255, 215, 0, 0.1),
-                inset 0 1px 0 rgba(255, 215, 0, 0.1);
+                0 -25px 60px var(--ferrari-red-glow-light),
+                inset 0 1px 0 var(--ferrari-red);
             min-height: 70vh;
         }
         
@@ -180,7 +196,7 @@
             margin: 0 auto;
         }
         
-        /* ENCABEZADO DE SECCIÓN - PULIDO */
+        /* ENCABEZADO DE SECCIÓN - ROJO FERRARI */
         .section-header {
             text-align: center;
             margin-bottom: 80px;
@@ -190,8 +206,8 @@
         
         .gac-badge {
             display: inline-block;
-            background: linear-gradient(135deg, #ffd700, #ffed4e);
-            color: #000000;
+            background: linear-gradient(135deg, var(--ferrari-red), var(--ferrari-red-light));
+            color: #ffffff;
             padding: 14px 32px;
             border-radius: 30px;
             font-size: 0.9em;
@@ -200,7 +216,7 @@
             margin-bottom: 30px;
             text-transform: uppercase;
             box-shadow: 
-                0 8px 25px rgba(255, 215, 0, 0.4),
+                0 8px 25px var(--ferrari-red-glow),
                 0 2px 5px rgba(0, 0, 0, 0.2);
             position: relative;
             overflow: hidden;
@@ -226,10 +242,10 @@
             font-weight: 400;
             margin-bottom: 25px;
             letter-spacing: 2px;
-            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            background: linear-gradient(135deg, var(--ferrari-red), var(--ferrari-red-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            text-shadow: 0 0 30px var(--ferrari-red-glow);
         }
         
         .section-subtitle {
@@ -242,7 +258,7 @@
             opacity: 0.9;
         }
         
-        /* CONTROLES DE BÚSQUEDA - FONDO MÁS CLARO */
+        /* CONTROLES DE BÚSQUEDA - ROJO FERRARI */
         .search-controls {
             background: linear-gradient(135deg, #2a3548, #354258);
             padding: 50px;
@@ -250,8 +266,8 @@
             margin-bottom: 50px;
             box-shadow: 
                 0 20px 50px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 215, 0, 0.1);
-            border: 1px solid rgba(255, 215, 0, 0.15);
+                inset 0 1px 0 var(--ferrari-red);
+            border: 1px solid var(--ferrari-red);
             position: relative;
             overflow: hidden;
             animation: fadeIn 1s ease-out 0.6s both;
@@ -265,10 +281,10 @@
             right: 0;
             height: 3px;
             background: linear-gradient(90deg, 
-                #ffd700, 
+                var(--ferrari-red), 
                 #ffffff, 
-                #ffd700);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+                var(--ferrari-red));
+            box-shadow: 0 0 15px var(--ferrari-red-glow);
         }
         
         .controls-row {
@@ -282,7 +298,7 @@
             flex: 1;
             min-width: 450px;
             padding: 22px 30px;
-            border: 2px solid rgba(255, 215, 0, 0.25);
+            border: 2px solid var(--ferrari-red);
             border-radius: 18px;
             font-size: 16px;
             background: rgba(26, 37, 54, 0.8);
@@ -300,17 +316,17 @@
         
         .search-box:focus {
             outline: none;
-            border-color: #ffd700;
+            border-color: var(--ferrari-red-light);
             box-shadow: 
-                0 0 0 4px rgba(255, 215, 0, 0.15),
-                0 12px 35px rgba(255, 215, 0, 0.2);
+                0 0 0 4px rgba(255, 40, 0, 0.15),
+                0 12px 35px var(--ferrari-red-glow-light);
             transform: translateY(-3px);
             background: rgba(26, 37, 54, 0.9);
         }
         
         .stock-filter {
             padding: 22px 30px;
-            border: 2px solid rgba(255, 215, 0, 0.25);
+            border: 2px solid var(--ferrari-red);
             border-radius: 18px;
             font-size: 16px;
             background: rgba(26, 37, 54, 0.8);
@@ -326,30 +342,64 @@
         
         .stock-filter:focus {
             outline: none;
-            border-color: #ffd700;
-            box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.15);
+            border-color: var(--ferrari-red-light);
+            box-shadow: 0 0 0 4px rgba(255, 40, 0, 0.15);
         }
         
         .search-box:hover, .stock-filter:hover {
-            border-color: #ffd700;
+            border-color: var(--ferrari-red-light);
             transform: translateY(-2px);
             box-shadow: 
-                0 12px 30px rgba(255, 215, 0, 0.2),
+                0 12px 30px var(--ferrari-red-glow-light),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
         
-        /* INDICADOR DE ACTUALIZACIÓN - FONDO MÁS CLARO */
+        /* BOTÓN DE COTIZACIÓN */
+        .quote-btn {
+            background: linear-gradient(135deg, var(--ferrari-red), var(--ferrari-red-light));
+            color: white;
+            border: none;
+            padding: 22px 40px;
+            border-radius: 18px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 
+                0 8px 25px var(--ferrari-red-glow),
+                0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s ease;
+            min-width: 200px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .quote-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 15px 35px var(--ferrari-red-glow),
+                0 4px 10px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, var(--ferrari-red-light), var(--ferrari-red));
+        }
+        
+        .quote-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        /* INDICADOR DE ACTUALIZACIÓN - ROJO FERRARI */
         .update-indicator {
             background: linear-gradient(135deg, #354258, #3f4d64);
             padding: 28px;
             text-align: center;
-            color: #ffd700;
+            color: var(--ferrari-red);
             border-radius: 20px;
             margin-bottom: 40px;
             box-shadow: 
                 0 12px 35px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 215, 0, 0.1);
-            border-left: 5px solid #ffd700;
+                inset 0 1px 0 var(--ferrari-red);
+            border-left: 5px solid var(--ferrari-red);
             animation: fadeIn 1s ease-out 0.9s both;
             font-size: 1.1em;
         }
@@ -358,18 +408,18 @@
             font-weight: 600;
             color: #ffffff;
             font-size: 1.2em;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            text-shadow: 0 0 10px var(--ferrari-red-glow);
         }
         
-        /* TABLA - FONDO MÁS CLARO */
+        /* TABLA - ROJO FERRARI CON BOTONES DE COTIZACIÓN */
         .table-container {
             background: linear-gradient(135deg, #2a3548, #354258);
             border-radius: 30px;
             overflow: hidden;
             box-shadow: 
                 0 25px 60px rgba(0, 0, 0, 0.5),
-                inset 0 1px 0 rgba(255, 215, 0, 0.1);
-            border: 1px solid rgba(255, 215, 0, 0.15);
+                inset 0 1px 0 var(--ferrari-red);
+            border: 1px solid var(--ferrari-red);
             animation: fadeIn 1s ease-out 1.2s both;
         }
         
@@ -382,7 +432,7 @@
         
         .inventory-table th {
             background: linear-gradient(135deg, #1a2536, #2a3548);
-            color: #ffd700;
+            color: var(--ferrari-red);
             padding: 26px 24px;
             text-align: left;
             font-weight: 600;
@@ -391,7 +441,7 @@
             top: 0;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            border-bottom: 3px solid #ffd700;
+            border-bottom: 3px solid var(--ferrari-red);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
         
@@ -405,7 +455,7 @@
         
         .inventory-table td {
             padding: 24px;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 40, 0, 0.1);
             font-size: 14px;
             line-height: 1.5;
             color: #ffffff;
@@ -419,25 +469,76 @@
         }
         
         .inventory-table tr:not(:last-child) {
-            border-bottom: 1px solid rgba(255, 215, 0, 0.08);
+            border-bottom: 1px solid rgba(255, 40, 0, 0.08);
         }
         
         .inventory-table tr:hover {
             background: linear-gradient(135deg, 
-                rgba(255, 215, 0, 0.08), 
-                rgba(255, 215, 0, 0.03));
+                rgba(255, 40, 0, 0.08), 
+                rgba(255, 40, 0, 0.03));
             transform: translateY(-2px);
             box-shadow: 
-                0 8px 25px rgba(255, 215, 0, 0.15),
+                0 8px 25px var(--ferrari-red-glow-light),
                 inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
         
         .inventory-table tr:hover td {
-            color: #ffd700;
+            color: var(--ferrari-red);
             font-weight: 500;
         }
         
-        /* ESTADOS DE STOCK - PULIDOS */
+        /* CONTROLES DE CANTIDAD */
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .quantity-btn {
+            background: var(--ferrari-red);
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .quantity-btn:hover {
+            background: var(--ferrari-red-light);
+            transform: scale(1.1);
+        }
+        
+        .quantity-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .quantity-input {
+            width: 60px;
+            padding: 8px;
+            border: 2px solid var(--ferrari-red);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .quantity-input:focus {
+            outline: none;
+            border-color: var(--ferrari-red-light);
+            box-shadow: 0 0 0 3px rgba(255, 40, 0, 0.2);
+        }
+        
+        /* ESTADOS DE STOCK - ROJO FERRARI */
         .stock-high { 
             background: linear-gradient(135deg, #27ae60, #2ecc71);
             color: white; 
@@ -492,7 +593,55 @@
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
         
-        /* ESTADOS DE CARGA - PULIDOS */
+        /* PANEL DE COTIZACIÓN */
+        .quote-panel {
+            background: linear-gradient(135deg, #2a3548, #354258);
+            padding: 40px;
+            border-radius: 25px;
+            margin-top: 40px;
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 var(--ferrari-red);
+            border: 1px solid var(--ferrari-red);
+            display: none;
+        }
+        
+        .quote-panel h3 {
+            color: var(--ferrari-red);
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+        
+        .quote-items {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 25px;
+        }
+        
+        .quote-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 40, 0, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .quote-total {
+            text-align: center;
+            font-size: 1.4em;
+            font-weight: 700;
+            color: var(--ferrari-red);
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 40, 0, 0.1);
+            border-radius: 10px;
+        }
+        
+        /* ESTADOS DE CARGA - ROJO FERRARI */
         .loading { 
             text-align: center; 
             padding: 100px; 
@@ -503,12 +652,12 @@
         .gac-spinner {
             width: 60px;
             height: 60px;
-            border: 4px solid rgba(255, 215, 0, 0.2);
-            border-top: 4px solid #ffd700;
+            border: 4px solid rgba(255, 40, 0, 0.2);
+            border-top: 4px solid var(--ferrari-red);
             border-radius: 50%;
             animation: spin 1.2s linear infinite;
             margin: 0 auto 30px;
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+            box-shadow: 0 0 25px var(--ferrari-red-glow);
         }
         
         @keyframes spin {
@@ -524,27 +673,27 @@
         .error { 
             text-align: center; 
             padding: 60px; 
-            color: #ff6b6b; 
+            color: var(--ferrari-red); 
             background: linear-gradient(135deg, 
-                rgba(255, 107, 107, 0.1), 
-                rgba(255, 107, 107, 0.05));
+                rgba(255, 40, 0, 0.1), 
+                rgba(255, 40, 0, 0.05));
             margin: 30px; 
             border-radius: 20px;
             font-size: 17px;
             box-shadow: 
                 0 12px 35px rgba(0, 0, 0, 0.3),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            border-left: 5px solid #ff6b6b;
+            border-left: 5px solid var(--ferrari-red);
         }
         
-        /* FOOTER - FONDO MÁS CLARO */
+        /* FOOTER - ROJO FERRARI */
         .footer {
             text-align: center;
             padding: 50px 20px;
             background: linear-gradient(135deg, #1a2536, #2a3548);
             color: #cccccc;
             margin-top: 100px;
-            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            border-top: 1px solid var(--ferrari-red);
             box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
         }
         
@@ -556,10 +705,10 @@
         }
         
         .gac-signature {
-            color: #ffd700;
+            color: var(--ferrari-red);
             font-weight: 600;
             margin-top: 15px;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            text-shadow: 0 0 10px var(--ferrari-red-glow);
             letter-spacing: 1.5px;
         }
         
@@ -611,11 +760,20 @@
             .search-controls {
                 padding: 35px;
             }
+            
+            .quantity-controls {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .quantity-input {
+                width: 50px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- HEADER GAC EMPOW - ACTUALIZADO -->
+    <!-- HEADER GAC EMPOW - ROJO FERRARI -->
     <header class="hero-header">
         <div class="hero-content">
             <!-- LOGOS GAC Y DFSK - AMBAS IMÁGENES -->
@@ -633,23 +791,23 @@
             <!-- CAMBIADO A GAC MOTOR / DFSK MOTOR -->
             <div class="gac-logo">GAC MOTOR / DFSK MOTOR</div>
             
-            <h1>Premium Inventory</h1>
+            <h1>Sistema de Cotización</h1>
             <div class="gac-divider"></div>
-            <p class="subtitle">Sistema exclusivo de gestión de inventario en tiempo real</p>
+            <p class="subtitle">Selecciona los repuestos y genera tu cotización automáticamente</p>
         </div>
     </header>
     
-    <!-- CONTENIDO PRINCIPAL - ACTUALIZADO -->
+    <!-- CONTENIDO PRINCIPAL - ROJO FERRARI -->
     <main class="main-container">
         <section class="inventory-section">
-            <!-- ENCABEZADO - ACTUALIZADO -->
+            <!-- ENCABEZADO - ROJO FERRARI -->
             <div class="section-header">
-                <div class="gac-badge">Sistema de Inventario</div>
-                <h2 class="section-title">Gestión de Repuestos</h2>
-                <p class="section-subtitle">Consulta en tiempo real la disponibilidad de repuestos originales GAC / DFSK</p>
+                <div class="gac-badge">Sistema de Cotización</div>
+                <h2 class="section-title">Selección de Repuestos</h2>
+                <p class="section-subtitle">Selecciona la cantidad de cada repuesto y genera tu cotización</p>
             </div>
             
-            <!-- CONTROLES DE BÚSQUEDA - ACTUALIZADOS -->
+            <!-- CONTROLES DE BÚSQUEDA - ROJO FERRARI -->
             <div class="search-controls">
                 <div class="controls-row">
                     <input type="text" 
@@ -663,15 +821,19 @@
                         <option value="medium">Stock Medio (1-10)</option>
                         <option value="low">Stock Bajo (0)</option>
                     </select>
+                    
+                    <button class="quote-btn" id="generateQuote" disabled>
+                        📋 Generar Cotización
+                    </button>
                 </div>
             </div>
             
-            <!-- INDICADOR DE ACTUALIZACIÓN - ACTUALIZADO -->
+            <!-- INDICADOR DE ACTUALIZACIÓN - ROJO FERRARI -->
             <div class="update-indicator">
                 Última actualización: <span id="update-time">Cargando...</span>
             </div>
             
-            <!-- TABLA - ACTUALIZADA -->
+            <!-- TABLA - ROJO FERRARI CON BOTONES DE COTIZACIÓN -->
             <div class="table-container">
                 <div id="loading-message" class="loading">
                     <div class="gac-spinner"></div>
@@ -694,16 +856,36 @@
                                 <th>Número de Parte</th>
                                 <th>Descripción</th>
                                 <th>Stock</th>
+                                <th>Cantidad a Cotizar</th>
                             </tr>
                         </thead>
                         <tbody id="inventory-body"></tbody>
                     </table>
                 </div>
             </div>
+            
+            <!-- PANEL DE COTIZACIÓN -->
+            <div class="quote-panel" id="quotePanel">
+                <h3>📄 Cotización Generada</h3>
+                <div class="quote-items" id="quoteItems">
+                    <!-- Los items de la cotización se generarán aquí -->
+                </div>
+                <div class="quote-total" id="quoteTotal">
+                    Total de items seleccionados: <span id="totalItems">0</span>
+                </div>
+                <div style="text-align: center;">
+                    <button class="quote-btn" onclick="downloadQuote()">
+                        📥 Descargar Cotización
+                    </button>
+                    <button class="quote-btn" onclick="clearQuote()" style="background: #666; margin-left: 15px;">
+                        🗑️ Limpiar Cotización
+                    </button>
+                </div>
+            </div>
         </section>
     </main>
     
-    <!-- FOOTER - ACTUALIZADO -->
+    <!-- FOOTER - ROJO FERRARI -->
     <footer class="footer">
         <p>&copy; 2024 GAC Motor Philippines. Todos los derechos reservados.</p>
         <p class="gac-signature">Innovation • Quality • Excellence</p>
@@ -714,6 +896,7 @@
         const CSV_URL = 'inventario.csv';
         
         let inventoryData = [];
+        let quoteItems = [];
 
         function getStockStatus(cantidad) {
             if (cantidad > 10) return { text: "Alto", class: "stock-high" };
@@ -727,7 +910,7 @@
             if (data.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="7" style="text-align: center; padding: 60px; color: #cccccc; font-size: 16px; font-style: italic; background: rgba(26, 37, 54, 0.5); border-radius: 0 0 30px 30px;">
+                        <td colspan="8" style="text-align: center; padding: 60px; color: #cccccc; font-size: 16px; font-style: italic; background: rgba(26, 37, 54, 0.5); border-radius: 0 0 30px 30px;">
                             No se encontraron repuestos con los criterios de búsqueda actuales
                         </td>
                     </tr>
@@ -737,127 +920,319 @@
             
             tbody.innerHTML = data.map(item => {
                 const status = getStockStatus(item.cantidad);
+                const existingQuote = quoteItems.find(q => q.codigo === item.codigo);
+                const quantity = existingQuote ? existingQuote.quantity : 0;
+                
                 return `
                     <tr>
-                        <td><strong style="color: #ffd700; font-size: 1.1em;">${item.codigo}</strong></td>
-                        <td style="font-weight: 500; color: #ffffff;">${item.marca}</td>
-                        <td style="color: #cccccc;">${item.serie}</td>
-                        <td style="color: #cccccc;">${item.modelo}</td>
+                        <td><strong style="color: #ff2800; font-size: 1.1em;">${item.codigo}</strong></
+                                                <td>${item.marca}</td>
+                        <td>${item.serie}</td>
+                        <td>${item.modelo}</td>
+                        <td><code style="background: rgba(255,40,0,0.1); padding: 4px 8px; border-radius: 6px; color: #ff2800; font-weight: 600;">${item.numero_parte}</code></td>
+                        <td>${item.descripcion}</td>
+                        <td><span class="${status.class}">${status.text}</span></td>
                         <td>
-                            <code style="background: rgba(255, 215, 0, 0.1); padding: 8px 12px; border-radius: 8px; font-family: 'Courier New', monospace; font-weight: 600; color: #ffd700; border: 1px solid rgba(255, 215, 0, 0.3);">
-                                ${item.numero_parte}
-                            </code>
+                            <div class="quantity-controls">
+                                <button class="quantity-btn" onclick="decreaseQuantity('${item.codigo}')" ${quantity === 0 ? 'disabled' : ''}>-</button>
+                                <input type="number" class="quantity-input" id="qty-${item.codigo}" 
+                                       value="${quantity}" min="0" max="${item.cantidad}" 
+                                       onchange="updateQuantity('${item.codigo}', this.value)" 
+                                       ${item.cantidad === 0 ? 'disabled' : ''}>
+                                <button class="quantity-btn" onclick="increaseQuantity('${item.codigo}', ${item.cantidad})" 
+                                        ${item.cantidad === 0 || quantity >= item.cantidad ? 'disabled' : ''}>+</button>
+                                ${item.cantidad === 0 ? '<div style="font-size: 0.8em; color: #ff4444; margin-top: 5px;">Sin stock</div>' : ''}
+                            </div>
                         </td>
-                        <td style="font-weight: 400; color: #ffffff;">${item.descripcion}</td>
-                        <td><span class="${status.class}">${item.cantidad}</span></td>
                     </tr>
                 `;
             }).join('');
+        }
+
+        function updateQuantity(codigo, newQuantity) {
+            const item = inventoryData.find(i => i.codigo === codigo);
+            newQuantity = parseInt(newQuantity) || 0;
+            
+            if (newQuantity < 0) newQuantity = 0;
+            if (newQuantity > item.cantidad) newQuantity = item.cantidad;
+            
+            // Actualizar input
+            document.getElementById(`qty-${codigo}`).value = newQuantity;
+            
+            // Actualizar quoteItems
+            const existingIndex = quoteItems.findIndex(q => q.codigo === codigo);
+            
+            if (newQuantity > 0) {
+                if (existingIndex >= 0) {
+                    quoteItems[existingIndex].quantity = newQuantity;
+                } else {
+                    quoteItems.push({
+                        ...item,
+                        quantity: newQuantity
+                    });
+                }
+            } else {
+                if (existingIndex >= 0) {
+                    quoteItems.splice(existingIndex, 1);
+                }
+            }
+            
+            updateQuoteButton();
+            updateQuantityButtons(codigo, newQuantity, item.cantidad);
+        }
+
+        function increaseQuantity(codigo, maxQuantity) {
+            const currentInput = document.getElementById(`qty-${codigo}`);
+            let currentValue = parseInt(currentInput.value) || 0;
+            
+            if (currentValue < maxQuantity) {
+                currentValue++;
+                updateQuantity(codigo, currentValue);
+            }
+        }
+
+        function decreaseQuantity(codigo) {
+            const currentInput = document.getElementById(`qty-${codigo}`);
+            let currentValue = parseInt(currentInput.value) || 0;
+            
+            if (currentValue > 0) {
+                currentValue--;
+                updateQuantity(codigo, currentValue);
+            }
+        }
+
+        function updateQuantityButtons(codigo, currentQuantity, maxQuantity) {
+            const decreaseBtn = document.querySelector(`button[onclick="decreaseQuantity('${codigo}')"]`);
+            const increaseBtn = document.querySelector(`button[onclick="increaseQuantity('${codigo}', ${maxQuantity})"]`);
+            
+            if (decreaseBtn) {
+                decreaseBtn.disabled = currentQuantity === 0;
+            }
+            if (increaseBtn) {
+                increaseBtn.disabled = currentQuantity >= maxQuantity;
+            }
+        }
+
+        function updateQuoteButton() {
+            const quoteBtn = document.getElementById('generateQuote');
+            quoteBtn.disabled = quoteItems.length === 0;
         }
 
         function filterInventory() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const stockFilter = document.getElementById('stockFilter').value;
             
-            const filteredData = inventoryData.filter(item => {
-                const matchesSearch = 
-                    (item.codigo && item.codigo.toLowerCase().includes(searchTerm)) ||
-                    (item.descripcion && item.descripcion.toLowerCase().includes(searchTerm)) ||
-                    (item.numero_parte && item.numero_parte.toLowerCase().includes(searchTerm)) ||
-                    (item.modelo && item.modelo.toLowerCase().includes(searchTerm)) ||
-                    (item.serie && item.serie.toLowerCase().includes(searchTerm));
-                
-                let matchesStock = true;
-                if (stockFilter === "high") matchesStock = item.cantidad > 10;
-                else if (stockFilter === "medium") matchesStock = item.cantidad > 0 && item.cantidad <= 10;
-                else if (stockFilter === "low") matchesStock = item.cantidad === 0;
-                
-                return matchesSearch && matchesStock;
-            });
+            let filteredData = inventoryData;
+            
+            // Filtro de búsqueda
+            if (searchTerm) {
+                filteredData = filteredData.filter(item => 
+                    item.codigo.toLowerCase().includes(searchTerm) ||
+                    item.marca.toLowerCase().includes(searchTerm) ||
+                    item.serie.toLowerCase().includes(searchTerm) ||
+                    item.modelo.toLowerCase().includes(searchTerm) ||
+                    item.numero_parte.toLowerCase().includes(searchTerm) ||
+                    item.descripcion.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            // Filtro de stock
+            if (stockFilter !== 'all') {
+                filteredData = filteredData.filter(item => {
+                    switch(stockFilter) {
+                        case 'high': return item.cantidad > 10;
+                        case 'medium': return item.cantidad > 0 && item.cantidad <= 10;
+                        case 'low': return item.cantidad === 0;
+                        default: return true;
+                    }
+                });
+            }
             
             renderInventory(filteredData);
         }
 
-        // Función para convertir CSV a JSON
-        function csvToJSON(csv) {
-            const lines = csv.split('\n').filter(line => line.trim() !== '');
-            if (lines.length < 2) return [];
+        function generateQuote() {
+            if (quoteItems.length === 0) return;
             
-            const result = [];
-            const headers = lines[0].split(',').map(h => h.trim().toLowerCase().replace(/ /g, '_'));
+            const quoteItemsContainer = document.getElementById('quoteItems');
+            const quoteTotal = document.getElementById('quoteTotal');
+            const quotePanel = document.getElementById('quotePanel');
             
-            for (let i = 1; i < lines.length; i++) {
-                const obj = {};
-                const currentline = lines[i].split(',');
-                
-                for (let j = 0; j < headers.length; j++) {
-                    const key = headers[j];
-                    let value = currentline[j] ? currentline[j].trim() : '';
-                    
-                    if (key === 'cantidad') {
-                        value = parseInt(value) || 0;
-                    }
-                    
-                    if (key === 'descripcion_espanol') {
-                        obj['descripcion'] = value;
-                    } else {
-                        obj[key] = value;
-                    }
-                }
-                
-                if (obj.codigo) {
-                    result.push(obj);
-                }
-            }
+            quoteItemsContainer.innerHTML = quoteItems.map(item => `
+                <div class="quote-item">
+                    <div>
+                        <strong style="color: #ff2800;">${item.codigo}</strong><br>
+                        <small>${item.descripcion}</small><br>
+                        <small style="color: #cccccc;">Parte: ${item.numero_parte}</small>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-weight: 600; color: #ffffff;">Cantidad: ${item.quantity}</div>
+                        <div style="font-size: 0.9em; color: #cccccc;">Stock: ${item.cantidad}</div>
+                    </div>
+                </div>
+            `).join('');
             
-            return result;
+            quoteTotal.innerHTML = `Total de items seleccionados: <span id="totalItems" style="color: #ffffff; font-size: 1.2em;">${quoteItems.length}</span>`;
+            quotePanel.style.display = 'block';
+            
+            // Scroll suave al panel de cotización
+            quotePanel.scrollIntoView({ behavior: 'smooth' });
         }
 
-        async function loadInventory() {
+        function downloadQuote() {
+            if (quoteItems.length === 0) return;
+            
+            let csvContent = "Código,Marca,Serie,Modelo,Número de Parte,Descripción,Cantidad Cotizada,Stock Disponible\n";
+            
+            quoteItems.forEach(item => {
+                csvContent += `"${item.codigo}","${item.marca}","${item.serie}","${item.modelo}","${item.numero_parte}","${item.descripcion}",${item.quantity},${item.cantidad}\n`;
+            });
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute("href", url);
+            link.setAttribute("download", `cotizacion_gac_dfsk_${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function clearQuote() {
+            quoteItems = [];
+            
+            // Reset all quantity inputs
+            document.querySelectorAll('.quantity-input').forEach(input => {
+                if (!input.disabled) {
+                    input.value = 0;
+                    const codigo = input.id.replace('qty-', '');
+                    updateQuantityButtons(codigo, 0, 0);
+                }
+            });
+            
+            updateQuoteButton();
+            document.getElementById('quotePanel').style.display = 'none';
+            
+            // Mostrar mensaje de confirmación
+            showNotification('Cotización limpiada correctamente', 'success');
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? 'linear-gradient(135deg, #27ae60, #2ecc71)' : 'linear-gradient(135deg, #ff2800, #ff4d4d)'};
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                z-index: 10000;
+                font-weight: 600;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Cargar datos del CSV
+        async function loadInventoryData() {
+            const loadingMessage = document.getElementById('loading-message');
+            const errorMessage = document.getElementById('error-message');
+            const table = document.getElementById('inventory-table');
+            
             try {
-                document.getElementById('loading-message').style.display = 'block';
-                document.getElementById('error-message').style.display = 'none';
-                document.getElementById('inventory-table').style.display = 'none';
+                const response = await fetch(CSV_URL);
+                if (!response.ok) throw new Error('Error al cargar el archivo CSV');
                 
-                const response = await fetch(CSV_URL + '?t=' + new Date().getTime());
+                const csvText = await response.text();
+                const lines = csvText.split('\n').filter(line => line.trim());
                 
-                if (!response.ok) throw new Error('No se pudo cargar el archivo CSV');
+                if (lines.length <= 1) throw new Error('El archivo CSV está vacío o no tiene datos');
                 
-                const csvData = await response.text();
+                // Parsear CSV (asumiendo encabezados: codigo,marca,serie,modelo,numero_parte,descripcion,cantidad)
+                const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
                 
-                if (!csvData || csvData.trim() === '') {
-                    throw new Error('El archivo CSV está vacío');
-                }
+                inventoryData = lines.slice(1).map(line => {
+                    const values = line.split(',').map(v => v.trim());
+                    const item = {};
+                    
+                    headers.forEach((header, index) => {
+                        item[header] = values[index] || '';
+                    });
+                    
+                    // Convertir cantidad a número
+                    item.cantidad = parseInt(item.cantidad) || 0;
+                    
+                    return item;
+                }).filter(item => item.codigo); // Filtrar items vacíos
                 
-                inventoryData = csvToJSON(csvData);
+                if (inventoryData.length === 0) throw new Error('No se pudieron cargar datos válidos del CSV');
                 
-                if (inventoryData.length === 0) {
-                    throw new Error('Formato CSV incorrecto');
-                }
+                // Ocultar loading, mostrar tabla
+                loadingMessage.style.display = 'none';
+                table.style.display = 'table';
                 
-                document.getElementById('loading-message').style.display = 'none';
-                document.getElementById('inventory-table').style.display = 'table';
+                // Renderizar datos
                 renderInventory(inventoryData);
+                
+                // Actualizar timestamp
                 document.getElementById('update-time').textContent = new Date().toLocaleString();
                 
+                // Mostrar notificación de éxito
+                showNotification(`Inventario cargado: ${inventoryData.length} repuestos encontrados`, 'success');
+                
             } catch (error) {
-                document.getElementById('loading-message').style.display = 'none';
-                document.getElementById('error-message').style.display = 'block';
-                document.getElementById('error-message').innerHTML = 
-                    '❌ Error cargando el inventario: ' + error.message + 
-                    '<br><br>Verifica que el archivo "inventario.csv" exista y tenga el formato correcto.';
+                console.error('Error:', error);
+                loadingMessage.style.display = 'none';
+                errorMessage.style.display = 'block';
+                errorMessage.innerHTML = `
+                    <div style="font-size: 1.3em; margin-bottom: 15px;">⚠️ Error al cargar el inventario</div>
+                    <div style="margin-bottom: 20px; color: #ff8888;">${error.message}</div>
+                    <small style="opacity: 0.8;">Verifica que el archivo "inventario.csv" esté en la misma carpeta y tenga el formato correcto.</small>
+                `;
             }
         }
+
+        // Event Listeners
+        document.getElementById('searchInput').addEventListener('input', filterInventory);
+        document.getElementById('stockFilter').addEventListener('change', filterInventory);
+        document.getElementById('generateQuote').addEventListener('click', generateQuote);
 
         // Inicializar
         document.addEventListener('DOMContentLoaded', function() {
-            loadInventory();
+            loadInventoryData();
             
-            document.getElementById('searchInput').addEventListener('input', filterInventory);
-            document.getElementById('stockFilter').addEventListener('change', filterInventory);
-            
-            // Actualizar automáticamente cada 30 minutos
-            setInterval(loadInventory, 30 * 60 * 1000);
+            // Efectos de entrada mejorados
+            setTimeout(() => {
+                document.querySelector('.hero-content').style.opacity = '1';
+            }, 100);
+        });
+
+        // Efectos de scroll para elementos
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero-header');
+            if (parallax) {
+                parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
         });
     </script>
 </body>
