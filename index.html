@@ -10,38 +10,45 @@
             padding: 0; 
             box-sizing: border-box; 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
         body { 
-            background: #000000;
+            background: #0f1a2b;
             color: #2c3e50;
             line-height: 1.6;
             overflow-x: hidden;
         }
         
-        /* LOGO GAC */
+        /* LOGO GAC - MÁS GRANDE */
         .logo-container {
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             text-align: center;
+            animation: fadeIn 1s ease-out;
         }
 
         .gac-logo-img {
-            height: 100px;
+            height: 180px;
             width: auto;
-            transition: all 0.3s ease;
-            border-radius: 12px;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            box-shadow: 
+                0 0 40px rgba(255, 215, 0, 0.4),
+                0 0 80px rgba(255, 215, 0, 0.2);
+            filter: brightness(1.1) contrast(1.1);
+            transition: all 0.5s ease;
         }
 
         .gac-logo-img:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+            box-shadow: 
+                0 0 50px rgba(255, 215, 0, 0.6),
+                0 0 100px rgba(255, 215, 0, 0.3);
         }
         
-        /* HEADER GAC EMPOW - NEGRO Y DORADO */
+        /* HEADER GAC EMPOW - FONDO MÁS CLARO */
         .hero-header {
             background: 
-                linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(20, 20, 20, 0.95) 100%),
+                linear-gradient(135deg, rgba(15, 26, 43, 0.9) 0%, rgba(30, 45, 70, 0.95) 100%),
                 url('https://br-www-resouce-cdn.gacgroup.com/static/Global/tenant/cms/common/202503/acd070ba-2958-4119-a246-9e8fbb408de3.webp');
             background-size: cover;
             background-position: center 40%;
@@ -63,25 +70,39 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.8) 80%);
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at center, transparent 0%, rgba(15, 26, 43, 0.8) 70%);
             z-index: 1;
         }
         
         .hero-content {
             max-width: 900px;
-            padding: 0 40px;
+            padding: 60px 50px;
             position: relative;
             z-index: 2;
+            backdrop-filter: blur(15px);
+            background: rgba(15, 26, 43, 0.6);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            animation: fadeIn 1.2s ease-out;
         }
         
         .gac-logo {
-            font-size: 1.4em;
+            font-size: 1.6em;
             letter-spacing: 4px;
             text-transform: uppercase;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             color: #ffd700;
             font-weight: 600;
             text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
         .hero-content h1 {
@@ -91,101 +112,128 @@
             letter-spacing: 3px;
             color: #ffffff;
             text-shadow: 0 0 30px rgba(255, 215, 0, 0.7);
-        }
-        
-        .empow-model {
-            font-size: 2.5em;
-            font-weight: 200;
-            color: #ffd700;
-            margin-bottom: 15px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            background: linear-gradient(135deg, #ffffff, #e8e8e8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
         .hero-content .subtitle {
             font-size: 1.3em;
             font-weight: 300;
             margin-bottom: 40px;
-            color: #cccccc;
+            color: #e8e8e8;
             letter-spacing: 1.5px;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            line-height: 1.8;
         }
         
         .gac-divider {
-            width: 150px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #ffd700, #ffffff, #ffd700, transparent);
-            margin: 30px auto;
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 215, 0, 0.3), 
+                #ffd700, 
+                rgba(255, 215, 0, 0.3), 
+                transparent);
+            margin: 40px auto;
             border-radius: 2px;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
         }
         
-        /* CONTENEDOR PRINCIPAL - NEGRO ELEGANTE */
+        /* CONTENEDOR PRINCIPAL - FONDO MÁS CLARO */
         .main-container {
-            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            background: linear-gradient(135deg, #1a2536, #2a3548);
             margin-top: -80px;
             position: relative;
             z-index: 2;
-            border-radius: 40px 40px 0 0;
-            box-shadow: 0 -25px 60px rgba(255, 215, 0, 0.1);
+            border-radius: 50px 50px 0 0;
+            box-shadow: 
+                0 -25px 60px rgba(255, 215, 0, 0.1),
+                inset 0 1px 0 rgba(255, 215, 0, 0.1);
             min-height: 70vh;
         }
         
         .inventory-section {
-            padding: 90px 40px 70px;
+            padding: 100px 40px 80px;
             max-width: 1400px;
             margin: 0 auto;
         }
         
-        /* ENCABEZADO DE SECCIÓN - DORADO */
+        /* ENCABEZADO DE SECCIÓN - PULIDO */
         .section-header {
             text-align: center;
-            margin-bottom: 70px;
+            margin-bottom: 80px;
             position: relative;
+            animation: fadeIn 1s ease-out 0.3s both;
         }
         
         .gac-badge {
             display: inline-block;
             background: linear-gradient(135deg, #ffd700, #ffed4e);
             color: #000000;
-            padding: 12px 28px;
-            border-radius: 25px;
+            padding: 14px 32px;
+            border-radius: 30px;
             font-size: 0.9em;
             font-weight: 700;
-            letter-spacing: 1.5px;
-            margin-bottom: 25px;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
             text-transform: uppercase;
-            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+            box-shadow: 
+                0 8px 25px rgba(255, 215, 0, 0.4),
+                0 2px 5px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gac-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .gac-badge:hover::before {
+            left: 100%;
         }
         
         .section-title {
-            font-size: 3em;
+            font-size: 3.2em;
             font-weight: 400;
-            color: #ffd700;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             letter-spacing: 2px;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
         }
         
         .section-subtitle {
             font-size: 1.3em;
-            color: #cccccc;
+            color: #e8e8e8;
             font-weight: 300;
             max-width: 700px;
             margin: 0 auto;
-            line-height: 1.7;
+            line-height: 1.8;
+            opacity: 0.9;
         }
         
-        /* CONTROLES DE BÚSQUEDA - NEGRO Y DORADO */
+        /* CONTROLES DE BÚSQUEDA - FONDO MÁS CLARO */
         .search-controls {
-            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-            padding: 45px;
-            border-radius: 25px;
-            margin-bottom: 45px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255, 215, 0, 0.2);
+            background: linear-gradient(135deg, #2a3548, #354258);
+            padding: 50px;
+            border-radius: 30px;
+            margin-bottom: 50px;
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.15);
             position: relative;
             overflow: hidden;
+            animation: fadeIn 1s ease-out 0.6s both;
         }
         
         .search-controls::before {
@@ -195,8 +243,11 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, #ffd700, #ffffff, #ffd700);
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            background: linear-gradient(90deg, 
+                #ffd700, 
+                #ffffff, 
+                #ffd700);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
         }
         
         .controls-row {
@@ -209,125 +260,155 @@
         .search-box {
             flex: 1;
             min-width: 450px;
-            padding: 20px 28px;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            border-radius: 15px;
+            padding: 22px 30px;
+            border: 2px solid rgba(255, 215, 0, 0.25);
+            border-radius: 18px;
             font-size: 16px;
-            transition: all 0.3s ease;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(26, 37, 54, 0.8);
             color: #ffffff;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            box-shadow: 
+                0 8px 20px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
         }
         
         .search-box::placeholder {
-            color: #cccccc;
+            color: #aaaaaa;
+            font-weight: 300;
         }
         
         .search-box:focus {
             outline: none;
             border-color: #ffd700;
-            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2), 0 8px 25px rgba(255, 215, 0, 0.1);
-            transform: translateY(-2px);
-            background: rgba(0, 0, 0, 0.7);
+            box-shadow: 
+                0 0 0 4px rgba(255, 215, 0, 0.15),
+                0 12px 35px rgba(255, 215, 0, 0.2);
+            transform: translateY(-3px);
+            background: rgba(26, 37, 54, 0.9);
         }
         
         .stock-filter {
-            padding: 20px 28px;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            border-radius: 15px;
+            padding: 22px 30px;
+            border: 2px solid rgba(255, 215, 0, 0.25);
+            border-radius: 18px;
             font-size: 16px;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(26, 37, 54, 0.8);
             color: #ffffff;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            box-shadow: 
+                0 8px 20px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
             min-width: 220px;
             font-weight: 500;
+            transition: all 0.4s ease;
         }
         
         .stock-filter:focus {
             outline: none;
             border-color: #ffd700;
-            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+            box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.15);
         }
         
-        /* INDICADOR DE ACTUALIZACIÓN */
+        .search-box:hover, .stock-filter:hover {
+            border-color: #ffd700;
+            transform: translateY(-2px);
+            box-shadow: 
+                0 12px 30px rgba(255, 215, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        
+        /* INDICADOR DE ACTUALIZACIÓN - FONDO MÁS CLARO */
         .update-indicator {
-            background: linear-gradient(135deg, #2a2a2a, #3a3a3a);
-            padding: 25px;
+            background: linear-gradient(135deg, #354258, #3f4d64);
+            padding: 28px;
             text-align: center;
             color: #ffd700;
-            border-radius: 18px;
-            margin-bottom: 35px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 
+                0 12px 35px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 215, 0, 0.1);
             border-left: 5px solid #ffd700;
+            animation: fadeIn 1s ease-out 0.9s both;
+            font-size: 1.1em;
         }
         
         .update-indicator span {
             font-weight: 600;
             color: #ffffff;
-            font-size: 1.1em;
+            font-size: 1.2em;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
         
-        /* TABLA - NEGRO ELEGANTE */
+        /* TABLA - FONDO MÁS CLARO */
         .table-container {
-            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-            border-radius: 25px;
+            background: linear-gradient(135deg, #2a3548, #354258);
+            border-radius: 30px;
             overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            border: 1px solid rgba(255, 215, 0, 0.2);
+            box-shadow: 
+                0 25px 60px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            animation: fadeIn 1s ease-out 1.2s both;
         }
         
         .inventory-table {
             width: 100%;
             border-collapse: collapse;
             font-size: 14px;
+            background: transparent;
         }
         
         .inventory-table th {
-            background: linear-gradient(135deg, #000000, #1a1a1a);
+            background: linear-gradient(135deg, #1a2536, #2a3548);
             color: #ffd700;
-            padding: 24px 22px;
+            padding: 26px 24px;
             text-align: left;
             font-weight: 600;
             font-size: 13px;
             position: sticky;
             top: 0;
             text-transform: uppercase;
-            letter-spacing: 1.2px;
+            letter-spacing: 1.5px;
             border-bottom: 3px solid #ffd700;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
         
         .inventory-table th:first-child {
-            border-radius: 25px 0 0 0;
+            border-radius: 30px 0 0 0;
         }
         
         .inventory-table th:last-child {
-            border-radius: 0 25px 0 0;
+            border-radius: 0 30px 0 0;
         }
         
         .inventory-table td {
-            padding: 22px;
+            padding: 24px;
             border-bottom: 1px solid rgba(255, 215, 0, 0.1);
             font-size: 14px;
             line-height: 1.5;
             color: #ffffff;
-            transition: all 0.3s ease;
             font-weight: 400;
+            transition: all 0.3s ease;
+            position: relative;
         }
         
         .inventory-table tr {
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
         }
         
         .inventory-table tr:not(:last-child) {
-            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.08);
         }
         
         .inventory-table tr:hover {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
+            background: linear-gradient(135deg, 
+                rgba(255, 215, 0, 0.08), 
+                rgba(255, 215, 0, 0.03));
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.2);
+            box-shadow: 
+                0 8px 25px rgba(255, 215, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
         
         .inventory-table tr:hover td {
@@ -335,20 +416,23 @@
             font-weight: 500;
         }
         
-        /* ESTADOS DE STOCK - DORADO */
+        /* ESTADOS DE STOCK - PULIDOS */
         .stock-high { 
             background: linear-gradient(135deg, #27ae60, #2ecc71);
             color: white; 
             font-weight: 700;
             padding: 10px 18px;
-            border-radius: 10px;
+            border-radius: 12px;
             text-align: center;
             display: inline-block;
             min-width: 75px;
-            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.4);
+            box-shadow: 
+                0 4px 15px rgba(39, 174, 96, 0.4),
+                0 2px 5px rgba(0, 0, 0, 0.2);
             text-transform: uppercase;
-            font-size: 0.85em;
-            letter-spacing: 0.5px;
+            font-size: 0.8em;
+            letter-spacing: 1px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
         
         .stock-medium { 
@@ -356,14 +440,17 @@
             color: white; 
             font-weight: 700;
             padding: 10px 18px;
-            border-radius: 10px;
+            border-radius: 12px;
             text-align: center;
             display: inline-block;
             min-width: 75px;
-            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+            box-shadow: 
+                0 4px 15px rgba(243, 156, 18, 0.4),
+                0 2px 5px rgba(0, 0, 0, 0.2);
             text-transform: uppercase;
-            font-size: 0.85em;
-            letter-spacing: 0.5px;
+            font-size: 0.8em;
+            letter-spacing: 1px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
         
         .stock-low { 
@@ -371,33 +458,36 @@
             color: white; 
             font-weight: 700;
             padding: 10px 18px;
-            border-radius: 10px;
+            border-radius: 12px;
             text-align: center;
             display: inline-block;
             min-width: 75px;
-            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+            box-shadow: 
+                0 4px 15px rgba(231, 76, 60, 0.4),
+                0 2px 5px rgba(0, 0, 0, 0.2);
             text-transform: uppercase;
-            font-size: 0.85em;
-            letter-spacing: 0.5px;
+            font-size: 0.8em;
+            letter-spacing: 1px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
         
-        /* ESTADOS DE CARGA */
+        /* ESTADOS DE CARGA - PULIDOS */
         .loading { 
             text-align: center; 
-            padding: 90px; 
+            padding: 100px; 
             color: #cccccc;
             font-size: 17px;
         }
         
         .gac-spinner {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border: 4px solid rgba(255, 215, 0, 0.2);
             border-top: 4px solid #ffd700;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 25px;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            animation: spin 1.2s linear infinite;
+            margin: 0 auto 30px;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
         }
         
         @keyframes spin {
@@ -405,49 +495,62 @@
             100% { transform: rotate(360deg); }
         }
         
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
         .error { 
             text-align: center; 
-            padding: 55px; 
+            padding: 60px; 
             color: #ff6b6b; 
-            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 107, 107, 0.05));
-            margin: 25px; 
-            border-radius: 18px;
+            background: linear-gradient(135deg, 
+                rgba(255, 107, 107, 0.1), 
+                rgba(255, 107, 107, 0.05));
+            margin: 30px; 
+            border-radius: 20px;
             font-size: 17px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            box-shadow: 
+                0 12px 35px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
             border-left: 5px solid #ff6b6b;
         }
         
-        /* FOOTER - NEGRO */
+        /* FOOTER - FONDO MÁS CLARO */
         .footer {
             text-align: center;
-            padding: 45px 20px;
-            background: linear-gradient(135deg, #000000, #1a1a1a);
+            padding: 50px 20px;
+            background: linear-gradient(135deg, #1a2536, #2a3548);
             color: #cccccc;
-            margin-top: 90px;
+            margin-top: 100px;
             border-top: 1px solid rgba(255, 215, 0, 0.2);
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
         }
         
         .footer p {
             font-size: 14px;
             letter-spacing: 1px;
             font-weight: 300;
+            opacity: 0.8;
         }
         
         .gac-signature {
             color: #ffd700;
             font-weight: 600;
-            margin-top: 10px;
+            margin-top: 15px;
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            letter-spacing: 1.5px;
         }
         
-        /* RESPONSIVE */
+        /* RESPONSIVE - MEJORADO */
         @media (max-width: 768px) {
-            .hero-content h1 {
-                font-size: 3em;
+            .hero-content {
+                padding: 40px 30px;
+                margin: 20px;
             }
             
-            .empow-model {
-                font-size: 1.8em;
+            .hero-content h1 {
+                font-size: 3em;
             }
             
             .hero-content .subtitle {
@@ -468,50 +571,55 @@
             }
             
             .inventory-section {
-                padding: 70px 25px 50px;
+                padding: 80px 25px 60px;
             }
             
             .hero-header {
-                height: 70vh;
-                background-position: center 30%;
+                height: 75vh;
+                background-position: center 35%;
             }
             
             .gac-logo-img {
-                height: 70px;
+                height: 140px;
+            }
+            
+            .search-controls {
+                padding: 35px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- HEADER GAC EMPOW - NEGRO Y DORADO -->
+    <!-- HEADER GAC EMPOW - ACTUALIZADO -->
     <header class="hero-header">
         <div class="hero-content">
-            <!-- LOGO GAC EMPOW -->
+            <!-- LOGO GAC EMPOW - MÁS GRANDE -->
             <div class="logo-container">
                 <img src="https://br-www-resouce-cdn.gacgroup.com/static/Global/tenant/cms/common/202503/acd070ba-2958-4119-a246-9e8fbb408de3.webp" 
                      alt="GAC EMPOW" 
                      class="gac-logo-img">
             </div>
             
-            <div class="gac-logo">GAC Motor</div>
-            <div class="empow-model">EMPOW</div>
+            <!-- CAMBIADO A GAC MOTOR / DFSK MOTOR -->
+            <div class="gac-logo">GAC MOTOR / DFSK MOTOR</div>
+            
             <h1>Premium Inventory</h1>
             <div class="gac-divider"></div>
-            <p class="subtitle">Sistema exclusivo de gestión de inventario</p>
+            <p class="subtitle">Sistema exclusivo de gestión de inventario en tiempo real</p>
         </div>
     </header>
     
-    <!-- CONTENIDO PRINCIPAL - NEGRO ELEGANTE -->
+    <!-- CONTENIDO PRINCIPAL - ACTUALIZADO -->
     <main class="main-container">
         <section class="inventory-section">
-            <!-- ENCABEZADO - DORADO -->
+            <!-- ENCABEZADO - ACTUALIZADO -->
             <div class="section-header">
                 <div class="gac-badge">Sistema de Inventario</div>
                 <h2 class="section-title">Gestión de Repuestos</h2>
-                <p class="section-subtitle">Consulta en tiempo real la disponibilidad de repuestos originales GAC</p>
+                <p class="section-subtitle">Consulta en tiempo real la disponibilidad de repuestos originales GAC / DFSK</p>
             </div>
             
-            <!-- CONTROLES DE BÚSQUEDA - NEGRO Y DORADO -->
+            <!-- CONTROLES DE BÚSQUEDA - ACTUALIZADOS -->
             <div class="search-controls">
                 <div class="controls-row">
                     <input type="text" 
@@ -528,17 +636,19 @@
                 </div>
             </div>
             
-            <!-- INDICADOR DE ACTUALIZACIÓN -->
+            <!-- INDICADOR DE ACTUALIZACIÓN - ACTUALIZADO -->
             <div class="update-indicator">
                 Última actualización: <span id="update-time">Cargando...</span>
             </div>
             
-            <!-- TABLA - NEGRO ELEGANTE -->
+            <!-- TABLA - ACTUALIZADA -->
             <div class="table-container">
                 <div id="loading-message" class="loading">
                     <div class="gac-spinner"></div>
-                    <div>Cargando inventario GAC...</div>
-                    <small style="margin-top: 15px; display: block; opacity: 0.7; color: #cccccc;">Obteniendo datos actualizados del sistema</small>
+                    <div>Cargando inventario GAC / DFSK...</div>
+                    <small style="margin-top: 20px; display: block; opacity: 0.7; color: #cccccc;">
+                        Obteniendo datos actualizados del sistema
+                    </small>
                 </div>
                 
                 <div id="error-message" class="error" style="display: none;"></div>
@@ -563,7 +673,7 @@
         </section>
     </main>
     
-    <!-- FOOTER - NEGRO -->
+    <!-- FOOTER - ACTUALIZADO -->
     <footer class="footer">
         <p>&copy; 2024 GAC Motor Philippines. Todos los derechos reservados.</p>
         <p class="gac-signature">Innovation • Quality • Excellence</p>
@@ -585,7 +695,13 @@
             const tbody = document.getElementById('inventory-body');
             
             if (data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 50px; color: #cccccc; font-size: 16px; font-style: italic; background: rgba(0,0,0,0.3); border-radius: 0 0 25px 25px;">No se encontraron repuestos con los criterios de búsqueda actuales</td></tr>';
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 60px; color: #cccccc; font-size: 16px; font-style: italic; background: rgba(26, 37, 54, 0.5); border-radius: 0 0 30px 30px;">
+                            No se encontraron repuestos con los criterios de búsqueda actuales
+                        </td>
+                    </tr>
+                `;
                 return;
             }
             
@@ -597,7 +713,11 @@
                         <td style="font-weight: 500; color: #ffffff;">${item.marca}</td>
                         <td style="color: #cccccc;">${item.serie}</td>
                         <td style="color: #cccccc;">${item.modelo}</td>
-                        <td><code style="background: rgba(255, 215, 0, 0.1); padding: 6px 10px; border-radius: 6px; font-family: 'Courier New', monospace; font-weight: 600; color: #ffd700; border: 1px solid rgba(255, 215, 0, 0.3);">${item.numero_parte}</code></td>
+                        <td>
+                            <code style="background: rgba(255, 215, 0, 0.1); padding: 8px 12px; border-radius: 8px; font-family: 'Courier New', monospace; font-weight: 600; color: #ffd700; border: 1px solid rgba(255, 215, 0, 0.3);">
+                                ${item.numero_parte}
+                            </code>
+                        </td>
                         <td style="font-weight: 400; color: #ffffff;">${item.descripcion}</td>
                         <td><span class="${status.class}">${item.cantidad}</span></td>
                     </tr>
