@@ -871,7 +871,7 @@
         </div>
     </header>
     
-    <!-- CONTENIDO PRINCIPAL - FONDO BLANCO -->
+    <!-- CONTENEDOR PRINCIPAL - FONDO BLANCO -->
     <main class="main-container">
         <section class="inventory-section">
             <!-- ENCABEZADO - ROJO FERRARI -->
@@ -1010,7 +1010,6 @@
                         <th>Número de Parte</th>
                         <th>Descripción</th>
                         <th>Cantidad Solicitada</th>
-                        <th>Stock Actual</th>
                     </tr>
                 </thead>
                 <tbody id="pdfRequestTableBody">
@@ -1018,7 +1017,7 @@
                 </tbody>
             </table>
             <div style="margin-top: 15px; font-style: italic; color: #666;">
-                <strong>Observación:</strong> El cliente solicita estos productos que exceden el stock disponible. Favor dar respuesta sobre disponibilidad y tiempos de entrega para las cantidades adicionales solicitadas.
+                <strong>Observación:</strong> El cliente solicita estos productos que actualmente no se encuentran en stock. Favor dar respuesta sobre disponibilidad y tiempos de entrega.
             </div>
         </div>
         
@@ -1080,10 +1079,12 @@
                             <div class="quantity-controls">
                                 <button class="quantity-btn" onclick="decreaseQuantity('${item.codigo}')" ${quantity === 0 ? 'disabled' : ''}>-</button>
                                 <input type="number" class="quantity-input" id="qty-${item.codigo}" 
-                                       value="${quantity}" min="0" 
-                                       onchange="updateQuantity('${item.codigo}', this.value)">
-                                <button class="quantity-btn" onclick="increaseQuantity('${item.codigo}')">+</button>
-                                ${item.cantidad === 0 ? '<div style="font-size: 0.8em; color: #d40000; margin-top: 5px;">Producto sin stock</div>' : ''}
+                                       value="${quantity}" min="0" max="${item.cantidad > 0 ? item.cantidad : ''}" 
+                                       onchange="updateQuantity('${item.codigo}', this.value)" 
+                                       ${item.cantidad > 0 ? `max="${item.cantidad}"` : ''}>
+                                <button class="quantity-btn" onclick="increaseQuantity('${item.codigo}')" 
+                                        ${item.cantidad > 0 ? `data-max="${item.cantidad}"` : ''}>+</button>
+                                ${item.cantidad === 0 ? '<div style="font-size: 0.8em; color: #d40000; margin-top: 5px;">Producto sin stock - Solicitud especial</div>' : ''}
                             </div>
                         </td>
                     </tr>
@@ -1096,6 +1097,12 @@
             newQuantity = parseInt(newQuantity) || 0;
             
             if (newQuantity < 0) newQuantity = 0;
+            
+            // Si tiene stock, no permitir más de lo disponible
+            if (item.cantidad > 0 && newQuantity > item.cantidad) {
+                newQuantity = item.cantidad;
+                showNotification(`No puede solicitar más de ${item.cantidad} unidades (stock disponible)`, 'error');
+            }
             
             // Actualizar input
             document.getElementById(`qty-${codigo}`).value = newQuantity;
@@ -1119,12 +1126,21 @@
             }
             
             updateQuoteButton();
-            updateQuantityButtons(codigo, newQuantity);
+            updateQuantityButtons(codigo, newQuantity, item.cantidad);
         }
 
         function increaseQuantity(codigo) {
             const currentInput = document.getElementById(`qty-${codigo}`);
+            const increaseBtn = document.querySelector(`button[onclick="increaseQuantity('${codigo}')"]`);
             let currentValue = parseInt(currentInput.value) || 0;
+            const maxQuantity = increaseBtn.getAttribute('data-max');
+            
+            // Si tiene stock, verificar límite
+            if (maxQuantity && currentValue >= parseInt(maxQuantity)) {
+                showNotification(`No puede solicitar más de ${maxQuantity} unidades (stock disponible)`, 'error');
+                return;
+            }
+            
             currentValue++;
             updateQuantity(codigo, currentValue);
         }
@@ -1139,11 +1155,15 @@
             }
         }
 
-        function updateQuantityButtons(codigo, currentQuantity) {
+        function updateQuantityButtons(codigo, currentQuantity, maxQuantity) {
             const decreaseBtn = document.querySelector(`button[onclick="decreaseQuantity('${codigo}')"]`);
+            const increaseBtn = document.querySelector(`button[onclick="increaseQuantity('${codigo}')"]`);
             
             if (decreaseBtn) {
                 decreaseBtn.disabled = currentQuantity === 0;
+            }
+            if (increaseBtn && maxQuantity > 0) {
+                increaseBtn.disabled = currentQuantity >= maxQuantity;
             }
         }
 
@@ -1196,8 +1216,7 @@
             const quotePanel = document.getElementById('quotePanel');
             
             quoteItemsContainer.innerHTML = quoteItems.map(item => {
-                const availableStock = Math.min(item.quantity, item.cantidad);
-                const extraRequest = item.quantity > item.cantidad ? item.quantity - item.cantidad : 0;
+                const isOutOfStock = item.cantidad === 0;
                 
                 return `
                     <div class="quote-item">
@@ -1209,8 +1228,7 @@
                         <div style="text-align: right;">
                             <div style="font-weight: 600; color: #333333;">Cantidad: ${item.quantity}</div>
                             <div style="font-size: 0.9em; color: #666666;">Stock disponible: ${item.cantidad}</div>
-                            ${extraRequest > 0 ? `<div style="font-size: 0.8em; color: #d40000; margin-top: 5px;">⚠️ ${extraRequest} unidades adicionales solicitadas</div>` : ''}
-                            ${item.cantidad === 0 ? '<div style="font-size: 0.8em; color: #d40000; margin-top: 5px;">⚠️ Sin stock</div>' : ''}
+                            ${isOutOfStock ? '<div style="font-size: 0.8em; color: #d40000; margin-top: 5px;">⚠️ Solicitud sin stock</div>' : ''}
                         </div>
                     </div>
                 `;
@@ -1298,23 +1316,9 @@
             // Mostrar loading
             showNotification('Generando PDF...', 'info');
             
-            // Separar productos con stock disponible y solicitudes adicionales
-            const itemsWithStock = [];
-            const itemsWithoutStock = [];
-            
-            quoteItems.forEach(item => {
-                if (item.cantidad > 0 && item.quantity <= item.cantidad) {
-                    // Producto completamente en stock
-                    itemsWithStock.push(item);
-                } else {
-                    // Producto sin stock o con cantidad adicional solicitada
-                    itemsWithoutStock.push({
-                        ...item,
-                        extraQuantity: item.quantity > item.cantidad ? item.quantity - item.cantidad : item.quantity,
-                        availableStock: Math.min(item.quantity, item.cantidad)
-                    });
-                }
-            });
+            // Separar productos con stock y sin stock
+            const itemsWithStock = quoteItems.filter(item => item.cantidad > 0);
+            const itemsWithoutStock = quoteItems.filter(item => item.cantidad === 0);
             
             // Preparar datos para el PDF
             const pdfDate = new Date().toLocaleDateString('es-ES', {
@@ -1354,8 +1358,7 @@
                         <td>${item.modelo}</td>
                         <td>${item.numero_parte}</td>
                         <td>${item.descripcion_espanol}</td>
-                        <td>${item.extraQuantity || item.quantity}</td>
-                        <td>${item.cantidad}</td>
+                        <td>${item.quantity}</td>
                     </tr>
                 `).join('');
                 pdfRequestSection.style.display = 'block';
@@ -1413,7 +1416,10 @@
             document.querySelectorAll('.quantity-input').forEach(input => {
                 input.value = 0;
                 const codigo = input.id.replace('qty-', '');
-                updateQuantityButtons(codigo, 0);
+                const item = inventoryData.find(i => i.codigo === codigo);
+                if (item) {
+                    updateQuantityButtons(codigo, 0, item.cantidad);
+                }
             });
             
             updateQuoteButton();
@@ -1546,4 +1552,3 @@
     </script>
 </body>
 </html>
-
