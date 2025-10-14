@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GAC Motors | Sistema de Cotización</title>
+    <!-- Incluir jsPDF y html2canvas para generar PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         * { 
             margin: 0; 
@@ -668,6 +671,75 @@
             text-shadow: 0 0 10px var(--ferrari-red-glow);
             letter-spacing: 1.5px;
         }
+
+        /* ESTILOS PARA EL PDF */
+        .pdf-template {
+            display: none;
+            background: white;
+            color: black;
+            padding: 40px;
+            font-family: Arial, sans-serif;
+        }
+
+        .pdf-header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #ff2800;
+            padding-bottom: 20px;
+        }
+
+        .pdf-title {
+            font-size: 28px;
+            color: #ff2800;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .pdf-subtitle {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .pdf-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 12px;
+        }
+
+        .pdf-table th {
+            background-color: #ff2800;
+            color: white;
+            padding: 12px 8px;
+            text-align: left;
+            font-weight: bold;
+            border: 1px solid #ddd;
+        }
+
+        .pdf-table td {
+            padding: 10px 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .pdf-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .pdf-footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #ff2800;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .pdf-total {
+            font-weight: bold;
+            color: #ff2800;
+            font-size: 14px;
+        }
         
         /* RESPONSIVE - MEJORADO */
         @media (max-width: 768px) {
@@ -831,8 +903,8 @@
                     Total de items seleccionados: <span id="totalItems">0</span>
                 </div>
                 <div style="text-align: center;">
-                    <button class="quote-btn" onclick="downloadQuote()">
-                        📥 Descargar Cotización
+                    <button class="quote-btn" onclick="generatePDF()">
+                        📥 Descargar PDF
                     </button>
                     <button class="quote-btn" onclick="clearQuote()" style="background: #666; margin-left: 15px;">
                         🗑️ Limpiar Cotización
@@ -841,6 +913,38 @@
             </div>
         </section>
     </main>
+
+    <!-- PLANTILLA OCULTA PARA EL PDF -->
+    <div id="pdfTemplate" class="pdf-template">
+        <div class="pdf-header">
+            <div class="pdf-title">COTIZACIÓN DE REPUESTOS</div>
+            <div class="pdf-subtitle">GAC MOTOR / DFSK MOTOR - SISTEMA DE COTIZACIÓN</div>
+            <div class="pdf-subtitle">Fecha: <span id="pdfDate"></span></div>
+        </div>
+        
+        <table class="pdf-table" id="pdfTable">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Marca</th>
+                    <th>Serie</th>
+                    <th>Modelo</th>
+                    <th>Número de Parte</th>
+                    <th>Descripción</th>
+                    <th>Cantidad Cotizada</th>
+                    <th>Stock Disponible</th>
+                </tr>
+            </thead>
+            <tbody id="pdfTableBody">
+                <!-- Los datos se insertarán aquí -->
+            </tbody>
+        </table>
+        
+        <div class="pdf-footer">
+            <div class="pdf-total">Total de items cotizados: <span id="pdfTotalItems">0</span></div>
+            <div style="margin-top: 10px;">Este documento fue generado automáticamente por el Sistema de Cotización GAC/DFSK</div>
+        </div>
+    </div>
     
     <!-- FOOTER - ROJO FERRARI -->
     <footer class="footer">
@@ -1036,26 +1140,77 @@
             quotePanel.scrollIntoView({ behavior: 'smooth' });
         }
 
-        function downloadQuote() {
+        function generatePDF() {
             if (quoteItems.length === 0) return;
             
-            let csvContent = "Código,Marca,Serie,Modelo,Número de Parte,Descripción,Cantidad Cotizada,Stock Disponible\n";
+            // Mostrar loading
+            showNotification('Generando PDF...', 'info');
             
-            quoteItems.forEach(item => {
-                csvContent += `"${item.codigo}","${item.marca}","${item.serie}","${item.modelo}","${item.numero_parte}","${item.descripcion_espanol}",${item.quantity},${item.cantidad}\n`;
+            // Preparar datos para el PDF
+            const pdfDate = new Date().toLocaleDateString('es-ES', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
             });
             
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement("a");
-            const url = URL.createObjectURL(blob);
+            document.getElementById('pdfDate').textContent = pdfDate;
+            document.getElementById('pdfTotalItems').textContent = quoteItems.length;
             
-            link.setAttribute("href", url);
-            link.setAttribute("download", `cotizacion_gac_dfsk_${new Date().toISOString().split('T')[0]}.csv`);
-            link.style.visibility = 'hidden';
+            const pdfTableBody = document.getElementById('pdfTableBody');
+            pdfTableBody.innerHTML = quoteItems.map(item => `
+                <tr>
+                    <td>${item.codigo}</td>
+                    <td>${item.marca}</td>
+                    <td>${item.serie}</td>
+                    <td>${item.modelo}</td>
+                    <td>${item.numero_parte}</td>
+                    <td>${item.descripcion_espanol}</td>
+                    <td>${item.quantity}</td>
+                    <td>${item.cantidad}</td>
+                </tr>
+            `).join('');
             
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            // Usar html2canvas y jsPDF para generar el PDF
+            const { jsPDF } = window.jspdf;
+            const pdfTemplate = document.getElementById('pdfTemplate');
+            
+            // Mostrar temporalmente el template
+            pdfTemplate.style.display = 'block';
+            
+            html2canvas(pdfTemplate, {
+                scale: 2,
+                useCORS: true,
+                logging: false
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const imgWidth = 210;
+                const pageHeight = 295;
+                const imgHeight = canvas.height * imgWidth / canvas.width;
+                let heightLeft = imgHeight;
+                let position = 0;
+                
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+                
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+                
+                pdf.save(`cotizacion_gac_dfsk_${new Date().toISOString().split('T')[0]}.pdf`);
+                
+                // Ocultar el template nuevamente
+                pdfTemplate.style.display = 'none';
+                
+                showNotification('PDF generado y descargado correctamente', 'success');
+            }).catch(error => {
+                console.error('Error al generar PDF:', error);
+                pdfTemplate.style.display = 'none';
+                showNotification('Error al generar el PDF', 'error');
+            });
         }
 
         function clearQuote() {
@@ -1086,7 +1241,9 @@
                 position: fixed;
                 top: 20px;
                 right: 20px;
-                background: ${type === 'success' ? 'linear-gradient(135deg, #27ae60, #2ecc71)' : 'linear-gradient(135deg, #ff2800, #ff4d4d)'};
+                background: ${type === 'success' ? 'linear-gradient(135deg, #27ae60, #2ecc71)' : 
+                          type === 'error' ? 'linear-gradient(135deg, #e74c3c, #c0392b)' : 
+                          'linear-gradient(135deg, #3498db, #2980b9)'};
                 color: white;
                 padding: 15px 25px;
                 border-radius: 10px;
