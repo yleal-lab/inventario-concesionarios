@@ -725,28 +725,28 @@
             }).join('');
         }
 
-        function filterInventory() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const stockFilter = document.getElementById('stockFilter').value;
-            
-            const filteredData = inventoryData.filter(item => {
-                const matchesSearch = 
-                    (item.codigo && item.codigo.toLowerCase().includes(searchTerm)) ||
-                    (item.descripcion && item.descripcion.toLowerCase().includes(searchTerm)) ||
-                    (item.numero_parte && item.numero_parte.toLowerCase().includes(searchTerm)) ||
-                    (item.modelo && item.modelo.toLowerCase().includes(searchTerm));
-                
-                let matchesStock = true;
-                if (stockFilter === "high") matchesStock = item.cantidad > 10;
-                else if (stockFilter === "medium") matchesStock = item.cantidad > 0 && item.cantidad <= 10;
-                else if (stockFilter === "low") matchesStock = item.cantidad === 0;
-                
-                return matchesSearch && matchesStock;
-            });
-            
-            renderInventory(filteredData);
-        }
-
+       function filterInventory() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const stockFilter = document.getElementById('stockFilter').value;
+    
+    const filteredData = inventoryData.filter(item => {
+        const matchesSearch = 
+            (item.codigo && item.codigo.toLowerCase().includes(searchTerm)) ||
+            (item.descripcion && item.descripcion.toLowerCase().includes(searchTerm)) ||
+            (item.numero_parte && item.numero_parte.toLowerCase().includes(searchTerm)) ||
+            (item.modelo && item.modelo.toLowerCase().includes(searchTerm)) ||
+            (item.serie && item.serie.toLowerCase().includes(searchTerm)); // ← AGREGADO
+        
+        let matchesStock = true;
+        if (stockFilter === "high") matchesStock = item.cantidad > 10;
+        else if (stockFilter === "medium") matchesStock = item.cantidad > 0 && item.cantidad <= 10;
+        else if (stockFilter === "low") matchesStock = item.cantidad === 0;
+        
+        return matchesSearch && matchesStock;
+    });
+    
+    renderInventory(filteredData);
+}
         // Función para convertir CSV a JSON
         function csvToJSON(csv) {
             const lines = csv.split('\n').filter(line => line.trim() !== '');
