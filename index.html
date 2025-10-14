@@ -375,6 +375,38 @@
             transform: none;
             box-shadow: none;
         }
+
+        /* BOTÓN ADMIN - OCULTO INICIALMENTE */
+        .admin-btn {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 
+                0 4px 15px rgba(0, 0, 0, 0.1),
+                0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            opacity: 0.3;
+        }
+        
+        .admin-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.2),
+                0 4px 10px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            opacity: 1;
+        }
         
         /* INDICADOR DE ACTUALIZACIÓN - FONDO BLANCO */
         .update-indicator {
@@ -600,21 +632,22 @@
             border-radius: 10px;
         }
 
-        /* PANEL DE ANÁLISIS DE REPOSICIÓN */
+        /* PANEL DE ANÁLISIS DE REPOSICIÓN - OCULTO INICIALMENTE */
         .replenishment-panel {
-            background: linear-gradient(135deg, #ffffff, #f8f8f8);
+            background: linear-gradient(135deg, #2c3e50, #34495e);
             padding: 30px;
             border-radius: 20px;
             margin-top: 30px;
             box-shadow: 
-                0 15px 35px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 var(--ferrari-red);
-            border: 2px solid var(--ferrari-red);
+                0 15px 35px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 2px solid #1a252f;
             display: none;
+            color: white;
         }
 
         .replenishment-panel h3 {
-            color: var(--ferrari-red);
+            color: #ecf0f1;
             margin-bottom: 20px;
             font-size: 1.5em;
             text-align: center;
@@ -625,10 +658,35 @@
             justify-content: space-between;
             align-items: center;
             padding: 12px;
-            border-bottom: 1px solid rgba(212, 0, 0, 0.1);
-            background: rgba(255, 255, 255, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 8px;
             margin-bottom: 8px;
+        }
+
+        .replenishment-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #bdc3c7;
         }
         
         /* ESTADOS DE CARGA - FONDO BLANCO */
@@ -843,10 +901,20 @@
             .quantity-input {
                 width: 50px;
             }
+
+            .admin-btn {
+                top: 10px;
+                right: 10px;
+                padding: 8px 15px;
+                font-size: 12px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- BOTÓN ADMIN - OCULTO INICIALMENTE -->
+    <button class="admin-btn" id="adminToggle" style="display: none;">🔒 Admin</button>
+
     <!-- HEADER GAC EMPOW - FONDO BLANCO -->
     <header class="hero-header">
         <div class="hero-content">
@@ -871,7 +939,7 @@
         </div>
     </header>
     
-    <!-- CONTENEDOR PRINCIPAL - FONDO BLANCO -->
+    <!-- CONTENIDO PRINCIPAL - FONDO BLANCO -->
     <main class="main-container">
         <section class="inventory-section">
             <!-- ENCABEZADO - ROJO FERRARI -->
@@ -957,11 +1025,28 @@
                 </div>
             </div>
 
-            <!-- PANEL DE ANÁLISIS DE REPOSICIÓN -->
+            <!-- PANEL DE ANÁLISIS DE REPOSICIÓN - SOLO VISIBLE PARA ADMIN -->
             <div class="replenishment-panel" id="replenishmentPanel">
-                <h3>📊 Análisis de Reposición Recomendada</h3>
+                <h3>📊 ANÁLISIS DE REPOSICIÓN - MODO ADMINISTRADOR</h3>
+                
+                <!-- ESTADÍSTICAS GENERALES -->
+                <div class="replenishment-stats" id="replenishmentStats">
+                    <!-- Las estadísticas se generarán aquí -->
+                </div>
+                
+                <!-- ITEMS QUE NECESITAN REPOSICIÓN -->
                 <div id="replenishmentItems">
                     <!-- Los items de reposición se generarán aquí -->
+                </div>
+
+                <!-- BOTÓN PARA EXPORTAR ANÁLISIS -->
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="quote-btn" onclick="exportReplenishmentAnalysis()" style="background: #3498db;">
+                        📊 Exportar Análisis
+                    </button>
+                    <button class="quote-btn" onclick="resetAnalysisData()" style="background: #e74c3c; margin-left: 15px;">
+                        🗑️ Resetear Datos
+                    </button>
                 </div>
             </div>
         </section>
@@ -1040,6 +1125,45 @@
         let inventoryData = [];
         let quoteItems = [];
         let productFrequency = JSON.parse(localStorage.getItem('productFrequency')) || {};
+        let isAdminMode = false;
+
+        // FUNCIÓN SECRETA PARA ACTIVAR MODO ADMIN - PRESIONA 'A' + 'D' + 'M' + 'I' + 'N'
+        let adminKeySequence = [];
+        const ADMIN_SECRET = 'admin';
+
+        function handleAdminKeyPress(event) {
+            adminKeySequence.push(event.key.toLowerCase());
+            
+            // Mantener solo los últimos 5 caracteres
+            if (adminKeySequence.length > 5) {
+                adminKeySequence.shift();
+            }
+            
+            // Verificar si la secuencia coincide con 'admin'
+            if (adminKeySequence.join('') === ADMIN_SECRET) {
+                activateAdminMode();
+                adminKeySequence = []; // Resetear la secuencia
+            }
+        }
+
+        function activateAdminMode() {
+            isAdminMode = true;
+            document.getElementById('adminToggle').style.display = 'block';
+            showNotification('Modo Administrador Activado', 'success');
+            showReplenishmentAnalysis();
+        }
+
+        function toggleAdminPanel() {
+            const panel = document.getElementById('replenishmentPanel');
+            if (panel.style.display === 'block') {
+                panel.style.display = 'none';
+                document.getElementById('adminToggle').textContent = '🔒 Admin';
+            } else {
+                panel.style.display = 'block';
+                document.getElementById('adminToggle').textContent = '👁️ Admin';
+                showReplenishmentAnalysis();
+            }
+        }
 
         function getStockStatus(cantidad) {
             if (cantidad > 10) return { class: "stock-high" };
@@ -1237,8 +1361,10 @@
             quoteTotal.innerHTML = `Total de items seleccionados: <span id="totalItems" style="color: #d40000; font-size: 1.2em;">${quoteItems.length}</span>`;
             quotePanel.style.display = 'block';
             
-            // Mostrar análisis de reposición
-            showReplenishmentAnalysis();
+            // Mostrar análisis de reposición solo si es admin
+            if (isAdminMode) {
+                showReplenishmentAnalysis();
+            }
             
             // Scroll suave al panel de cotización
             quotePanel.scrollIntoView({ behavior: 'smooth' });
@@ -1250,7 +1376,8 @@
                     productFrequency[item.codigo] = {
                         count: 0,
                         description: item.descripcion_espanol,
-                        totalRequested: 0
+                        totalRequested: 0,
+                        lastRequested: new Date().toISOString()
                     };
                 }
                 productFrequency[item.codigo].count++;
@@ -1263,8 +1390,36 @@
         }
 
         function showReplenishmentAnalysis() {
+            if (!isAdminMode) return;
+            
             const replenishmentPanel = document.getElementById('replenishmentPanel');
             const replenishmentItems = document.getElementById('replenishmentItems');
+            const replenishmentStats = document.getElementById('replenishmentStats');
+            
+            // Calcular estadísticas generales
+            const totalProducts = Object.keys(productFrequency).length;
+            const totalRequests = Object.values(productFrequency).reduce((sum, item) => sum + item.count, 0);
+            const totalQuantityRequested = Object.values(productFrequency).reduce((sum, item) => sum + item.totalRequested, 0);
+            
+            // Mostrar estadísticas
+            replenishmentStats.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-value">${totalProducts}</div>
+                    <div class="stat-label">Productos Únicos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${totalRequests}</div>
+                    <div class="stat-label">Total Solicitudes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${totalQuantityRequested}</div>
+                    <div class="stat-label">Unidades Solicitadas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${Math.round(totalQuantityRequested / totalRequests) || 0}</div>
+                    <div class="stat-label">Promedio por Solicitud</div>
+                </div>
+            `;
             
             // Calcular productos que necesitan reposición
             const replenishmentNeeded = [];
@@ -1273,9 +1428,10 @@
                 const frequencyData = productFrequency[codigo];
                 const inventoryItem = inventoryData.find(item => item.codigo === codigo);
                 
-                if (inventoryItem && frequencyData.count >= 2) {
+                if (inventoryItem) {
                     const avgRequest = Math.ceil(frequencyData.totalRequested / frequencyData.count);
-                    const recommendedStock = Math.max(avgRequest * 2, 10); // Mínimo 10 unidades o el doble del promedio
+                    const recommendedStock = Math.max(avgRequest * 3, 15); // Mínimo 15 unidades o el triple del promedio
+                    const urgency = frequencyData.count >= 5 ? 'ALTA' : frequencyData.count >= 3 ? 'MEDIA' : 'BAJA';
                     
                     if (inventoryItem.cantidad < recommendedStock) {
                         replenishmentNeeded.push({
@@ -1284,29 +1440,125 @@
                             currentStock: inventoryItem.cantidad,
                             recommendedStock,
                             frequency: frequencyData.count,
-                            avgRequest: avgRequest
+                            avgRequest: avgRequest,
+                            urgency: urgency,
+                            lastRequested: new Date(frequencyData.lastRequested).toLocaleDateString()
                         });
                     }
                 }
             });
             
+            // Ordenar por urgencia y frecuencia
+            replenishmentNeeded.sort((a, b) => {
+                if (a.urgency !== b.urgency) {
+                    const urgencyOrder = { 'ALTA': 3, 'MEDIA': 2, 'BAJA': 1 };
+                    return urgencyOrder[b.urgency] - urgencyOrder[a.urgency];
+                }
+                return b.frequency - a.frequency;
+            });
+            
             if (replenishmentNeeded.length > 0) {
                 replenishmentItems.innerHTML = replenishmentNeeded.map(item => `
                     <div class="replenishment-item">
-                        <div>
-                            <strong style="color: #d40000;">${item.codigo}</strong><br>
-                            <small>${item.description}</small>
+                        <div style="flex: 1;">
+                            <strong style="color: #3498db;">${item.codigo}</strong><br>
+                            <small>${item.description}</small><br>
+                            <small style="color: #bdc3c7;">Última solicitud: ${item.lastRequested}</small>
                         </div>
                         <div style="text-align: right;">
-                            <div style="font-weight: 600; color: #333333;">Stock actual: ${item.currentStock}</div>
-                            <div style="color: #27ae60;">Recomendado: ${item.recommendedStock}</div>
-                            <div style="font-size: 0.8em; color: #666666;">Solicitado ${item.frequency} veces</div>
+                            <div style="font-weight: 600; color: #ecf0f1;">Stock: ${item.currentStock} → ${item.recommendedStock}</div>
+                            <div style="color: ${item.urgency === 'ALTA' ? '#e74c3c' : item.urgency === 'MEDIA' ? '#f39c12' : '#27ae60'}">
+                                Urgencia: ${item.urgency}
+                            </div>
+                            <div style="font-size: 0.8em; color: #bdc3c7;">
+                                Solicitudes: ${item.frequency} | Promedio: ${item.avgRequest}
+                            </div>
                         </div>
                     </div>
                 `).join('');
-                replenishmentPanel.style.display = 'block';
             } else {
-                replenishmentPanel.style.display = 'none';
+                replenishmentItems.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #bdc3c7;">
+                        No se requieren reposiciones en este momento
+                    </div>
+                `;
+            }
+        }
+
+        function exportReplenishmentAnalysis() {
+            if (!isAdminMode) return;
+            
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            
+            // Título
+            pdf.setFontSize(20);
+            pdf.setTextColor(44, 62, 80);
+            pdf.text('ANÁLISIS DE REPOSICIÓN - GAC/DFSK', 20, 30);
+            
+            pdf.setFontSize(12);
+            pdf.setTextColor(100, 100, 100);
+            pdf.text(`Fecha de generación: ${new Date().toLocaleDateString()}`, 20, 40);
+            
+            // Estadísticas
+            pdf.setFontSize(14);
+            pdf.setTextColor(44, 62, 80);
+            pdf.text('ESTADÍSTICAS GENERALES', 20, 60);
+            
+            const totalProducts = Object.keys(productFrequency).length;
+            const totalRequests = Object.values(productFrequency).reduce((sum, item) => sum + item.count, 0);
+            const totalQuantityRequested = Object.values(productFrequency).reduce((sum, item) => sum + item.totalRequested, 0);
+            
+            pdf.setFontSize(10);
+            pdf.text(`• Productos únicos solicitados: ${totalProducts}`, 25, 75);
+            pdf.text(`• Total de solicitudes: ${totalRequests}`, 25, 85);
+            pdf.text(`• Unidades totales solicitadas: ${totalQuantityRequested}`, 25, 95);
+            pdf.text(`• Promedio por solicitud: ${Math.round(totalQuantityRequested / totalRequests) || 0}`, 25, 105);
+            
+            // Productos que necesitan reposición
+            let yPosition = 130;
+            
+            Object.keys(productFrequency).forEach(codigo => {
+                const frequencyData = productFrequency[codigo];
+                const inventoryItem = inventoryData.find(item => item.codigo === codigo);
+                
+                if (inventoryItem) {
+                    const avgRequest = Math.ceil(frequencyData.totalRequested / frequencyData.count);
+                    const recommendedStock = Math.max(avgRequest * 3, 15);
+                    
+                    if (inventoryItem.cantidad < recommendedStock && yPosition < 250) {
+                        pdf.setFontSize(12);
+                        pdf.setTextColor(44, 62, 80);
+                        pdf.text(`${codigo} - ${frequencyData.description}`, 20, yPosition);
+                        
+                        pdf.setFontSize(10);
+                        pdf.setTextColor(100, 100, 100);
+                        pdf.text(`Stock actual: ${inventoryItem.cantidad} | Recomendado: ${recommendedStock}`, 25, yPosition + 7);
+                        pdf.text(`Solicitado ${frequencyData.count} veces | Promedio: ${avgRequest} unidades`, 25, yPosition + 14);
+                        
+                        yPosition += 25;
+                    }
+                }
+                
+                // Si se llena la página, crear una nueva
+                if (yPosition >= 250) {
+                    pdf.addPage();
+                    yPosition = 30;
+                }
+            });
+            
+            pdf.save(`analisis_reposicion_${new Date().toISOString().split('T')[0]}.pdf`);
+            showNotification('Análisis exportado correctamente', 'success');
+        }
+
+        function resetAnalysisData() {
+            if (!isAdminMode) return;
+            
+            if (confirm('¿Estás seguro de que quieres resetear todos los datos de análisis? Esta acción no se puede deshacer.')) {
+                productFrequency = {};
+                localStorage.setItem('productFrequency', JSON.stringify(productFrequency));
+                showReplenishmentAnalysis();
+                showNotification('Datos de análisis reseteados', 'success');
             }
         }
 
@@ -1424,7 +1676,6 @@
             
             updateQuoteButton();
             document.getElementById('quotePanel').style.display = 'none';
-            document.getElementById('replenishmentPanel').style.display = 'none';
             
             // Mostrar mensaje de confirmación
             showNotification('Cotización limpiada correctamente', 'success');
@@ -1508,9 +1759,6 @@
                 // Actualizar timestamp
                 document.getElementById('update-time').textContent = new Date().toLocaleString();
                 
-                // Mostrar análisis de reposición si hay datos
-                showReplenishmentAnalysis();
-                
                 // Mostrar notificación de éxito
                 showNotification(`Inventario cargado: ${inventoryData.length} repuestos encontrados`, 'success');
                 
@@ -1530,6 +1778,8 @@
         document.getElementById('searchInput').addEventListener('input', filterInventory);
         document.getElementById('stockFilter').addEventListener('change', filterInventory);
         document.getElementById('generateQuote').addEventListener('click', generateQuote);
+        document.getElementById('adminToggle').addEventListener('click', toggleAdminPanel);
+        document.addEventListener('keydown', handleAdminKeyPress);
 
         // Inicializar
         document.addEventListener('DOMContentLoaded', function() {
