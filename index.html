@@ -5,90 +5,360 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventario DFSK - Repuestos Glory</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
-        body { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); min-height: 100vh; padding: 20px; }
-        .container { max-width: 95%; margin: 0 auto; background: white; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); overflow: hidden; }
-        .header { background: #2c3e50; color: white; padding: 25px; text-align: center; }
-        .header h1 { font-size: 2.2em; margin-bottom: 8px; }
-        .last-update { background: #34495e; padding: 10px; text-align: center; color: #ecf0f1; font-size: 0.9em; }
-        .controls { padding: 20px; background: #f8f9fa; border-bottom: 1px solid #e9ecef; display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
-        .search-box { flex: 1; min-width: 250px; padding: 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 14px; }
-        .stock-filter { padding: 10px; border: 2px solid #ddd; border-radius: 6px; font-size: 14px; background: white; }
-        .inventory-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-        .inventory-table th { background: #34495e; color: white; padding: 12px 8px; text-align: left; font-weight: 600; font-size: 11px; position: sticky; top: 0; }
-        .inventory-table td { padding: 10px 8px; border-bottom: 1px solid #ecf0f1; font-size: 11px; line-height: 1.3; }
-        .inventory-table tr:hover { background: #f8f9fa; }
-        .stock-high { background: #d4edda; color: #155724; font-weight: bold; padding: 4px 8px; border-radius: 4px; text-align: center; }
-        .stock-medium { background: #fff3cd; color: #856404; font-weight: bold; padding: 4px 8px; border-radius: 4px; text-align: center; }
-        .stock-low { background: #f8d7da; color: #721c24; font-weight: bold; padding: 4px 8px; border-radius: 4px; text-align: center; }
-        .stock-zero { background: #f1f1f1; color: #6c757d; font-weight: bold; padding: 4px 8px; border-radius: 4px; text-align: center; }
-        .loading { text-align: center; padding: 40px; color: #666; }
-        .footer { text-align: center; padding: 15px; background: #ecf0f1; color: #7f8c8d; font-size: 12px; }
-        .error { text-align: center; padding: 40px; color: #e74c3c; background: #f8d7da; margin: 20px; border-radius: 8px; }
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: 'Arial', sans-serif; 
+        }
+        
+        body { 
+            background: #0a0a0a;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* HEADER CON FONDO DE VEHÍCULO */
+        .hero-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1592198084033-aade902d1aae?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .hero-content p {
+            font-size: 1.4em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        /* CONTENEDOR PRINCIPAL */
+        .main-container {
+            background: white;
+            margin-top: -50px;
+            position: relative;
+            z-index: 2;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .inventory-section {
+            padding: 40px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .section-title p {
+            color: #7f8c8d;
+            font-size: 1.1em;
+        }
+        
+        /* CONTROLES DE BÚSQUEDA */
+        .search-controls {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .controls-row {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+            padding: 15px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+        
+        .stock-filter {
+            padding: 15px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 16px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .stock-filter:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        /* TABLA DE INVENTARIO */
+        .table-container {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .inventory-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        
+        .inventory-table th {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+            position: sticky;
+            top: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .inventory-table td {
+            padding: 16px 15px;
+            border-bottom: 1px solid #ecf0f1;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        
+        .inventory-table tr:hover {
+            background: #f8f9fa;
+            transform: translateY(-1px);
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* ESTADOS DE STOCK */
+        .stock-high { 
+            background: #d4edda; 
+            color: #155724; 
+            font-weight: bold;
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-align: center;
+            display: inline-block;
+            min-width: 60px;
+        }
+        
+        .stock-medium { 
+            background: #fff3cd; 
+            color: #856404; 
+            font-weight: bold;
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-align: center;
+            display: inline-block;
+            min-width: 60px;
+        }
+        
+        .stock-low { 
+            background: #f8d7da; 
+            color: #721c24; 
+            font-weight: bold;
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-align: center;
+            display: inline-block;
+            min-width: 60px;
+        }
+        
+        /* ESTADOS DE CARGA */
+        .loading { 
+            text-align: center; 
+            padding: 60px; 
+            color: #666; 
+            font-size: 16px;
+        }
+        
+        .error { 
+            text-align: center; 
+            padding: 40px; 
+            color: #e74c3c; 
+            background: #f8d7da; 
+            margin: 20px; 
+            border-radius: 10px;
+            font-size: 16px;
+        }
+        
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            background: #2c3e50;
+            color: #ecf0f1;
+            margin-top: 50px;
+        }
+        
+        .last-update {
+            background: #34495e;
+            padding: 15px;
+            text-align: center;
+            color: #ecf0f1;
+            font-size: 14px;
+            border-radius: 0 0 15px 15px;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5em;
+            }
+            
+            .hero-content p {
+                font-size: 1.1em;
+            }
+            
+            .controls-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                min-width: auto;
+            }
+            
+            .section-title h2 {
+                font-size: 2em;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🏭 Inventario DFSK - Serie Glory</h1>
-            <p>Stock de repuestos disponible - Actualización automática</p>
+    <!-- HEADER CON FONDO DE VEHÍCULO -->
+    <header class="hero-header">
+        <div class="hero-content">
+            <h1>DFSK Glory</h1>
+            <p>Repuestos Originales - Stock en Tiempo Real</p>
         </div>
-        
-        <div class="last-update">
-            Última actualización: <span id="update-time">Cargando...</span>
-        </div>
-        
-        <div class="controls">
-            <input type="text" class="search-box" placeholder="🔍 Buscar por código, descripción, número de parte..." id="searchInput">
-            <select class="stock-filter" id="stockFilter">
-                <option value="all">Todo el stock</option>
-                <option value="high">Stock Alto (>10)</option>
-                <option value="medium">Stock Medio (1-10)</option>
-                <option value="low">Stock Bajo (0)</option>
-            </select>
-        </div>
-        
-        <div style="overflow-x: auto; max-height: 70vh; overflow-y: auto;">
-            <div id="loading-message" class="loading">🔄 Cargando inventario...</div>
-            <div id="error-message" class="error" style="display: none;"></div>
-            <table class="inventory-table" id="inventory-table" style="display: none;">
-                <thead>
-                    <tr>
-                        <th>CODIGO</th>
-                        <th>MARCA</th>
-                        <th>SERIE</th>
-                        <th>MODELO</th>
-                        <th>NUMERO DE PARTE</th>
-                        <th>DESCRIPCION ESPAÑOL</th>
-                        <th>CANTIDAD</th>
-                    </tr>
-                </thead>
-                <tbody id="inventory-body"></tbody>
-            </table>
-        </div>
-        
-        <div class="footer">
-            <p>&copy; 2024 Sistema de Inventario DFSK - Actualización automática</p>
-        </div>
-    </div>
+    </header>
+    
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-container">
+        <section class="inventory-section">
+            <div class="section-title">
+                <h2>Inventario de Repuestos</h2>
+                <p>Consulta la disponibilidad actualizada de todos nuestros repuestos</p>
+            </div>
+            
+            <!-- CONTROLES DE BÚSQUEDA -->
+            <div class="search-controls">
+                <div class="controls-row">
+                    <input type="text" 
+                           class="search-box" 
+                           placeholder="🔍 Buscar por código, descripción, número de parte..." 
+                           id="searchInput">
+                    
+                    <select class="stock-filter" id="stockFilter">
+                        <option value="all">Todo el stock</option>
+                        <option value="high">Stock Alto (>10)</option>
+                        <option value="medium">Stock Medio (1-10)</option>
+                        <option value="low">Stock Bajo (0)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- ÚLTIMA ACTUALIZACIÓN -->
+            <div class="last-update">
+                Última actualización: <span id="update-time">Cargando...</span>
+            </div>
+            
+            <!-- TABLA DE INVENTARIO -->
+            <div class="table-container">
+                <div id="loading-message" class="loading">
+                    <div>🔄 Cargando inventario...</div>
+                    <small>Espera un momento mientras cargamos los datos más recientes</small>
+                </div>
+                
+                <div id="error-message" class="error" style="display: none;"></div>
+                
+                <div style="overflow-x: auto; max-height: 60vh; overflow-y: auto;">
+                    <table class="inventory-table" id="inventory-table" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th>CODIGO</th>
+                                <th>MARCA</th>
+                                <th>SERIE</th>
+                                <th>MODELO</th>
+                                <th>NUMERO DE PARTE</th>
+                                <th>DESCRIPCION ESPAÑOL</th>
+                                <th>CANTIDAD</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventory-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>&copy; 2024 Sistema de Inventario DFSK - Todos los derechos reservados</p>
+    </footer>
 
     <script>
-        // URL SIMPLIFICADA - Esto debería funcionar
-        const CSV_URL = './inventario.csv';
+        // URL del archivo CSV
+        const CSV_URL = 'inventario.csv';
         
         let inventoryData = [];
 
         function getStockStatus(cantidad) {
             if (cantidad > 10) return { text: "Alto", class: "stock-high" };
             if (cantidad > 0) return { text: "Medio", class: "stock-medium" };
-            return { text: "Agotado", class: "stock-zero" };
+            return { text: "Agotado", class: "stock-low" };
         }
 
         function renderInventory(data) {
             const tbody = document.getElementById('inventory-body');
             
             if (data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 20px; color: #666;">No se encontraron repuestos</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 30px; color: #666; font-size: 16px;">No se encontraron repuestos con los filtros aplicados</td></tr>';
                 return;
             }
             
@@ -130,43 +400,41 @@
             renderInventory(filteredData);
         }
 
-function csvToJSON(csv) {
-    const lines = csv.split('\n').filter(line => line.trim() !== '');
-    if (lines.length < 2) return [];
-    
-    const result = [];
-    const headers = lines[0].split(',').map(h => h.trim().toLowerCase().replace(/ /g, '_'));
-    
-    console.log('Columnas detectadas:', headers); // Para debug
-    
-    for (let i = 1; i < lines.length; i++) {
-        const obj = {};
-        const currentline = lines[i].split(',');
-        
-        for (let j = 0; j < headers.length; j++) {
-            const key = headers[j];
-            let value = currentline[j] ? currentline[j].trim() : '';
+        // Función para convertir CSV a JSON
+        function csvToJSON(csv) {
+            const lines = csv.split('\n').filter(line => line.trim() !== '');
+            if (lines.length < 2) return [];
             
-            // Convertir cantidad a número
-            if (key === 'cantidad') {
-                value = parseInt(value) || 0;
+            const result = [];
+            const headers = lines[0].split(',').map(h => h.trim().toLowerCase().replace(/ /g, '_'));
+            
+            for (let i = 1; i < lines.length; i++) {
+                const obj = {};
+                const currentline = lines[i].split(',');
+                
+                for (let j = 0; j < headers.length; j++) {
+                    const key = headers[j];
+                    let value = currentline[j] ? currentline[j].trim() : '';
+                    
+                    if (key === 'cantidad') {
+                        value = parseInt(value) || 0;
+                    }
+                    
+                    if (key === 'descripcion_espanol') {
+                        obj['descripcion'] = value;
+                    } else {
+                        obj[key] = value;
+                    }
+                }
+                
+                if (obj.codigo) {
+                    result.push(obj);
+                }
             }
             
-            // Mapear nombres de columnas específicos
-            if (key === 'descripcion_espanol') {
-                obj['descripcion'] = value;
-            } else {
-                obj[key] = value;
-            }
+            return result;
         }
-        
-        if (obj.codigo) {
-            result.push(obj);
-        }
-    }
-    
-    return result;
-}
+
         async function loadInventory() {
             try {
                 document.getElementById('loading-message').style.display = 'block';
@@ -198,15 +466,20 @@ function csvToJSON(csv) {
                 document.getElementById('loading-message').style.display = 'none';
                 document.getElementById('error-message').style.display = 'block';
                 document.getElementById('error-message').innerHTML = 
-                    '❌ Error: ' + error.message + 
-                    '<br><br>Verifica que el archivo "inventario.csv" exista y tenga datos.';
+                    '❌ Error cargando el inventario: ' + error.message + 
+                    '<br><br>Verifica que el archivo "inventario.csv" exista y tenga el formato correcto.';
             }
         }
 
+        // Inicializar
         document.addEventListener('DOMContentLoaded', function() {
             loadInventory();
+            
             document.getElementById('searchInput').addEventListener('input', filterInventory);
             document.getElementById('stockFilter').addEventListener('change', filterInventory);
+            
+            // Actualizar automáticamente cada 30 minutos
+            setInterval(loadInventory, 30 * 60 * 1000);
         });
     </script>
 </body>
