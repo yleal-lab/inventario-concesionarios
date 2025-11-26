@@ -27,28 +27,35 @@
             --primary-dark: #1a1a2e;
         }
         
-        /* HEADER CON BANNER IPB */
+        /* HEADER CON BANNER IPB - MODIFICADO */
         .header-banner {
             width: 100%;
-            background: white;
-            padding: 0;
+            background: linear-gradient(135deg, #1a2a3a 0%, #2c3e50 100%);
+            padding: 20px 0;
             text-align: center;
             border-bottom: 3px solid var(--primary-red);
+        }
+
+        .banner-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
         .banner-image {
             max-width: 100%;
             height: auto;
-            display: block;
-            margin: 0 auto;
+            max-height: 150px;
+            filter: brightness(0) invert(1); /* Hace el logo blanco */
         }
 
         .header-subtitle {
             background: var(--primary-red);
             color: white;
-            padding: 10px 0;
-            font-size: 1.1em;
+            padding: 12px 0;
+            font-size: 1.2em;
             font-weight: 600;
+            margin-top: 15px;
         }
         
         .main-container {
@@ -310,13 +317,12 @@
             }
             
             .banner-image {
-                height: 120px;
-                object-fit: contain;
+                max-height: 100px;
             }
             
             .header-subtitle {
-                font-size: 0.9em;
-                padding: 8px 0;
+                font-size: 1em;
+                padding: 10px 0;
             }
         }
     </style>
@@ -324,11 +330,14 @@
 <body>
     <button class="admin-btn" id="adminToggle" style="display: none;">🔓 Admin</button>
 
-    <!-- HEADER CON BANNER IPB -->
+    <!-- HEADER CON BANNER IPB - CORREGIDO CON IMAGEN REAL -->
     <header class="header-banner">
-        <img src="https://via.placeholder.com/1200x200/FFFFFF/0056b3?text=IPB+MOVILIDAD+C.A.+BANNER" 
-             alt="IPB Movilidad C.A. - GAC Motor - DFSK - Shineray" 
-             class="banner-image">
+        <div class="banner-container">
+            <!-- IMAGEN REAL DE IPB MOVILIDAD -->
+            <img src="https://raw.githubusercontent.com/yleal-lab/ipb-images/main/WhatsApp%20Image%202025-11-26%20at%209.52.10%20AM.jpeg" 
+                 alt="IPB Movilidad C.A. - GAC Motor - DFSK - Shineray" 
+                 class="banner-image">
+        </div>
         <div class="header-subtitle">
             Sistema de Cotización para Aliados Comerciales
         </div>
@@ -468,6 +477,9 @@
         let quoteItems = [];
         let productFrequency = JSON.parse(localStorage.getItem('productFrequency')) || {};
         let quoteCounter = parseInt(localStorage.getItem('quoteCounter')) || 1;
+
+        // URL de la imagen para el PDF
+        const IPB_LOGO_URL = 'https://raw.githubusercontent.com/yleal-lab/ipb-images/main/WhatsApp%20Image%202025-11-26%20at%209.52.10%20AM.jpeg';
 
         // ===== FUNCIONES PRINCIPALES =====
 
@@ -706,45 +718,40 @@
             doc.setFontSize(20);
             doc.setTextColor(40, 40, 40);
             
-            // Banner (placeholder - reemplazar con imagen real)
-            doc.setFillColor(0, 86, 179);
-            doc.rect(0, 0, 210, 40, 'F');
-            doc.setTextColor(255, 255, 255);
-            doc.setFontSize(16);
-            doc.text('IPB MOVILIDAD C.A.', 105, 15, { align: 'center' });
-            doc.setFontSize(12);
-            doc.text('GAC MOTOR • DFSK • SHINERAY', 105, 25, { align: 'center' });
+            // BANNER CON IMAGEN REAL - CORREGIDO
+            // Agregar imagen del logo IPB
+            doc.addImage(IPB_LOGO_URL, 'JPEG', 20, 10, 170, 30);
             
             // Información de cotización
             doc.setTextColor(0, 0, 0);
             doc.setFontSize(14);
-            doc.text(quoteNumber, 20, 60);
+            doc.text(quoteNumber, 20, 55);
             doc.setFontSize(10);
             
             const now = new Date();
             const validUntil = new Date(now.getTime() + 24 * 60 * 60 * 1000);
             
-            doc.text(`Fecha: ${now.toLocaleDateString()} - Hora: ${now.toLocaleTimeString()}`, 20, 70);
-            doc.text(`Válida hasta: ${validUntil.toLocaleDateString()} - ${validUntil.toLocaleTimeString()} (24 horas)`, 20, 76);
+            doc.text(`Fecha: ${now.toLocaleDateString()} - Hora: ${now.toLocaleTimeString()}`, 20, 65);
+            doc.text(`Válida hasta: ${validUntil.toLocaleDateString()} - ${validUntil.toLocaleTimeString()} (24 horas)`, 20, 71);
             
             // Datos del aliado comercial
             doc.setFontSize(12);
-            doc.text('DATOS DEL ALIADO COMERCIAL', 20, 90);
+            doc.text('DATOS DEL ALIADO COMERCIAL', 20, 85);
             doc.setFontSize(10);
-            doc.text(`• Razón Social: ${clientName}`, 20, 100);
-            doc.text(`• RIF: ${clientRIF}`, 20, 106);
+            doc.text(`• Razón Social: ${clientName}`, 20, 95);
+            doc.text(`• RIF: ${clientRIF}`, 20, 101);
             
             // Detalle de cotización
             doc.setFontSize(12);
-            doc.text('DETALLE DE COTIZACIÓN', 20, 120);
+            doc.text('DETALLE DE COTIZACIÓN', 20, 115);
             
             // Encabezados de tabla
             doc.setFontSize(10);
-            doc.text('Código', 20, 130);
-            doc.text('Descripción', 50, 130);
-            doc.text('Cant', 180, 130);
+            doc.text('Código', 20, 125);
+            doc.text('Descripción', 50, 125);
+            doc.text('Cant', 180, 125);
             
-            let yPosition = 140;
+            let yPosition = 135;
             quoteItems.forEach((item, index) => {
                 if (yPosition > 270) {
                     doc.addPage();
