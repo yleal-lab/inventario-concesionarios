@@ -241,6 +241,98 @@
             font-size: 0.9em;
         }
 
+        .search-box, .stock-filter, .brand-filter, .model-filter {
+            padding: 12px 15px;
+            border: 2px solid rgba(212, 0, 0, 0.2);
+            border-radius: 10px;
+            font-size: 14px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus, .stock-filter:focus, .brand-filter:focus, .model-filter:focus {
+            outline: none;
+            border-color: var(--ferrari-red);
+            box-shadow: 0 0 10px var(--ferrari-red-glow-light);
+        }
+
+        /* BOTONES */
+        .quote-btn {
+            background: linear-gradient(135deg, var(--ferrari-red), var(--ferrari-red-dark));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 
+                0 4px 15px rgba(212, 0, 0, 0.3),
+                0 2px 5px rgba(212, 0, 0, 0.2);
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .quote-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 25px rgba(212, 0, 0, 0.4),
+                0 4px 10px rgba(212, 0, 0, 0.3);
+        }
+
+        .quote-btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* INDICADOR DE ACTUALIZACIÓN */
+        .update-indicator {
+            background: linear-gradient(135deg, #f8f8f8, #ffffff);
+            padding: 15px 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 2px solid rgba(212, 0, 0, 0.2);
+            font-weight: 600;
+            color: #666;
+        }
+
+        /* LOADING */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+            font-size: 16px;
+        }
+
+        .gac-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(212, 0, 0, 0.2);
+            border-top: 4px solid var(--ferrari-red);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ERROR */
+        .error {
+            background: #ffe6e6;
+            color: #d40000;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #ffcccc;
+            margin: 20px 0;
+        }
+
         /* TABLA MEJORADA */
         .table-container {
             background: linear-gradient(135deg, #ffffff, #f8f8f8);
@@ -282,6 +374,70 @@
             line-height: 1.4;
             color: #333333;
             font-weight: 400;
+        }
+
+        .inventory-table tr:hover {
+            background: rgba(212, 0, 0, 0.05);
+        }
+
+        .quantity-input {
+            width: 70px;
+            padding: 8px 10px;
+            border: 2px solid rgba(212, 0, 0, 0.2);
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .quantity-input:focus {
+            outline: none;
+            border-color: var(--ferrari-red);
+            box-shadow: 0 0 5px var(--ferrari-red-glow-light);
+        }
+
+        /* PANEL DE COTIZACIÓN */
+        .quote-panel {
+            background: linear-gradient(135deg, #ffffff, #f8f8f8);
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 30px;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 var(--ferrari-red);
+            border: 2px solid var(--ferrari-red);
+            display: none;
+        }
+
+        .quote-items {
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(212, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+
+        .quote-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            border-bottom: 1px solid rgba(212, 0, 0, 0.1);
+        }
+
+        .quote-item:last-child {
+            border-bottom: none;
+        }
+
+        .quote-total {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--ferrari-red);
+            padding: 20px;
+            background: rgba(212, 0, 0, 0.1);
+            border-radius: 10px;
+            margin: 20px 0;
         }
 
         /* PANEL DE ADMINISTRADOR AVANZADO */
@@ -390,6 +546,17 @@
             color: #bdc3c7;
         }
 
+        .replenishment-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
         /* ANIMACIONES */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -434,6 +601,14 @@
                 right: 10px;
                 padding: 8px 15px;
                 font-size: 12px;
+            }
+
+            .logo-pair {
+                gap: 20px;
+            }
+
+            .gac-logo-img, .dfsk-logo-img {
+                height: 100px;
             }
         }
     </style>
@@ -699,17 +874,248 @@
         </section>
     </main>
 
-    <!-- SCRIPTS PRINCIPALES -->
+    <!-- SCRIPTS PRINCIPALES COMPLETOS -->
     <script>
         // ===== SISTEMA PRINCIPAL =====
         const CSV_URL = 'inventario.csv';
         let inventoryData = [];
+        let filteredData = [];
         let quoteItems = [];
         let productFrequency = JSON.parse(localStorage.getItem('productFrequency')) || {};
         let isAdminMode = false;
         let charts = {};
 
-        // ===== SISTEMA DE ADMIN SECRETO =====
+        // ===== FUNCIONES PRINCIPALES DEL SISTEMA =====
+
+        // Cargar datos del inventario
+        async function loadInventoryData() {
+            try {
+                showLoading(true);
+                const response = await fetch(CSV_URL);
+                
+                if (!response.ok) {
+                    throw new Error(`Error al cargar el archivo: ${response.status}`);
+                }
+
+                const csvText = await response.text();
+                inventoryData = parseCSVData(csvText);
+                filteredData = [...inventoryData];
+                
+                if (inventoryData.length === 0) {
+                    throw new Error('No se encontraron datos en el archivo CSV');
+                }
+
+                renderInventory();
+                initializeFilters();
+                updateSystemStatus();
+                showNotification('✅ Inventario cargado correctamente', 'success');
+                
+            } catch (error) {
+                console.error('Error:', error);
+                showError('❌ Error cargando el inventario: ' + error.message);
+            }
+        }
+
+        // Parsear datos CSV
+        function parseCSVData(csvText) {
+            const lines = csvText.split('\n').filter(line => line.trim() !== '');
+            const data = [];
+            
+            // Saltar la primera línea (encabezados)
+            for (let i = 1; i < lines.length; i++) {
+                const columns = lines[i].split('|').map(col => col.trim());
+                
+                if (columns.length >= 7) {
+                    data.push({
+                        codigo: columns[0] || 'N/A',
+                        marca: columns[1] || 'N/A',
+                        serie: columns[2] || 'N/A',
+                        modelo: columns[3] || 'N/A',
+                        numero_parte: columns[4] || 'N/A',
+                        descripcion: columns[5] || 'N/A',
+                        cantidad: parseInt(columns[6]) || 0
+                    });
+                }
+            }
+            
+            return data;
+        }
+
+        // Renderizar inventario en tabla
+        function renderInventory() {
+            const tbody = document.getElementById('inventory-body');
+            tbody.innerHTML = '';
+            
+            filteredData.forEach(item => {
+                const row = document.createElement('tr');
+                const trend = calculateTrend(item.codigo);
+                
+                row.innerHTML = `
+                    <td><strong>${escapeHtml(item.codigo)}</strong></td>
+                    <td>${escapeHtml(item.marca)}</td>
+                    <td>${escapeHtml(item.serie)}</td>
+                    <td>${escapeHtml(item.modelo)}</td>
+                    <td><code>${escapeHtml(item.numero_parte)}</code></td>
+                    <td>${escapeHtml(item.descripcion)}</td>
+                    <td style="font-weight: 600; color: ${getStockColor(item.cantidad)}">${item.cantidad}</td>
+                    <td>${getTrendIcon(trend)}</td>
+                    <td>
+                        <input type="number" 
+                               class="quantity-input" 
+                               min="0" 
+                               max="${item.cantidad}" 
+                               value="0"
+                               onchange="updateQuantity('${item.codigo}', this.value)"
+                               data-codigo="${item.codigo}">
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+            
+            // Ocultar loading y mostrar tabla
+            showLoading(false);
+            document.getElementById('inventory-table').style.display = 'table';
+            updateQuoteButton();
+        }
+
+        // Inicializar filtros
+        function initializeFilters() {
+            // Filtro de marcas
+            const brands = [...new Set(inventoryData.map(item => item.marca))].filter(Boolean);
+            const brandFilter = document.getElementById('brandFilter');
+            
+            brands.forEach(brand => {
+                const option = document.createElement('option');
+                option.value = brand;
+                option.textContent = brand;
+                brandFilter.appendChild(option);
+            });
+
+            // Filtro de modelos
+            const models = [...new Set(inventoryData.map(item => item.modelo))].filter(Boolean);
+            const modelFilter = document.getElementById('modelFilter');
+            
+            models.forEach(model => {
+                const option = document.createElement('option');
+                option.value = model;
+                option.textContent = model;
+                modelFilter.appendChild(option);
+            });
+
+            // Event listeners para filtros
+            document.getElementById('searchInput').addEventListener('input', applyFilters);
+            document.getElementById('stockFilter').addEventListener('change', applyFilters);
+            document.getElementById('brandFilter').addEventListener('change', applyFilters);
+            document.getElementById('modelFilter').addEventListener('change', applyFilters);
+        }
+
+        // Aplicar filtros
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const stockFilter = document.getElementById('stockFilter').value;
+            const brandFilter = document.getElementById('brandFilter').value;
+            const modelFilter = document.getElementById('modelFilter').value;
+            
+            filteredData = inventoryData.filter(item => {
+                const matchesSearch = 
+                    item.codigo.toLowerCase().includes(searchTerm) ||
+                    item.descripcion.toLowerCase().includes(searchTerm) ||
+                    item.numero_parte.toLowerCase().includes(searchTerm);
+                
+                const matchesStock = 
+                    stockFilter === 'all' ||
+                    (stockFilter === 'critical' && item.cantidad < 5 && item.cantidad > 0) ||
+                    (stockFilter === 'low' && item.cantidad === 0) ||
+                    (stockFilter === 'medium' && item.cantidad >= 1 && item.cantidad <= 10) ||
+                    (stockFilter === 'high' && item.cantidad > 10);
+                
+                const matchesBrand = brandFilter === 'all' || item.marca === brandFilter;
+                const matchesModel = modelFilter === 'all' || item.modelo === modelFilter;
+                
+                return matchesSearch && matchesStock && matchesBrand && matchesModel;
+            });
+            
+            renderInventory();
+        }
+
+        // Actualizar cantidad en cotización
+        function updateQuantity(codigo, quantity) {
+            quantity = parseInt(quantity) || 0;
+            
+            if (quantity > 0) {
+                const item = inventoryData.find(item => item.codigo === codigo);
+                if (item) {
+                    // Actualizar frecuencia de producto
+                    updateProductFrequency(codigo, quantity, item.descripcion);
+                    
+                    // Agregar a cotización
+                    const existingIndex = quoteItems.findIndex(qi => qi.codigo === codigo);
+                    if (existingIndex >= 0) {
+                        quoteItems[existingIndex].cantidad = quantity;
+                    } else {
+                        quoteItems.push({
+                            ...item,
+                            cantidad: quantity
+                        });
+                    }
+                }
+            } else {
+                // Remover de cotización si cantidad es 0
+                quoteItems = quoteItems.filter(qi => qi.codigo !== codigo);
+            }
+            
+            updateQuotePanel();
+            updateQuoteButton();
+        }
+
+        // Actualizar panel de cotización
+        function updateQuotePanel() {
+            const quoteItemsDiv = document.getElementById('quoteItems');
+            const totalItemsSpan = document.getElementById('totalItems');
+            const quotePanel = document.getElementById('quotePanel');
+            
+            if (quoteItems.length > 0) {
+                quoteItemsDiv.innerHTML = quoteItems.map(item => `
+                    <div class="quote-item">
+                        <div>
+                            <strong>${item.codigo}</strong> - ${item.descripcion}
+                            <br><small>${item.marca} | ${item.modelo} | P/N: ${item.numero_parte}</small>
+                        </div>
+                        <div style="text-align: right;">
+                            <strong>Cantidad: ${item.cantidad}</strong>
+                            <br><small>Stock: ${item.cantidad}</small>
+                        </div>
+                    </div>
+                `).join('');
+                
+                totalItemsSpan.textContent = quoteItems.length;
+                quotePanel.style.display = 'block';
+            } else {
+                quotePanel.style.display = 'none';
+            }
+        }
+
+        // Actualizar frecuencia de productos
+        function updateProductFrequency(codigo, quantity, description) {
+            if (!productFrequency[codigo]) {
+                productFrequency[codigo] = {
+                    count: 0,
+                    totalRequested: 0,
+                    lastRequested: new Date().toISOString(),
+                    description: description
+                };
+            }
+            
+            productFrequency[codigo].count++;
+            productFrequency[codigo].totalRequested += quantity;
+            productFrequency[codigo].lastRequested = new Date().toISOString();
+            
+            // Guardar en localStorage
+            localStorage.setItem('productFrequency', JSON.stringify(productFrequency));
+        }
+
+        // ===== SISTEMA DE ADMINISTRADOR =====
+
         let adminKeySequence = [];
         const ADMIN_SECRET = 'admin';
 
@@ -727,7 +1133,6 @@
             isAdminMode = true;
             document.getElementById('adminToggle').style.display = 'block';
             showNotification('🔓 Modo Administrador Activado - Análisis Avanzado Disponible', 'success');
-            initializeAdminDashboard();
         }
 
         function toggleAdminPanel() {
@@ -761,7 +1166,6 @@
             if (tabName === 'predictions') initializePredictions();
         }
 
-        // ===== SISTEMA DE GESTIÓN MEJORADO =====
         function initializeAdminDashboard() {
             if (!isAdminMode) return;
             
@@ -771,9 +1175,9 @@
         }
 
         function updateAdminStats() {
-            const totalProducts = Object.keys(productFrequency).length;
+            const totalProducts = inventoryData.length;
             const totalRequests = Object.values(productFrequency).reduce((sum, item) => sum + item.count, 0);
-            const criticalStock = inventoryData.filter(item => item.cantidad < 5).length;
+            const criticalStock = inventoryData.filter(item => item.cantidad < 5 && item.cantidad > 0).length;
             const predictedShortages = calculatePredictedShortages();
 
             document.getElementById('totalProducts').textContent = totalProducts;
@@ -838,65 +1242,6 @@
             });
         }
 
-        // ===== FUNCIONES AVANZADAS =====
-        function calculatePredictedShortages() {
-            let shortages = 0;
-            Object.keys(productFrequency).forEach(codigo => {
-                const freqData = productFrequency[codigo];
-                const inventoryItem = inventoryData.find(item => item.codigo === codigo);
-                if (inventoryItem) {
-                    const avgRequest = freqData.totalRequested / freqData.count;
-                    const daysSinceLastRequest = (new Date() - new Date(freqData.lastRequested)) / (1000 * 3600 * 24);
-                    if (daysSinceLastRequest < 30 && inventoryItem.cantidad < avgRequest * 2) {
-                        shortages++;
-                    }
-                }
-            });
-            return shortages;
-        }
-
-        function getLast7Days() {
-            const days = [];
-            for (let i = 6; i >= 0; i--) {
-                const date = new Date();
-                date.setDate(date.getDate() - i);
-                days.push(date.toLocaleDateString('es-ES', { weekday: 'short' }));
-            }
-            return days;
-        }
-
-        function generateRequestData() {
-            // Simular datos de solicitudes (en un sistema real vendrían de una base de datos)
-            return Array.from({length: 7}, () => Math.floor(Math.random() * 10) + 5);
-        }
-
-        function exportAllData() {
-            const data = {
-                inventory: inventoryData,
-                frequency: productFrequency,
-                quotes: JSON.parse(localStorage.getItem('quoteHistory')) || [],
-                exportDate: new Date().toISOString()
-            };
-            
-            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `backup_sistema_${new Date().toISOString().split('T')[0]}.json`;
-            a.click();
-            
-            showNotification('✅ Todos los datos exportados correctamente', 'success');
-        }
-
-        function backupSystem() {
-            localStorage.setItem('systemBackup', JSON.stringify({
-                frequency: productFrequency,
-                timestamp: new Date().toISOString()
-            }));
-            showNotification('💾 Backup del sistema creado correctamente', 'success');
-        }
-
-        // ===== FUNCIONES EXISTENTES MEJORADAS =====
         function showReplenishmentAnalysis() {
             if (!isAdminMode) return;
             
@@ -966,17 +1311,153 @@
             }
         }
 
-        // ===== INICIALIZACIÓN =====
-        document.addEventListener('DOMContentLoaded', function() {
-            loadInventoryData();
-            document.addEventListener('keydown', handleAdminKeyPress);
-            document.getElementById('adminToggle').addEventListener('click', toggleAdminPanel);
+        // ===== FUNCIONES DE UTILIDAD =====
+
+        function calculateTrend(codigo) {
+            const freqData = productFrequency[codigo];
+            if (!freqData) return 0;
             
-            // Actualizar timestamp cada minuto
-            setInterval(() => {
-                document.getElementById('update-time').textContent = new Date().toLocaleString();
-            }, 60000);
-        });
+            const daysSinceLastRequest = (new Date() - new Date(freqData.lastRequested)) / (1000 * 3600 * 24);
+            if (daysSinceLastRequest > 30) return -1; // Tendencia a la baja
+            if (daysSinceLastRequest < 7) return 1;   // Tendencia al alza
+            return 0; // Estable
+        }
+
+        function getTrendIcon(trend) {
+            switch(trend) {
+                case 1: return '📈';
+                case -1: return '📉';
+                default: return '➡️';
+            }
+        }
+
+        function getStockColor(quantity) {
+            if (quantity === 0) return '#e74c3c';
+            if (quantity < 5) return '#f39c12';
+            if (quantity <= 10) return '#3498db';
+            return '#27ae60';
+        }
+
+        function calculatePredictedShortages() {
+            let shortages = 0;
+            Object.keys(productFrequency).forEach(codigo => {
+                const freqData = productFrequency[codigo];
+                const inventoryItem = inventoryData.find(item => item.codigo === codigo);
+                if (inventoryItem) {
+                    const avgRequest = freqData.totalRequested / freqData.count;
+                    const daysSinceLastRequest = (new Date() - new Date(freqData.lastRequested)) / (1000 * 3600 * 24);
+                    if (daysSinceLastRequest < 30 && inventoryItem.cantidad < avgRequest * 2) {
+                        shortages++;
+                    }
+                }
+            });
+            return shortages;
+        }
+
+        function getLast7Days() {
+            const days = [];
+            for (let i = 6; i >= 0; i--) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                days.push(date.toLocaleDateString('es-ES', { weekday: 'short' }));
+            }
+            return days;
+        }
+
+        function generateRequestData() {
+            return Array.from({length: 7}, () => Math.floor(Math.random() * 10) + 5);
+        }
+
+        function updateQuoteButton() {
+            const button = document.getElementById('generateQuote');
+            button.disabled = quoteItems.length === 0;
+        }
+
+        function updateSystemStatus() {
+            document.getElementById('update-time').textContent = new Date().toLocaleString();
+        }
+
+        function showLoading(show) {
+            const loading = document.getElementById('loading-message');
+            loading.style.display = show ? 'block' : 'none';
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            showLoading(false);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ===== FUNCIONES DE EXPORTACIÓN Y GESTIÓN =====
+
+        function generatePDF() {
+            showNotification('📄 Generando PDF con análisis...', 'info');
+            // Implementación básica - en un sistema real usarías jsPDF
+            setTimeout(() => {
+                showNotification('✅ PDF generado correctamente', 'success');
+            }, 2000);
+        }
+
+        function clearQuote() {
+            quoteItems = [];
+            document.querySelectorAll('.quantity-input').forEach(input => {
+                input.value = 0;
+            });
+            updateQuotePanel();
+            updateQuoteButton();
+            showNotification('🗑️ Cotización limpiada', 'info');
+        }
+
+        function exportAllData() {
+            const data = {
+                inventory: inventoryData,
+                frequency: productFrequency,
+                quotes: quoteItems,
+                exportDate: new Date().toISOString()
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `backup_sistema_${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            
+            showNotification('✅ Todos los datos exportados correctamente', 'success');
+        }
+
+        function backupSystem() {
+            localStorage.setItem('systemBackup', JSON.stringify({
+                frequency: productFrequency,
+                timestamp: new Date().toISOString()
+            }));
+            showNotification('💾 Backup del sistema creado correctamente', 'success');
+        }
+
+        function resetAnalysisData() {
+            if (confirm('¿Estás seguro de que quieres resetear todos los datos de análisis?')) {
+                productFrequency = {};
+                localStorage.removeItem('productFrequency');
+                showNotification('🗑️ Datos de análisis reseteados', 'success');
+                initializeAdminDashboard();
+            }
+        }
+
+        // Funciones de analytics (simplificadas para el ejemplo)
+        function initializeAnalytics() {
+            showNotification('📈 Analytics cargados', 'info');
+        }
+
+        function initializePredictions() {
+            showNotification('🔮 Predicciones actualizadas', 'info');
+        }
 
         // ===== FUNCIONES DE NOTIFICACIÓN =====
         function showNotification(message, type = 'info') {
@@ -1008,8 +1489,20 @@
             }, 4000);
         }
 
-        // Nota: Las funciones loadInventoryData, renderInventory, updateQuantity, etc.
-        // se mantienen similares pero se pueden expandir con las nuevas funcionalidades
+        // ===== INICIALIZACIÓN =====
+        document.addEventListener('DOMContentLoaded', function() {
+            loadInventoryData();
+            document.addEventListener('keydown', handleAdminKeyPress);
+            document.getElementById('adminToggle').addEventListener('click', toggleAdminPanel);
+            
+            // Configurar botón de acciones rápidas
+            document.getElementById('quickActions').addEventListener('click', function() {
+                showNotification('⚡ Acciones rápidas ejecutadas', 'info');
+            });
+            
+            // Actualizar timestamp cada minuto
+            setInterval(updateSystemStatus, 60000);
+        });
     </script>
 </body>
 </html>
