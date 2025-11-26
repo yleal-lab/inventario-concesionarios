@@ -284,6 +284,173 @@
             padding: 15px;
         }
 
+        /* PANEL DE LOGIN KPIs */
+        .kpi-login {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            border: 2px solid #9b59b6;
+        }
+
+        .kpi-login h3 {
+            color: #9b59b6;
+            margin-bottom: 20px;
+        }
+
+        /* PANEL DE KPIs */
+        .kpi-panel {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid #27ae60;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .kpi-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .kpi-card:nth-child(2) {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .kpi-card:nth-child(3) {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .kpi-card:nth-child(4) {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .kpi-icon {
+            font-size: 2em;
+        }
+
+        .kpi-content {
+            flex: 1;
+        }
+
+        .kpi-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .kpi-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .chart-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+        }
+
+        .chart-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .replenishment-section {
+            margin-top: 25px;
+        }
+
+        .replenishment-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+
+        .replenishment-item {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .replenishment-item.critical {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+        }
+
+        .replenishment-item.warning {
+            background: #fff3cd;
+            border-color: #ffeaa7;
+        }
+
+        .replenishment-info {
+            flex: 1;
+        }
+
+        .replenishment-code {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .replenishment-desc {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        .replenishment-stats {
+            text-align: right;
+        }
+
+        .replenishment-stock {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .replenishment-urgency {
+            font-size: 0.8em;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: #e74c3c;
+            color: white;
+        }
+
+        .replenishment-urgency.medium {
+            background: #f39c12;
+        }
+
+        .replenishment-urgency.low {
+            background: #3498db;
+        }
+
         @media (max-width: 768px) {
             .hero-content {
                 padding: 20px;
@@ -303,6 +470,14 @@
 
             .gac-logo-img, .dfsk-logo-img {
                 height: 80px;
+            }
+
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-container {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -422,6 +597,93 @@
                     </button>
                 </div>
             </div>
+
+            <!-- PANEL DE KPIs SEGURO (OCULTO INICIALMENTE) -->
+            <div class="kpi-login" id="kpiLogin" style="display: none;">
+                <h3>🔒 Acceso al Dashboard de KPIs</h3>
+                <div style="text-align: center; margin: 20px 0;">
+                    <input type="password" id="kpiPassword" placeholder="Ingresa la contraseña" 
+                           style="padding: 12px; width: 200px; border: 2px solid #ddd; border-radius: 8px; margin-right: 10px;">
+                    <button class="quote-btn" onclick="verifyKPIAccess()" style="background: #27ae60;">
+                        🔓 Acceder
+                    </button>
+                </div>
+                <div id="kpiLoginError" style="color: #e74c3c; text-align: center; margin-top: 10px; display: none;">
+                    ❌ Contraseña incorrecta
+                </div>
+            </div>
+
+            <div class="kpi-panel" id="kpiPanel" style="display: none;">
+                <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 20px;">
+                    <h3>📊 Dashboard de KPIs - Acceso Restringido</h3>
+                    <button class="quote-btn" onclick="lockKPIs()" style="background: #e74c3c; margin-left: auto;">
+                        🔒 Cerrar Dashboard
+                    </button>
+                </div>
+                
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-icon">📦</div>
+                        <div class="kpi-content">
+                            <div class="kpi-value" id="kpiTotalProducts">0</div>
+                            <div class="kpi-label">Total Productos</div>
+                        </div>
+                    </div>
+                    
+                    <div class="kpi-card">
+                        <div class="kpi-icon">⚠️</div>
+                        <div class="kpi-content">
+                            <div class="kpi-value" id="kpiCriticalStock">0</div>
+                            <div class="kpi-label">Stock Crítico</div>
+                        </div>
+                    </div>
+                    
+                    <div class="kpi-card">
+                        <div class="kpi-icon">🔄</div>
+                        <div class="kpi-content">
+                            <div class="kpi-value" id="kpiTotalRequests">0</div>
+                            <div class="kpi-label">Solicitudes</div>
+                        </div>
+                    </div>
+                    
+                    <div class="kpi-card">
+                        <div class="kpi-icon">📈</div>
+                        <div class="kpi-content">
+                            <div class="kpi-value" id="kpiPredictedShortages">0</div>
+                            <div class="kpi-label">Faltantes Previstos</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GRÁFICOS -->
+                <div class="charts-container">
+                    <div class="chart-card">
+                        <div class="chart-title">Distribución de Stock</div>
+                        <canvas id="stockDistributionChart"></canvas>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <div class="chart-title">Top 10 Productos Más Solicitados</div>
+                        <canvas id="topProductsChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- ANÁLISIS DE REPOSICIÓN -->
+                <div class="replenishment-section">
+                    <h4>🔄 Productos que Necesitan Reposición</h4>
+                    <div id="replenishmentList" class="replenishment-list">
+                        <!-- Los productos se cargarán aquí -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOTÓN PARA ACCEDER A KPIs (VISIBLE PARA TODOS) -->
+            <div style="text-align: center; margin-top: 25px;">
+                <button class="quote-btn" onclick="showKPILogin()" id="accessKPIButton" 
+                        style="background: #9b59b6;">
+                    🔐 Acceder a Dashboard de KPIs
+                </button>
+            </div>
         </section>
     </main>
 
@@ -432,6 +694,12 @@
         let filteredData = [];
         let quoteItems = [];
         let productFrequency = JSON.parse(localStorage.getItem('productFrequency')) || {};
+
+        // ===== SISTEMA DE SEGURIDAD PARA KPIs =====
+        const KPI_PASSWORD = "admin123"; // Cambia esta contraseña por la que quieras
+        let kpiAccessGranted = false;
+        let failedAttempts = 0;
+        const MAX_ATTEMPTS = 3;
 
         // ===== FUNCIONES PRINCIPALES =====
 
@@ -455,6 +723,7 @@
                 renderInventory();
                 initializeFilters();
                 updateSystemStatus();
+                updateKPIs();
                 showNotification('✅ Inventario cargado: ' + inventoryData.length + ' productos', 'success');
                 
             } catch (error) {
@@ -641,6 +910,258 @@
             productFrequency[codigo].lastRequested = new Date().toISOString();
             
             localStorage.setItem('productFrequency', JSON.stringify(productFrequency));
+        }
+
+        // ===== SISTEMA DE SEGURIDAD KPIs =====
+
+        function showKPILogin() {
+            document.getElementById('kpiLogin').style.display = 'block';
+            document.getElementById('accessKPIButton').style.display = 'none';
+            document.getElementById('kpiPassword').focus();
+        }
+
+        function verifyKPIAccess() {
+            const passwordInput = document.getElementById('kpiPassword');
+            const password = passwordInput.value;
+            const errorDiv = document.getElementById('kpiLoginError');
+
+            if (password === KPI_PASSWORD) {
+                // Acceso concedido
+                kpiAccessGranted = true;
+                failedAttempts = 0;
+                
+                document.getElementById('kpiLogin').style.display = 'none';
+                document.getElementById('kpiPanel').style.display = 'block';
+                document.getElementById('accessKPIButton').style.display = 'none';
+                
+                // Actualizar KPIs
+                updateKPIs();
+                initializeCharts();
+                
+                showNotification('🔓 Acceso concedido al Dashboard de KPIs', 'success');
+                
+                // Limpiar campo de contraseña
+                passwordInput.value = '';
+                
+            } else {
+                // Acceso denegado
+                failedAttempts++;
+                errorDiv.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+                
+                if (failedAttempts >= MAX_ATTEMPTS) {
+                    lockoutKPIs();
+                } else {
+                    showNotification(`❌ Contraseña incorrecta. Intentos restantes: ${MAX_ATTEMPTS - failedAttempts}`, 'error');
+                }
+            }
+        }
+
+        function lockoutKPIs() {
+            document.getElementById('kpiLogin').style.display = 'none';
+            document.getElementById('accessKPIButton').style.display = 'block';
+            document.getElementById('accessKPIButton').disabled = true;
+            document.getElementById('accessKPIButton').textContent = '🔒 Acceso Bloqueado (30 segundos)';
+            document.getElementById('accessKPIButton').style.background = '#95a5a6';
+            
+            showNotification('🚫 Demasiados intentos fallidos. Acceso bloqueado temporalmente.', 'error');
+            
+            // Reactivar después de 30 segundos
+            setTimeout(() => {
+                document.getElementById('accessKPIButton').disabled = false;
+                document.getElementById('accessKPIButton').textContent = '🔐 Acceder a Dashboard de KPIs';
+                document.getElementById('accessKPIButton').style.background = '#9b59b6';
+                failedAttempts = 0;
+            }, 30000);
+        }
+
+        function lockKPIs() {
+            kpiAccessGranted = false;
+            document.getElementById('kpiPanel').style.display = 'none';
+            document.getElementById('accessKPIButton').style.display = 'block';
+            document.getElementById('kpiPassword').value = '';
+            
+            showNotification('🔒 Dashboard de KPIs cerrado', 'info');
+        }
+
+        // Proteger contra F12 (DevTools)
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u')) {
+                if (!kpiAccessGranted) {
+                    e.preventDefault();
+                    showNotification('🔒 Acceso restringido', 'error');
+                    return false;
+                }
+            }
+        });
+
+        // Prevenir clic derecho
+        document.addEventListener('contextmenu', function(e) {
+            if (!kpiAccessGranted) {
+                e.preventDefault();
+                showNotification('🔒 Acceso restringido', 'error');
+                return false;
+            }
+        });
+
+        // ===== SISTEMA DE KPIs =====
+
+        function updateKPIs() {
+            if (inventoryData.length === 0) return;
+            
+            const totalProducts = inventoryData.length;
+            const criticalStock = inventoryData.filter(item => item.cantidad < 5 && item.cantidad > 0).length;
+            const totalRequests = Object.values(productFrequency).reduce((sum, item) => sum + item.count, 0);
+            const predictedShortages = calculatePredictedShortages();
+            
+            document.getElementById('kpiTotalProducts').textContent = totalProducts;
+            document.getElementById('kpiCriticalStock').textContent = criticalStock;
+            document.getElementById('kpiTotalRequests').textContent = totalRequests;
+            document.getElementById('kpiPredictedShortages').textContent = predictedShortages;
+            
+            updateReplenishmentAnalysis();
+        }
+
+        function initializeCharts() {
+            // Gráfico de distribución de stock
+            const stockCtx = document.getElementById('stockDistributionChart').getContext('2d');
+            if (window.stockChart) window.stockChart.destroy();
+            
+            const stockData = {
+                labels: ['Stock Crítico (<5)', 'Sin Stock (0)', 'Stock Medio (1-10)', 'Stock Alto (>10)'],
+                datasets: [{
+                    data: [
+                        inventoryData.filter(item => item.cantidad < 5 && item.cantidad > 0).length,
+                        inventoryData.filter(item => item.cantidad === 0).length,
+                        inventoryData.filter(item => item.cantidad >= 1 && item.cantidad <= 10).length,
+                        inventoryData.filter(item => item.cantidad > 10).length
+                    ],
+                    backgroundColor: ['#e74c3c', '#f39c12', '#3498db', '#27ae60']
+                }]
+            };
+            
+            window.stockChart = new Chart(stockCtx, {
+                type: 'doughnut',
+                data: stockData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Gráfico de productos más solicitados
+            const topCtx = document.getElementById('topProductsChart').getContext('2d');
+            if (window.topProductsChart) window.topProductsChart.destroy();
+            
+            const topProducts = Object.entries(productFrequency)
+                .sort((a, b) => b[1].count - a[1].count)
+                .slice(0, 10);
+            
+            const topData = {
+                labels: topProducts.map(([code, data]) => code),
+                datasets: [{
+                    label: 'Solicitudes',
+                    data: topProducts.map(([code, data]) => data.count),
+                    backgroundColor: '#667eea'
+                }]
+            };
+            
+            window.topProductsChart = new Chart(topCtx, {
+                type: 'bar',
+                data: topData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateReplenishmentAnalysis() {
+            const replenishmentList = document.getElementById('replenishmentList');
+            const replenishmentNeeded = [];
+
+            Object.keys(productFrequency).forEach(codigo => {
+                const freqData = productFrequency[codigo];
+                const inventoryItem = inventoryData.find(item => item.codigo === codigo);
+                
+                if (inventoryItem && freqData.count >= 2) {
+                    const avgRequest = Math.ceil(freqData.totalRequested / freqData.count);
+                    const recommendedStock = Math.max(avgRequest * 3, 10);
+                    
+                    if (inventoryItem.cantidad < recommendedStock) {
+                        const urgency = freqData.count >= 5 ? 'high' : freqData.count >= 3 ? 'medium' : 'low';
+                        const urgencyText = urgency === 'high' ? 'ALTA' : urgency === 'medium' ? 'MEDIA' : 'BAJA';
+                        
+                        replenishmentNeeded.push({
+                            codigo,
+                            description: freqData.description,
+                            currentStock: inventoryItem.cantidad,
+                            recommendedStock,
+                            frequency: freqData.count,
+                            urgency,
+                            urgencyText
+                        });
+                    }
+                }
+            });
+
+            replenishmentNeeded.sort((a, b) => {
+                const urgencyOrder = { 'high': 3, 'medium': 2, 'low': 1 };
+                return urgencyOrder[b.urgency] - urgencyOrder[a.urgency];
+            });
+
+            if (replenishmentNeeded.length > 0) {
+                replenishmentList.innerHTML = replenishmentNeeded.map(item => `
+                    <div class="replenishment-item ${item.urgency === 'high' ? 'critical' : item.urgency === 'medium' ? 'warning' : ''}">
+                        <div class="replenishment-info">
+                            <div class="replenishment-code">${item.codigo}</div>
+                            <div class="replenishment-desc">${item.description}</div>
+                        </div>
+                        <div class="replenishment-stats">
+                            <div class="replenishment-stock">${item.currentStock} → ${item.recommendedStock}</div>
+                            <div class="replenishment-urgency ${item.urgency}">${item.urgencyText}</div>
+                            <div style="font-size: 0.8em; color: #666; margin-top: 2px;">
+                                Solicitudes: ${item.frequency}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                replenishmentList.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #666; background: #f8f9fa; border-radius: 8px;">
+                        ✅ No se requieren reposiciones en este momento
+                    </div>
+                `;
+            }
+        }
+
+        function calculatePredictedShortages() {
+            let shortages = 0;
+            Object.keys(productFrequency).forEach(codigo => {
+                const freqData = productFrequency[codigo];
+                const inventoryItem = inventoryData.find(item => item.codigo === codigo);
+                if (inventoryItem && freqData.count >= 2) {
+                    const avgRequest = freqData.totalRequested / freqData.count;
+                    if (inventoryItem.cantidad < avgRequest * 2) {
+                        shortages++;
+                    }
+                }
+            });
+            return shortages;
         }
 
         // ===== FUNCIONES DE UTILIDAD =====
