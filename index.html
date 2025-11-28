@@ -46,7 +46,7 @@
             max-width: 100%;
             height: auto;
             max-height: 150px;
-            filter: brightness(0) invert(1); /* Hace el logo blanco */
+            /* ELIMINADO: filter: brightness(0) invert(1); - Esto volvía la imagen blanca */
         }
 
         .header-subtitle {
@@ -478,9 +478,6 @@
         let productFrequency = JSON.parse(localStorage.getItem('productFrequency')) || {};
         let quoteCounter = parseInt(localStorage.getItem('quoteCounter')) || 1;
 
-        // URL de la imagen para el PDF
-        const IPB_LOGO_URL = 'https://raw.githubusercontent.com/yleal-lab/ipb-images/main/WhatsApp%20Image%202025-11-26%20at%209.52.10%20AM.jpeg';
-
         // ===== FUNCIONES PRINCIPALES =====
 
         async function loadInventoryData() {
@@ -689,9 +686,8 @@
             localStorage.setItem('productFrequency', JSON.stringify(productFrequency));
         }
 
-        // ===== GENERACIÓN DE PDF MEJORADO =====
-
-        function generatePDF() {
+        // ===== GENERACIÓN DE PDF MEJORADO CON HTML2CANVAS =====
+        async function generatePDF() {
             const clientName = document.getElementById('clientName').value.trim();
             const clientRIF = document.getElementById('clientRIF').value.trim();
             
@@ -714,44 +710,73 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             
-            // Configuración inicial
-            doc.setFontSize(20);
-            doc.setTextColor(40, 40, 40);
+            // SOLUCIÓN HTML2CANVAS - CAPTURAR BANNER AUTOMÁTICAMENTE
+            try {
+                const bannerElement = document.querySelector('.header-banner');
+                
+                // Capturar el banner como imagen
+                const canvas = await html2canvas(bannerElement, {
+                    scale: 2, // Alta calidad
+                    useCORS: true, // Permite imágenes externas
+                    backgroundColor: '#1a2a3a', // Color de fondo por defecto
+                    logging: false, // Sin logs en consola
+                    width: bannerElement.offsetWidth,
+                    height: bannerElement.offsetHeight
+                });
+                
+                // Convertir canvas a imagen
+                const bannerImage = canvas.toDataURL('image/jpeg', 0.9);
+                
+                // Agregar banner al PDF (ajustar tamaño según necesidad)
+                doc.addImage(bannerImage, 'JPEG', 5, 5, 200, 50);
+                
+            } catch (error) {
+                console.warn('Error capturando banner, usando fallback:', error);
+                // FALLBACK: banner simple si hay error
+                doc.setFillColor(26, 42, 58);
+                doc.rect(0, 0, 210, 40, 'F');
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(16);
+                doc.text('IPB MOVILIDAD C.A.', 105, 20, { align: 'center' });
+                doc.setFontSize(10);
+                doc.text('GAC MOTOR • DFSK • SHINERAY', 105, 28, { align: 'center' });
+                doc.setFontSize(8);
+                doc.text('Sistema de Cotización para Aliados Comerciales', 105, 35, { align: 'center' });
+            }
             
-            // BANNER CON IMAGEN REAL - CORREGIDO
-            // Agregar imagen del logo IPB
-            doc.addImage(IPB_LOGO_URL, 'JPEG', 20, 10, 170, 30);
+            // POSICIONES AJUSTADAS PARA EL CONTENIDO (debajo del banner)
+            const contentStartY = 65;
             
             // Información de cotización
             doc.setTextColor(0, 0, 0);
             doc.setFontSize(14);
-            doc.text(quoteNumber, 20, 55);
+            doc.text(quoteNumber, 20, contentStartY);
             doc.setFontSize(10);
             
             const now = new Date();
             const validUntil = new Date(now.getTime() + 24 * 60 * 60 * 1000);
             
-            doc.text(`Fecha: ${now.toLocaleDateString()} - Hora: ${now.toLocaleTimeString()}`, 20, 65);
-            doc.text(`Válida hasta: ${validUntil.toLocaleDateString()} - ${validUntil.toLocaleTimeString()} (24 horas)`, 20, 71);
+            doc.text(`Fecha: ${now.toLocaleDateString()} - Hora: ${now.toLocaleTimeString()}`, 20, contentStartY + 10);
+            doc.text(`Válida hasta: ${validUntil.toLocaleDateString()} - ${validUntil.toLocaleTimeString()} (24 horas)`, 20, contentStartY + 16);
             
             // Datos del aliado comercial
             doc.setFontSize(12);
-            doc.text('DATOS DEL ALIADO COMERCIAL', 20, 85);
+            doc.text('DATOS DEL ALIADO COMERCIAL', 20, contentStartY + 30);
             doc.setFontSize(10);
-            doc.text(`• Razón Social: ${clientName}`, 20, 95);
-            doc.text(`• RIF: ${clientRIF}`, 20, 101);
+            doc.text(`• Razón Social: ${clientName}`, 20, contentStartY + 40);
+            doc.text(`• RIF: ${clientRIF}`, 20, contentStartY + 46);
             
             // Detalle de cotización
             doc.setFontSize(12);
-            doc.text('DETALLE DE COTIZACIÓN', 20, 115);
+            doc.text('DETALLE DE COTIZACIÓN', 20, contentStartY + 60);
             
             // Encabezados de tabla
             doc.setFontSize(10);
-            doc.text('Código', 20, 125);
-            doc.text('Descripción', 50, 125);
-            doc.text('Cant', 180, 125);
+            doc.text('Código', 20, contentStartY + 70);
+            doc.text('Descripción', 50, contentStartY + 70);
+            doc.text('Cant', 180, contentStartY + 70);
             
-            let yPosition = 135;
+            let yPosition = contentStartY + 80;
             quoteItems.forEach((item, index) => {
                 if (yPosition > 270) {
                     doc.addPage();
