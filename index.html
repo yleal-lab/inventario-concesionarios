@@ -326,6 +326,52 @@
             margin: 20px 0;
         }
 
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .chart-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+        }
+
+        .chart-title {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .metric-card {
+            background: #e8f5e8;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .metric-percentage {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: #27ae60;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
         @media (max-width: 768px) {
             .controls-grid, .form-grid {
                 grid-template-columns: 1fr;
@@ -338,6 +384,10 @@
             .header-subtitle {
                 font-size: 1em;
                 padding: 10px 0;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -500,22 +550,57 @@
                 <h3 style="color: #27ae60; margin-bottom: 20px;">📊 Dashboard de KPIs - IPB Movilidad</h3>
                 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px;">
-                    <div style="background: #e8f5e8; padding: 15px; border-radius: 10px; text-align: center;">
+                    <div class="metric-card">
+                        <span class="metric-percentage" id="totalProductsPercentage">0%</span>
                         <h4 style="color: #27ae60; margin-bottom: 5px;">Total Productos</h4>
                         <p style="font-size: 24px; font-weight: bold;" id="totalProducts">0</p>
+                        <small style="color: #666;">Inventario total</small>
                     </div>
-                    <div style="background: #e8f5e8; padding: 15px; border-radius: 10px; text-align: center;">
+                    <div class="metric-card">
+                        <span class="metric-percentage" id="totalQuotesPercentage">0%</span>
                         <h4 style="color: #27ae60; margin-bottom: 5px;">Cotizaciones</h4>
                         <p style="font-size: 24px; font-weight: bold;" id="totalQuotes">0</p>
+                        <small style="color: #666;">Generadas este mes</small>
                     </div>
-                    <div style="background: #e8f5e8; padding: 15px; border-radius: 10px; text-align: center;">
+                    <div class="metric-card">
+                        <span class="metric-percentage" id="lowStockPercentage">0%</span>
                         <h4 style="color: #27ae60; margin-bottom: 5px;">Stock Bajo</h4>
                         <p style="font-size: 24px; font-weight: bold;" id="lowStock">0</p>
+                        <small style="color: #666;">Necesitan reposición</small>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-percentage" id="outOfStockPercentage">0%</span>
+                        <h4 style="color: #27ae60; margin-bottom: 5px;">Sin Stock</h4>
+                        <p style="font-size: 24px; font-weight: bold;" id="outOfStock">0</p>
+                        <small style="color: #666;">Agotados</small>
                     </div>
                 </div>
 
-                <div class="chart-container">
-                    <canvas id="productsChart"></canvas>
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <div class="chart-title">📦 Distribución por Marca</div>
+                        <div class="chart-container">
+                            <canvas id="brandsChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-title">📊 Estado del Stock</div>
+                        <div class="chart-container">
+                            <canvas id="stockChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-title">🚗 Productos Más Solicitados</div>
+                        <div class="chart-container">
+                            <canvas id="popularProductsChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-title">📈 Tendencias de Stock</div>
+                        <div class="chart-container">
+                            <canvas id="stockTrendsChart"></canvas>
+                        </div>
+                    </div>
                 </div>
 
                 <div style="text-align: center; margin-top: 20px;">
@@ -908,8 +993,8 @@
             const user = document.getElementById('adminUser').value;
             const password = document.getElementById('adminPassword').value;
             
-            // Credenciales simples para demo (en producción usar autenticación segura)
-            if (user === 'admin' && password === 'ipb2024') {
+            // Nueva contraseña: gac.12345
+            if (user === 'admin' && password === 'gac.12345') {
                 document.getElementById('kpiLogin').style.display = 'none';
                 document.getElementById('kpiDashboard').style.display = 'block';
                 document.getElementById('accessKPIButton').style.display = 'none';
@@ -926,19 +1011,38 @@
         }
 
         function loadDashboardData() {
-            // Actualizar métricas
-            document.getElementById('totalProducts').textContent = inventoryData.length;
-            document.getElementById('totalQuotes').textContent = quoteCounter - 1;
+            const totalProducts = inventoryData.length;
+            const totalQuotes = quoteCounter - 1;
+            const lowStockCount = inventoryData.filter(item => item.cantidad < 5 && item.cantidad > 0).length;
+            const outOfStockCount = inventoryData.filter(item => item.cantidad === 0).length;
             
-            const lowStockCount = inventoryData.filter(item => item.cantidad < 5).length;
+            // Actualizar métricas con porcentajes
+            document.getElementById('totalProducts').textContent = totalProducts;
+            document.getElementById('totalProductsPercentage').textContent = '100%';
+            
+            document.getElementById('totalQuotes').textContent = totalQuotes;
+            document.getElementById('totalQuotesPercentage').textContent = calculatePercentage(totalQuotes, Math.max(totalQuotes, 1));
+            
             document.getElementById('lowStock').textContent = lowStockCount;
+            document.getElementById('lowStockPercentage').textContent = calculatePercentage(lowStockCount, totalProducts);
             
-            // Crear gráfico
-            createProductsChart();
+            document.getElementById('outOfStock').textContent = outOfStockCount;
+            document.getElementById('outOfStockPercentage').textContent = calculatePercentage(outOfStockCount, totalProducts);
+            
+            // Crear gráficos
+            createBrandsChart();
+            createStockChart();
+            createPopularProductsChart();
+            createStockTrendsChart();
         }
 
-        function createProductsChart() {
-            const ctx = document.getElementById('productsChart').getContext('2d');
+        function calculatePercentage(part, total) {
+            if (total === 0) return '0%';
+            return Math.round((part / total) * 100) + '%';
+        }
+
+        function createBrandsChart() {
+            const ctx = document.getElementById('brandsChart').getContext('2d');
             
             // Agrupar por marca
             const brands = {};
@@ -950,17 +1054,141 @@
             });
             
             new Chart(ctx, {
-                type: 'bar',
+                type: 'doughnut',
                 data: {
                     labels: Object.keys(brands),
                     datasets: [{
-                        label: 'Productos por Marca',
                         data: Object.values(brands),
                         backgroundColor: [
                             '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
                             '#9966FF', '#FF9F40', '#FF6384', '#C9CBCF'
                         ],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.raw || 0;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = Math.round((value / total) * 100);
+                                    return `${label}: ${value} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createStockChart() {
+            const ctx = document.getElementById('stockChart').getContext('2d');
+            
+            const stockLevels = {
+                'Sin Stock': inventoryData.filter(item => item.cantidad === 0).length,
+                'Stock Bajo': inventoryData.filter(item => item.cantidad < 5 && item.cantidad > 0).length,
+                'Stock Medio': inventoryData.filter(item => item.cantidad >= 5 && item.cantidad <= 10).length,
+                'Stock Alto': inventoryData.filter(item => item.cantidad > 10).length
+            };
+            
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(stockLevels),
+                    datasets: [{
+                        data: Object.values(stockLevels),
+                        backgroundColor: [
+                            '#e74c3c', '#f39c12', '#3498db', '#27ae60'
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function createPopularProductsChart() {
+            const ctx = document.getElementById('popularProductsChart').getContext('2d');
+            
+            // Obtener productos más solicitados
+            const popularProducts = Object.entries(productFrequency)
+                .sort((a, b) => b[1].count - a[1].count)
+                .slice(0, 5);
+            
+            const labels = popularProducts.map(item => {
+                const desc = item[1].description.length > 20 ? 
+                    item[1].description.substring(0, 20) + '...' : item[1].description;
+                return `${item[0]}\n${desc}`;
+            });
+            
+            const data = popularProducts.map(item => item[1].count);
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Veces solicitado',
+                        data: data,
+                        backgroundColor: '#9b59b6',
                         borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function createStockTrendsChart() {
+            const ctx = document.getElementById('stockTrendsChart').getContext('2d');
+            
+            // Simular datos de tendencias (en un sistema real vendrían de una base de datos)
+            const trends = {
+                'Ene': 45,
+                'Feb': 52,
+                'Mar': 48,
+                'Abr': 61,
+                'May': 55,
+                'Jun': 58
+            };
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: Object.keys(trends),
+                    datasets: [{
+                        label: 'Productos en Stock',
+                        data: Object.values(trends),
+                        borderColor: '#3498db',
+                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
                     }]
                 },
                 options: {
