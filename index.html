@@ -46,7 +46,6 @@
             max-width: 100%;
             height: auto;
             max-height: 150px;
-            /* ELIMINADO: filter: brightness(0) invert(1); - Esto volvía la imagen blanca */
         }
 
         .header-subtitle {
@@ -300,6 +299,7 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             text-align: center;
             border: 2px solid #9b59b6;
+            display: none;
         }
 
         .kpi-panel {
@@ -309,6 +309,21 @@
             margin-top: 25px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             border: 2px solid #27ae60;
+            display: none;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 300px;
+            margin: 20px 0;
         }
 
         @media (max-width: 768px) {
@@ -459,7 +474,58 @@
                 </div>
             </div>
 
-            <!-- ACCESO KPIs (Mantenido igual) -->
+            <!-- LOGIN DASHBOARD KPIs -->
+            <div class="kpi-login" id="kpiLogin">
+                <h3 style="color: #9b59b6; margin-bottom: 20px;">🔐 Acceso al Dashboard de KPIs</h3>
+                <div class="login-form">
+                    <div class="form-group">
+                        <label class="form-label">Usuario Administrador</label>
+                        <input type="text" class="form-input" id="adminUser" placeholder="Usuario">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Contraseña</label>
+                        <input type="password" class="form-input" id="adminPassword" placeholder="Contraseña">
+                    </div>
+                    <button class="quote-btn" onclick="loginToDashboard()" style="background: #9b59b6;">
+                        🚀 Acceder al Dashboard
+                    </button>
+                    <button class="quote-btn" onclick="hideKPILogin()" style="background: #cccccc;">
+                        ↩️ Volver
+                    </button>
+                </div>
+            </div>
+
+            <!-- DASHBOARD KPIs -->
+            <div class="kpi-panel" id="kpiDashboard">
+                <h3 style="color: #27ae60; margin-bottom: 20px;">📊 Dashboard de KPIs - IPB Movilidad</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px;">
+                    <div style="background: #e8f5e8; padding: 15px; border-radius: 10px; text-align: center;">
+                        <h4 style="color: #27ae60; margin-bottom: 5px;">Total Productos</h4>
+                        <p style="font-size: 24px; font-weight: bold;" id="totalProducts">0</p>
+                    </div>
+                    <div style="background: #e8f5e8; padding: 15px; border-radius: 10px; text-align: center;">
+                        <h4 style="color: #27ae60; margin-bottom: 5px;">Cotizaciones</h4>
+                        <p style="font-size: 24px; font-weight: bold;" id="totalQuotes">0</p>
+                    </div>
+                    <div style="background: #e8f5e8; padding: 15px; border-radius: 10px; text-align: center;">
+                        <h4 style="color: #27ae60; margin-bottom: 5px;">Stock Bajo</h4>
+                        <p style="font-size: 24px; font-weight: bold;" id="lowStock">0</p>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="productsChart"></canvas>
+                </div>
+
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="quote-btn" onclick="hideDashboard()" style="background: #cccccc;">
+                        ↩️ Volver al Sistema
+                    </button>
+                </div>
+            </div>
+
+            <!-- ACCESO KPIs -->
             <div style="text-align: center; margin-top: 25px;">
                 <button class="quote-btn" onclick="showKPILogin()" id="accessKPIButton" 
                         style="background: #9b59b6;">
@@ -825,6 +891,88 @@
             updateQuotePanel();
             updateQuoteButton();
             showNotification('🗑️ Cotización limpiada', 'info');
+        }
+
+        // ===== DASHBOARD KPIs =====
+        function showKPILogin() {
+            document.getElementById('kpiLogin').style.display = 'block';
+            document.getElementById('accessKPIButton').style.display = 'none';
+        }
+
+        function hideKPILogin() {
+            document.getElementById('kpiLogin').style.display = 'none';
+            document.getElementById('accessKPIButton').style.display = 'block';
+        }
+
+        function loginToDashboard() {
+            const user = document.getElementById('adminUser').value;
+            const password = document.getElementById('adminPassword').value;
+            
+            // Credenciales simples para demo (en producción usar autenticación segura)
+            if (user === 'admin' && password === 'ipb2024') {
+                document.getElementById('kpiLogin').style.display = 'none';
+                document.getElementById('kpiDashboard').style.display = 'block';
+                document.getElementById('accessKPIButton').style.display = 'none';
+                loadDashboardData();
+                showNotification('✅ Acceso concedido al Dashboard', 'success');
+            } else {
+                showNotification('❌ Usuario o contraseña incorrectos', 'error');
+            }
+        }
+
+        function hideDashboard() {
+            document.getElementById('kpiDashboard').style.display = 'none';
+            document.getElementById('accessKPIButton').style.display = 'block';
+        }
+
+        function loadDashboardData() {
+            // Actualizar métricas
+            document.getElementById('totalProducts').textContent = inventoryData.length;
+            document.getElementById('totalQuotes').textContent = quoteCounter - 1;
+            
+            const lowStockCount = inventoryData.filter(item => item.cantidad < 5).length;
+            document.getElementById('lowStock').textContent = lowStockCount;
+            
+            // Crear gráfico
+            createProductsChart();
+        }
+
+        function createProductsChart() {
+            const ctx = document.getElementById('productsChart').getContext('2d');
+            
+            // Agrupar por marca
+            const brands = {};
+            inventoryData.forEach(item => {
+                if (!brands[item.marca]) {
+                    brands[item.marca] = 0;
+                }
+                brands[item.marca]++;
+            });
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(brands),
+                    datasets: [{
+                        label: 'Productos por Marca',
+                        data: Object.values(brands),
+                        backgroundColor: [
+                            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
+                            '#9966FF', '#FF9F40', '#FF6384', '#C9CBCF'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
         }
 
         // ===== FUNCIONES DE UTILIDAD =====
